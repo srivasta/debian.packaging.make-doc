@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: make 3.79.1\n"
+"Project-Id-Version: make 3.80\n"
 "POT-Creation-Date: 2002-10-03 22:13-0400\n"
-"PO-Revision-Date: 2001-09-02 18:21+02:00\n"
+"PO-Revision-Date: 2002-10-05 22:56+0200\n"
 "Last-Translator: Byrial Ole Jensen <byrial@image.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -177,9 +177,9 @@ msgid " so far."
 msgstr " indtil videre."
 
 #: dir.c:1079
-#, fuzzy, c-format
+#, c-format
 msgid " impossibilities in %lu directories.\n"
-msgstr " umuligheder i %u kataloger.\n"
+msgstr " umuligheder i %lu kataloger.\n"
 
 #: expand.c:110
 #, c-format
@@ -226,9 +226,8 @@ msgid "*** Deleting intermediate file `%s'"
 msgstr "*** Sletter mellemfil '%s'"
 
 #: file.c:379
-#, fuzzy
 msgid "Removing intermediate files...\n"
-msgstr "*** Sletter mellemfil '%s'"
+msgstr "Sletter mellemfiler ...\n"
 
 #: file.c:558
 #, c-format
@@ -347,6 +346,9 @@ msgid ""
 "# files hash-table stats:\n"
 "# "
 msgstr ""
+"\n"
+"# Statistik for fil-hash-spande:\n"
+"# "
 
 #: function.c:768
 msgid "non-numeric first argument to `word' function"
@@ -461,22 +463,22 @@ msgstr "%s: tilvalg '-W %s' tillader ikke et argument\n"
 #: hash.c:56
 #, c-format
 msgid "can't allocate %ld bytes for hash table: memory exhausted"
-msgstr ""
+msgstr "kan ikke tildele %ld byte til hash-spande: hukommelsen opbrugt"
 
 #: hash.c:315
 #, c-format
 msgid "Load=%ld/%ld=%.0f%%, "
-msgstr ""
+msgstr "Fyldning=%ld/%ld=%.0f%%, "
 
 #: hash.c:317
 #, c-format
 msgid "Rehash=%d, "
-msgstr ""
+msgstr "Omgrupperinger=%d, "
 
 #: hash.c:318
 #, c-format
 msgid "Collisions=%ld/%ld=%.0f%%"
-msgstr ""
+msgstr "Sammenstød=%ld/%ld=%.0f%%"
 
 #: implicit.c:40
 #, c-format
@@ -592,9 +594,8 @@ msgstr "Høster vinderbarn 0x%08lx, PID %ld %s\n"
 msgid "Cleaning up temp batch file %s\n"
 msgstr "Afrydder midlertidig jobfil %s\n"
 
-# Mellemrum foran %s fjernet med vilje.
 #: job.c:732
-#, fuzzy, c-format
+#, c-format
 msgid "Removing child 0x%08lx PID %ld%s from chain.\n"
 msgstr "Fjerner barn 0x%08lx, PID %ld%s fra kæde.\n"
 
@@ -654,8 +655,7 @@ msgstr "-advarsel, CTRL-Y vil efterlade underproces(ser).\n"
 
 #: job.c:1839
 msgid "-warning, you may have to re-enable CTRL-Y handling from DCL.\n"
-msgstr ""
-"-advarsel, du kan blive nødt til at genetablere CTRL-Y-behandling fra DCL.\n"
+msgstr "-advarsel, du kan blive nødt til at genetablere CTRL-Y-behandling fra DCL.\n"
 
 #: job.c:1952
 #, c-format
@@ -745,160 +745,148 @@ msgid "Options:\n"
 msgstr "Tilvalg:\n"
 
 #: main.c:265
-#, fuzzy
 msgid "  -b, -m                      Ignored for compatibility.\n"
-msgstr "Ignoreret af hensyn til kompabilitet"
+msgstr "  -b, -m                      Ignoreret af hensyn til kompabilitet.\n"
 
 #: main.c:267
 msgid "  -B, --always-make           Unconditionally make all targets.\n"
-msgstr ""
+msgstr "  -B, --always-make           Skab alle mål betingelsesløst.\n"
 
 #: main.c:269
 msgid ""
 "  -C DIRECTORY, --directory=DIRECTORY\n"
 "                              Change to DIRECTORY before doing anything.\n"
 msgstr ""
+"  -C KATALOG, --directory=KATALOG\n"
+"                              Skift allerførst til KATALOG.\n"
 
 #: main.c:272
-#, fuzzy
 msgid "  -d                          Print lots of debugging information.\n"
-msgstr "Udskriv en masse fejlsøgningsinformation"
+msgstr "  -d                          Udskriv en masse fejlsøgningsinformation.\n"
 
 #: main.c:274
-#, fuzzy
-msgid ""
-"  --debug[=FLAGS]             Print various types of debugging information.\n"
-msgstr "Udskriv forskellige slags fejlsøgningsinformation"
+msgid "  --debug[=FLAGS]             Print various types of debugging information.\n"
+msgstr "  --debug[=FLAG]              Udskriv forskellige slags fejlsøgningsinformation.\n"
 
 #: main.c:276
 msgid ""
 "  -e, --environment-overrides\n"
 "                              Environment variables override makefiles.\n"
 msgstr ""
+"  -e, --environment-overrides\n"
+"                              Miljøvariable har forrang for makefiler.\n"
 
 #: main.c:279
 msgid ""
 "  -f FILE, --file=FILE, --makefile=FILE\n"
 "                              Read FILE as a makefile.\n"
 msgstr ""
+"  -f FIL, --file=FIL, --makefile=FIL\n"
+"                              Læs FIL som en makefil.\n"
 
 #: main.c:282
-#, fuzzy
 msgid "  -h, --help                  Print this message and exit.\n"
-msgstr "Udskriv denne besked og afslut"
+msgstr "  -h, --help                  Udskriv denne besked og afslut.\n"
 
 #: main.c:284
-#, fuzzy
 msgid "  -i, --ignore-errors         Ignore errors from commands.\n"
-msgstr "Ignorér fejl fra kommandoer"
+msgstr "  -i, --ignore-errors         Ignorér fejl fra kommandoer.\n"
 
 #: main.c:286
 msgid ""
 "  -I DIRECTORY, --include-dir=DIRECTORY\n"
 "                              Search DIRECTORY for included makefiles.\n"
 msgstr ""
+"  -I KATALOG, --include-dir=KATALOG\n"
+"                              Søg i KATALOG efter inkluderede makefiler.\n"
 
 #: main.c:289
-#, fuzzy
-msgid ""
-"  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no "
-"arg.\n"
-msgstr "Tillad N samtidige job; uendelig mange job uden argument"
+msgid "  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no arg.\n"
+msgstr "  -j [N], --jobs[=N]          Tillad N samtidige job; uendelig mange job uden argument.\n"
 
 #: main.c:291
-#, fuzzy
-msgid ""
-"  -k, --keep-going            Keep going when some targets can't be made.\n"
-msgstr "Fortsæt selvom nogen mål ikke kan skabes"
+msgid "  -k, --keep-going            Keep going when some targets can't be made.\n"
+msgstr "  -k, --keep-going            Fortsæt selvom nogen mål ikke kan skabes.\n"
 
 #: main.c:293
 msgid ""
 "  -l [N], --load-average[=N], --max-load[=N]\n"
-"                              Don't start multiple jobs unless load is below "
-"N.\n"
+"                              Don't start multiple jobs unless load is below N.\n"
 msgstr ""
+"  -l [N], --load-average[=N], --max-load[=N]\n"
+"                              Start ikke flere job medmindre belastningen er under N.\n"
 
 #: main.c:296
 msgid ""
 "  -n, --just-print, --dry-run, --recon\n"
-"                              Don't actually run any commands; just print "
-"them.\n"
+"                              Don't actually run any commands; just print them.\n"
 msgstr ""
+"  -n, --just-print, --dry-run, --recon\n"
+"                              Udfør ikke nogen kommandoer; udskriv dem bare.\n"
 
 #: main.c:299
 msgid ""
 "  -o FILE, --old-file=FILE, --assume-old=FILE\n"
-"                              Consider FILE to be very old and don't remake "
-"it.\n"
+"                              Consider FILE to be very old and don't remake it.\n"
 msgstr ""
+"  -o FIL, --old-file=FIL, --assume-old=FIL\n"
+"                              Anse FIL som værende meget gammel og genskab den ikke.\n"
 
 #: main.c:302
-#, fuzzy
 msgid "  -p, --print-data-base       Print make's internal database.\n"
-msgstr "Udskriv makes interne database"
+msgstr "  -p, --print-data-base       Udskriv makes interne database.\n"
 
 #: main.c:304
-#, fuzzy
-msgid ""
-"  -q, --question              Run no commands; exit status says if up to "
-"date.\n"
-msgstr "Udfør ingen kommandoer; afslutningskoden fortæller status"
+msgid "  -q, --question              Run no commands; exit status says if up to date.\n"
+msgstr "  -q, --question              Udfør ingen kommandoer; afslutningskoden fortæller status.\n"
 
 #: main.c:306
-#, fuzzy
 msgid "  -r, --no-builtin-rules      Disable the built-in implicit rules.\n"
-msgstr "Slå de indbyggede implicitte regler fra"
+msgstr "  -r, --no-builtin-rules      Slå de indbyggede implicitte regler fra.\n"
 
 #: main.c:308
-#, fuzzy
 msgid "  -R, --no-builtin-variables  Disable the built-in variable settings.\n"
-msgstr "Slå de indbyggede variabelværdier fra"
+msgstr "  -R, --no-builtin-variables  Slå de indbyggede variabelværdier fra.\n"
 
 #: main.c:310
 msgid "  -s, --silent, --quiet       Don't echo commands.\n"
-msgstr ""
+msgstr "  -s, --silent, --quiet       Udskriv ikke kommander.\n"
 
 #: main.c:312
 msgid ""
 "  -S, --no-keep-going, --stop\n"
 "                              Turns off -k.\n"
 msgstr ""
+"  -S, --no-keep-going, --stop\n"
+"                              Slår -k fra.\n"
 
 #: main.c:315
-#, fuzzy
 msgid "  -t, --touch                 Touch targets instead of remaking them.\n"
-msgstr "Berør mål i stedet for at genskabe dem"
+msgstr "  -t, --touch                 Berør mål i stedet for at genskabe dem.\n"
 
 #: main.c:317
-#, fuzzy
-msgid ""
-"  -v, --version               Print the version number of make and exit.\n"
-msgstr "Udskriv makes versionnummer og afslut"
+msgid "  -v, --version               Print the version number of make and exit.\n"
+msgstr "  -v, --version               Udskriv makes versionnummer og afslut.\n"
 
 #: main.c:319
-#, fuzzy
 msgid "  -w, --print-directory       Print the current directory.\n"
-msgstr "Udskriv det aktuelle katalog"
+msgstr "  -w, --print-directory       Udskriv det aktuelle katalog.\n"
 
 #: main.c:321
-#, fuzzy
-msgid ""
-"  --no-print-directory        Turn off -w, even if it was turned on "
-"implicitly.\n"
-msgstr "Slå -w fra, selv hvis det var slået til automatisk"
+msgid "  --no-print-directory        Turn off -w, even if it was turned on implicitly.\n"
+msgstr "  --no-print-directory        Slå -w fra, selv hvis det var slået til automatisk.\n"
 
 #: main.c:323
 msgid ""
 "  -W FILE, --what-if=FILE, --new-file=FILE, --assume-new=FILE\n"
 "                              Consider FILE to be infinitely new.\n"
 msgstr ""
+"  -W FIL, --what-if=FIL, --new-file=FIL, --assume-new=FIL\n"
+"                              Anse FIL som værende nyskabt.\n"
 
 #: main.c:326
-#, fuzzy
-msgid ""
-"  --warn-undefined-variables  Warn when an undefined variable is "
-"referenced.\n"
-msgstr "Advar når en udefineret variabel bruges"
+msgid "  --warn-undefined-variables  Warn when an undefined variable is referenced.\n"
+msgstr "  --warn-undefined-variables  Advar når en udefineret variabel bruges.\n"
 
 #: main.c:511
 msgid "empty string invalid as file name"
@@ -1000,11 +988,8 @@ msgid "dup jobserver"
 msgstr "dup jobserver"
 
 #: main.c:1537
-msgid ""
-"warning: jobserver unavailable: using -j1.  Add `+' to parent make rule."
-msgstr ""
-"advarsel: jobserver ikke tilgængelig: bruger -j1. Tilføj '+' til "
-"ophavsmakeregel."
+msgid "warning: jobserver unavailable: using -j1.  Add `+' to parent make rule."
+msgstr "advarsel: jobserver ikke tilgængelig: bruger -j1. Tilføj '+' til ophavsmakeregel."
 
 #: main.c:1560
 msgid "creating jobs pipe"
@@ -1077,6 +1062,8 @@ msgid ""
 "\n"
 "This program built for %s\n"
 msgstr ""
+"\n"
+"Dette program er bygget til %s\n"
 
 #: main.c:2135
 #, c-format
@@ -1084,13 +1071,12 @@ msgid ""
 "\n"
 "This program built for %s (%s)\n"
 msgstr ""
+"\n"
+"Dette program er bygget til %s (%s)\n"
 
 #: main.c:2138
-#, fuzzy
 msgid "Report bugs to <bug-make@gnu.org>\n"
-msgstr ""
-"\n"
-"Send fejlmeldinger (på engelsk) til <bug-make@gnu.org>.\n"
+msgstr "Send fejlmeldinger (på engelsk) til <bug-make@gnu.org>.\n"
 
 #: main.c:2259
 #, c-format
@@ -1098,22 +1084,15 @@ msgid "the `-%c' option requires a positive integral argument"
 msgstr "'-%c'-tilvalget kræver et positivt heltalligt argument"
 
 #: main.c:2687
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sThis is free software; see the source for copying conditions.\n"
 "%sThere is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A\n"
 "%sPARTICULAR PURPOSE.\n"
 msgstr ""
-", af Richard Stallman og Roland McGraph.\n"
-"%sBygget til %s\n"
-"%sOphavsret (C) 1988, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 2000\n"
-"%s\tFree Software Foundation, Inc.\n"
 "%sDette er frit programmel; se kildeteksten for kopieringsbetingelser.\n"
 "%sDer er INGEN garanti; end ikke for SALGBARHED eller EGNETHED TIL NOGET\n"
 "%sBESTEMT FORMÅL.\n"
-"\n"
-"%sSend fejlmeldinger (på engelsk) til <bug-make@gnu.org>.\n"
-"\n"
 
 # %s giver dato og klokkeslæt
 #: main.c:2707
@@ -1136,44 +1115,44 @@ msgstr ""
 "# Afsluttet makedatabase %s\n"
 
 #: main.c:2788
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Entering an unknown directory"
-msgstr "et ukendt katalog"
+msgstr "%s: Går til et ukendt katalog"
 
 #: main.c:2790
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Leaving an unknown directory"
-msgstr "et ukendt katalog"
+msgstr "%s: Forlader et ukendt katalog"
 
 #: main.c:2793
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Entering directory `%s'\n"
-msgstr "katalog '%s'\n"
+msgstr "%s: Går til katalog '%s'\n"
 
 #: main.c:2796
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Leaving directory `%s'\n"
-msgstr "katalog '%s'\n"
+msgstr "%s: Forlader katalog '%s'\n"
 
 #: main.c:2801
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%u]: Entering an unknown directory"
-msgstr "et ukendt katalog"
+msgstr "%s[%u]: Går til et ukendt katalog"
 
 #: main.c:2804
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%u]: Leaving an unknown directory"
-msgstr "et ukendt katalog"
+msgstr "%s[%u]: Forlader et ukendt katalog"
 
 #: main.c:2808
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%u]: Entering directory `%s'\n"
-msgstr "katalog '%s'\n"
+msgstr "%s[%u]: Går til katalog '%s'\n"
 
 #: main.c:2811
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%u]: Leaving directory `%s'\n"
-msgstr "katalog '%s'\n"
+msgstr "%s[%u]: Forlader katalog '%s'\n"
 
 #: misc.c:309
 msgid ".  Stop.\n"
@@ -1187,38 +1166,37 @@ msgstr "Ukendt fejl %d"
 #: misc.c:342
 #, c-format
 msgid "%s%s: %s"
-msgstr ""
+msgstr "%s%s: %s"
 
 #: misc.c:351
 #, c-format
 msgid "%s: %s"
-msgstr ""
+msgstr "%s: %s"
 
 #: misc.c:371 misc.c:386 misc.c:404 read.c:3094
 msgid "virtual memory exhausted"
 msgstr "virtuel hukommelse opbrugt"
 
 #: misc.c:654
-#, fuzzy, c-format
+#, c-format
 msgid "%s: user %lu (real %lu), group %lu (real %lu)\n"
-msgstr "%s_access: bruger %lu (reelt %lu), gruppe %lu (reelt %lu)\n"
+msgstr "%s: bruger %lu (reelt %lu), gruppe %lu (reelt %lu)\n"
 
 #: misc.c:675
-#, fuzzy
 msgid "Initialized access"
-msgstr "Init"
+msgstr "Indledende adgang"
 
 #: misc.c:754
 msgid "User access"
-msgstr ""
+msgstr "Brugeradgang"
 
 #: misc.c:802
 msgid "Make access"
-msgstr ""
+msgstr "Make-adgang"
 
 #: misc.c:836
 msgid "Child access"
-msgstr ""
+msgstr "Barneadgang"
 
 #: read.c:159
 msgid "Reading makefiles...\n"
@@ -1419,9 +1397,8 @@ msgstr "Filen '%s' findes ikke.\n"
 
 #: remake.c:406
 #, c-format
-msgid ""
-"*** Warning: .LOW_RESOLUTION_TIME file `%s' has a high resolution time stamp"
-msgstr ""
+msgid "*** Warning: .LOW_RESOLUTION_TIME file `%s' has a high resolution time stamp"
+msgstr "*** Advarsel: .LOW_RESOLUTION_TIME-fil '%s' har et tidsstempel med høj opløsning"
 
 #: remake.c:419 remake.c:872
 #, c-format
@@ -1464,9 +1441,9 @@ msgid "Target `%s' not remade because of errors."
 msgstr "Målet '%s' ikke genskabt på grund af fejl."
 
 #: remake.c:606
-#, fuzzy, c-format
+#, c-format
 msgid "Prerequisite `%s' is order-only for target `%s'.\n"
-msgstr "Forudsætningen '%s' er ældre end målet '%s'.\n"
+msgstr "Forudsætningen '%s' angiver kun rækkefølgen ift. målet '%s'.\n"
 
 #: remake.c:611
 #, c-format
@@ -1496,7 +1473,7 @@ msgstr "Ingen kommandoer til '%s' og ingen forudsætninger er ændrede.\n"
 #: remake.c:649
 #, c-format
 msgid "Making `%s' due to always-make flag.\n"
-msgstr ""
+msgstr "Skaber '%s' pga. \"always-make\"-flag.\n"
 
 #: remake.c:657
 #, c-format
@@ -1549,14 +1526,14 @@ msgid "%sNo rule to make target `%s', needed by `%s'%s"
 msgstr "%sIngen regel til at skabe mål '%s' som behøves af '%s'%s"
 
 #: remake.c:1227
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: File `%s' has modification time in the future"
-msgstr "*** Advarsel: Ændringstiden for filen '%s' er i fremtiden (%s > %s)"
+msgstr "Advarsel: Ændringstiden for filen '%s' er i fremtiden"
 
 #: remake.c:1234
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: File `%s' has modification time %.2g s in the future"
-msgstr "*** Advarsel: Ændringstiden for filen '%s' er i fremtiden (%s > %s)"
+msgstr "Advarsel: Ændringstiden for filen '%s' er %.2g s i fremtiden"
 
 #: remake.c:1355
 #, c-format
@@ -1572,13 +1549,12 @@ msgid "Customs won't export: %s\n"
 msgstr "Customs kan ikke eksporteres: %s\n"
 
 #: rule.c:657
-#, fuzzy
 msgid ""
 "\n"
 "# Implicit Rules"
 msgstr ""
 "\n"
-"# Ingen implicitte regler."
+"# Implicitte regler."
 
 #: rule.c:672
 msgid ""
@@ -1818,14 +1794,13 @@ msgid "automatic"
 msgstr "automatisk"
 
 #: variable.c:1167
-#, fuzzy, c-format
+#, c-format
 msgid " (from `%s', line %lu)"
-msgstr " (fra '%s', linje %lu):\n"
+msgstr " (fra '%s', linje %lu)"
 
 #: variable.c:1211
-#, fuzzy
 msgid "# variable set hash-table stats:\n"
-msgstr "# %u variabler i %u hash-spande.\n"
+msgstr "# Statistik for variabelsæt-hash-spande:\n"
 
 #: variable.c:1222
 msgid ""
@@ -1899,53 +1874,8 @@ msgstr ""
 #~ msgid "# average %.3f files per bucket, max %u files in one bucket.\n"
 #~ msgstr "# %.3f filer per spand i gennemsnit, maks. %u filer i en spand.\n"
 
-#~ msgid "DIRECTORY"
-#~ msgstr "KATALOG"
-
-#~ msgid "Change to DIRECTORY before doing anything"
-#~ msgstr "Skift allerførst til KATALOG"
-
-#~ msgid "FLAGS"
-#~ msgstr "FLAG"
-
 #~ msgid "Suspend process to allow a debugger to attach"
 #~ msgstr "Stands proces for at tillade et fejlsøgningsprogram at hænge sig på"
-
-#~ msgid "Environment variables override makefiles"
-#~ msgstr "Miljøvariable har forrang for makefiler"
-
-#~ msgid "FILE"
-#~ msgstr "FIL"
-
-#~ msgid "Read FILE as a makefile"
-#~ msgstr "Læs FIL som makefil"
-
-#~ msgid "Search DIRECTORY for included makefiles"
-#~ msgstr "Søg i KATALOG efter inkluderede makefiler"
-
-#~ msgid "Don't start multiple jobs unless load is below N"
-#~ msgstr "Start ikke flere job med mindre belastningen er under N"
-
-#~ msgid "Don't actually run any commands; just print them"
-#~ msgstr "Udfør ikke nogen kommandoer; udskriv dem bare"
-
-#~ msgid "Consider FILE to be very old and don't remake it"
-#~ msgstr "Anse FIL som værende meget gammel og genskab den ikke"
-
-#~ msgid "Don't echo commands"
-#~ msgstr "Udskriv ikke kommander"
-
-#~ msgid "Turns off -k"
-#~ msgstr "Slå -k fra"
-
-#~ msgid "Consider FILE to be infinitely new"
-#~ msgstr "Anse FIL som værende nyskabt"
-
-#~ msgid "Entering"
-#~ msgstr "Går til"
-
-#~ msgid "Leaving"
-#~ msgstr "Forlader"
 
 #~ msgid "# No variables."
 #~ msgstr "# Ingen variabler."

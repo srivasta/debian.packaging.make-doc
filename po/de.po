@@ -199,9 +199,9 @@ msgid " so far."
 msgstr " bisher."
 
 #: dir.c:1079
-#, fuzzy, c-format
+#, c-format
 msgid " impossibilities in %lu directories.\n"
-msgstr " Unmöglichkeiten in %u Verzeichnissen.\n"
+msgstr " Unmöglichkeiten in %lu Verzeichnissen.\n"
 
 #: expand.c:110
 #, c-format
@@ -260,9 +260,8 @@ msgid "*** Deleting intermediate file `%s'"
 msgstr "*** Löschen der Zwischendatei »%s«"
 
 #: file.c:379
-#, fuzzy
 msgid "Removing intermediate files...\n"
-msgstr "*** Löschen der Zwischendatei »%s«"
+msgstr "Löschen der Zwischendateien...\n"
 
 #: file.c:558
 #, c-format
@@ -381,6 +380,9 @@ msgid ""
 "# files hash-table stats:\n"
 "# "
 msgstr ""
+"\n"
+"# Datei-Hashtable-Statistiken:\n"
+"# "
 
 #: function.c:768
 msgid "non-numeric first argument to `word' function"
@@ -495,22 +497,22 @@ msgstr "%s: Option »-W %s« erlaubt kein Argument\n"
 #: hash.c:56
 #, c-format
 msgid "can't allocate %ld bytes for hash table: memory exhausted"
-msgstr ""
+msgstr "kann keine %ld Bytes für Hashtable bereitstellen: Speicher erschöpft"
 
 #: hash.c:315
 #, c-format
 msgid "Load=%ld/%ld=%.0f%%, "
-msgstr ""
+msgstr "Load=%ld/%ld=%.0f%%, "
 
 #: hash.c:317
 #, c-format
 msgid "Rehash=%d, "
-msgstr ""
+msgstr "Rehash=%d, "
 
 #: hash.c:318
 #, c-format
 msgid "Collisions=%ld/%ld=%.0f%%"
-msgstr ""
+msgstr "Collisions=%ld/%ld=%.0f%%"
 
 #: implicit.c:40
 #, c-format
@@ -627,9 +629,9 @@ msgid "Cleaning up temp batch file %s\n"
 msgstr "Lösche temporäre Stapelverarbeitungsdatei »%s«\n"
 
 #: job.c:732
-#, fuzzy, c-format
+#, c-format
 msgid "Removing child 0x%08lx PID %ld%s from chain.\n"
-msgstr "Entferne Kindprozess 0x%08lx PID %ld %s aus der Kette.\n"
+msgstr "Entferne Kindprozess 0x%08lx PID %ld%s aus der Kette.\n"
 
 #: job.c:788
 msgid "write jobserver"
@@ -781,73 +783,76 @@ msgid "Options:\n"
 msgstr "Optionen:\n"
 
 #: main.c:265
-#, fuzzy
 msgid "  -b, -m                      Ignored for compatibility.\n"
-msgstr "Aus Kompatibilitätsgründen ignoriert"
+msgstr "  -b, -m                      Aus Kompatibilitätsgründen ignoriert.\n"
 
 #: main.c:267
 msgid "  -B, --always-make           Unconditionally make all targets.\n"
-msgstr ""
+msgstr "  -B, --always-make           Mache bedingungslos alle Ziele.\n"
 
 #: main.c:269
 msgid ""
 "  -C DIRECTORY, --directory=DIRECTORY\n"
 "                              Change to DIRECTORY before doing anything.\n"
 msgstr ""
+"  -C VERZEICHNIS, --directory=VERZEICHNIS\n"
+"                              Wechsle in VERZEICHNIS bevor irgendetwas getan wird.\n"
 
 #: main.c:272
-#, fuzzy
 msgid "  -d                          Print lots of debugging information.\n"
-msgstr "Viele Informationen zur Fehlersuche ausgeben"
+msgstr "  -d                          Viele Informationen zur Fehlersuche ausgeben.\n"
 
 #: main.c:274
-#, fuzzy
 msgid ""
 "  --debug[=FLAGS]             Print various types of debugging information.\n"
-msgstr "Verschiedene Arten von Debug-Information ausgeben"
+msgstr ""
+"  --debug[=FLAGS]             Verschiedene Arten von Debug-Information ausgeben.\n"
 
 #: main.c:276
 msgid ""
 "  -e, --environment-overrides\n"
 "                              Environment variables override makefiles.\n"
 msgstr ""
+"  -e, --environment-overrides\n"
+"                              Umgebungsvariablen haben Vorrang vor makefiles.\n"
 
 #: main.c:279
 msgid ""
 "  -f FILE, --file=FILE, --makefile=FILE\n"
 "                              Read FILE as a makefile.\n"
 msgstr ""
+"  -f DATEI, --file=DATEI, --makefile=DATEI\n"
+"                              Lies DATEI als makefile.\n"
 
 #: main.c:282
-#, fuzzy
 msgid "  -h, --help                  Print this message and exit.\n"
-msgstr "Diese Meldung ausgeben und beenden"
+msgstr "  -h, --help                  Diese Meldung ausgeben und beenden.\n"
 
 #: main.c:284
-#, fuzzy
 msgid "  -i, --ignore-errors         Ignore errors from commands.\n"
-msgstr "Fehler in den Befehlen irgnorieren"
+msgstr "  -i, --ignore-errors         Fehler in den Befehlen ignorieren.\n"
 
 #: main.c:286
 msgid ""
 "  -I DIRECTORY, --include-dir=DIRECTORY\n"
 "                              Search DIRECTORY for included makefiles.\n"
 msgstr ""
+"  -I VERZEICHNIS, --include-dir=VERZEICHNIS\n"
+"                              Suche in VERZEICHNIS nach inkludierten makefiles.\n"
 
 #: main.c:289
-#, fuzzy
 msgid ""
 "  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no "
 "arg.\n"
 msgstr ""
-"N Jobs gleichzeitig erlauben; unbegrenzte Anzahl \n"
-"von Jobs ohne Argument"
+"  -j [N], --jobs[=N]          N Jobs gleichzeitig erlauben; unbegrenzte Anzahl \n"
+"von Jobs ohne Argument.\n"
 
 #: main.c:291
-#, fuzzy
 msgid ""
 "  -k, --keep-going            Keep going when some targets can't be made.\n"
-msgstr "Weiterlaufen, auch wenn einige Targets nicht erzeugt werden konnten"
+msgstr ""
+"  -k, --keep-going            Weiterlaufen, auch wenn einige Targets nicht erzeugt werden konnten.\n"
 
 #: main.c:293
 msgid ""
@@ -855,6 +860,9 @@ msgid ""
 "                              Don't start multiple jobs unless load is below "
 "N.\n"
 msgstr ""
+"  -l [N], --load-average[=N], --max-load[=N]\n"
+"                              Bleibe bei nur einem einzigen Job bis die Last "
+"unter N fällt.\n"
 
 #: main.c:296
 msgid ""
@@ -862,6 +870,9 @@ msgid ""
 "                              Don't actually run any commands; just print "
 "them.\n"
 msgstr ""
+"  -n, --just-print, --dry-run, --recon\n"
+"                              Führe die Kommandos nicht wirlich aus; zeige sie "
+"nur an.\n"
 
 #: main.c:299
 msgid ""
@@ -869,79 +880,78 @@ msgid ""
 "                              Consider FILE to be very old and don't remake "
 "it.\n"
 msgstr ""
+"  -o DATEI, --old-file=DATEI, --assume-old=DATEI\n"
+"                              Erachte DATEI als alt und verarbeite sie nicht "
+"von Neuem.\n"
 
 #: main.c:302
-#, fuzzy
 msgid "  -p, --print-data-base       Print make's internal database.\n"
-msgstr "Die interne Datenbank von »make« ausgeben"
+msgstr "  -p, --print-data-base       Die interne Datenbank von »make« ausgeben.\n"
 
 #: main.c:304
-#, fuzzy
 msgid ""
 "  -q, --question              Run no commands; exit status says if up to "
 "date.\n"
 msgstr ""
-"Keine Befehle ausführen; der Exit-Status gibt an, ob die Dateien\n"
-"aktuell sind"
+"  -q, --question              Keine Befehle ausführen; der Exit-Status gibt an, ob die Dateien "
+"aktuell sind.\n"
 
 #: main.c:306
-#, fuzzy
 msgid "  -r, --no-builtin-rules      Disable the built-in implicit rules.\n"
-msgstr "Die eingebauten impliziten Regeln deaktivieren"
+msgstr "  -r, --no-builtin-rules      Die eingebauten impliziten Regeln deaktivieren.\n"
 
 #: main.c:308
-#, fuzzy
 msgid "  -R, --no-builtin-variables  Disable the built-in variable settings.\n"
-msgstr "Die eingebauten Variablenbelegungen deaktivieren"
+msgstr "  -R, --no-builtin-variables  Die eingebauten Variablenbelegungen deaktivieren.\n"
 
 #: main.c:310
 msgid "  -s, --silent, --quiet       Don't echo commands.\n"
-msgstr ""
+msgstr "  -s, --silent, --quiet       Kein Kommando-Echo.\n"
 
 #: main.c:312
 msgid ""
 "  -S, --no-keep-going, --stop\n"
 "                              Turns off -k.\n"
 msgstr ""
+"  -S, --no-keep-going, --stop\n"
+"                              Schaltet -k aus.\n"
 
 #: main.c:315
-#, fuzzy
 msgid "  -t, --touch                 Touch targets instead of remaking them.\n"
-msgstr ""
-"Die Targets werden nur als aktualisiert markiert,\n"
-"nicht tatsächlich erneuert"
+msgstr "  -t, --touch                 Die Targets werden nur als aktualisiert markiert, "
+"nicht tatsächlich erneuert.\n"
 
 #: main.c:317
-#, fuzzy
 msgid ""
 "  -v, --version               Print the version number of make and exit.\n"
-msgstr "Die Versionsnummer von »make« ausgeben und beenden"
+msgstr ""
+"  -v, --version               Die Versionsnummer von »make« ausgeben und beenden.\n"
 
 #: main.c:319
-#, fuzzy
 msgid "  -w, --print-directory       Print the current directory.\n"
-msgstr "Das aktuelle Verzeichnis ausgeben"
+msgstr "  -w, --print-directory       Das aktuelle Verzeichnis ausgeben.\n"
 
 #: main.c:321
-#, fuzzy
 msgid ""
 "  --no-print-directory        Turn off -w, even if it was turned on "
 "implicitly.\n"
-msgstr "-w abschalten, selbst wenn es implizit eingeschaltet wurde"
+msgstr ""
+"  --no-print-directory        -w abschalten, selbst wenn es implizit eingeschaltet wurde.\n"
 
 #: main.c:323
 msgid ""
 "  -W FILE, --what-if=FILE, --new-file=FILE, --assume-new=FILE\n"
 "                              Consider FILE to be infinitely new.\n"
 msgstr ""
+"  -W DATEI, --what-if=DATEI, --new-file=DATEI, --assume-new=DATEI\n"
+"                              Erachte DATEI als unendlich neu.\n"
 
 #: main.c:326
-#, fuzzy
 msgid ""
 "  --warn-undefined-variables  Warn when an undefined variable is "
 "referenced.\n"
 msgstr ""
-"Eine Warnung ausgeben, wenn eine undefinierte Variable referenziert wird"
+"  --warn-undefined-variables  Eine Warnung ausgeben, wenn eine undefinierte Variable referenziert wird.\n"
 
 #: main.c:511
 msgid "empty string invalid as file name"
@@ -1132,6 +1142,8 @@ msgid ""
 "\n"
 "This program built for %s\n"
 msgstr ""
+"\n"
+"Dieses Programm wurde gebaut für %s\n"
 
 #: main.c:2135
 #, c-format
@@ -1139,13 +1151,12 @@ msgid ""
 "\n"
 "This program built for %s (%s)\n"
 msgstr ""
+"\n"
+"Dieses Programm wurde gebaut für %s (%s)\n"
 
 #: main.c:2138
-#, fuzzy
 msgid "Report bugs to <bug-make@gnu.org>\n"
-msgstr ""
-"\n"
-"Fehlermeldungen (auf Englisch) an <bug-make@gnu.org>.\n"
+msgstr "Fehlermeldungen (auf Englisch) an <bug-make@gnu.org>\n"
 
 #: main.c:2259
 #, c-format
@@ -1153,24 +1164,15 @@ msgid "the `-%c' option requires a positive integral argument"
 msgstr "Die Option »-%c« verlangt eine positive ganze Zahl als Argument"
 
 #: main.c:2687
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sThis is free software; see the source for copying conditions.\n"
 "%sThere is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A\n"
 "%sPARTICULAR PURPOSE.\n"
 msgstr ""
-", von Richard Stallman und Roland McGrath.\n"
-"%sErstellt für %s\n"
-"%sCopyright (C) 1988, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 2000\n"
-"%s\tFree Software Foundation, Inc.\n"
-"%sDies ist Freie Software; siehe die Programmquellen für "
-"Vervielfältigungsbedingungen.\n"
-"%sEs gibt KEINE Gewährleistung; nicht einmal für VERMARKTUNG oder "
-"NUTZBARKEIT FÜR EINEN\n"
+"%sDies ist Freie Software; siehe die Programmquellen für Vervielfältigungsbedingungen.\n"
+"%sEs gibt KEINE Gewährleistung; nicht einmal für VERMARKTUNG oder NUTZBARKEIT FÜR EINEN\n"
 "%sBESONDEREN ZWECK.\n"
-"\n"
-"%sFehlermeldungen (auf Englisch) an <bug-make@gnu.org>.\n"
-"\n"
 
 #: main.c:2707
 #, c-format
@@ -1191,48 +1193,48 @@ msgstr ""
 "# »Make«-Datenbank; beendet am: %s\n"
 
 #: main.c:2788
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Entering an unknown directory"
-msgstr "ein unbekanntes Verzeichnis"
+msgstr "%s: Gehe in ein unbekanntes Verzeichnis"
 
 #: main.c:2790
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Leaving an unknown directory"
-msgstr "ein unbekanntes Verzeichnis"
+msgstr "%s: Verlasse ein unbekanntes Verzeichnis"
 
 # !!! Attention: concatenated with the previous messages!!!
 #: main.c:2793
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Entering directory `%s'\n"
-msgstr "»%s«\n"
+msgstr "%s: Gehe in Verzeichnis »%s«\n"
 
 # !!! Attention: concatenated with the previous messages!!!
 #: main.c:2796
-#, fuzzy, c-format
+#, c-format
 msgid "%s: Leaving directory `%s'\n"
-msgstr "»%s«\n"
+msgstr "%s: Verlasse Verzeichnis »%s«\n"
 
 #: main.c:2801
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%u]: Entering an unknown directory"
-msgstr "ein unbekanntes Verzeichnis"
+msgstr "%s[%u]: Gehe in ein unbekanntes Verzeichnis"
 
 #: main.c:2804
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%u]: Leaving an unknown directory"
-msgstr "ein unbekanntes Verzeichnis"
+msgstr "%s[%u]: Verlasse ein unbekanntes Verzeichnis"
 
 # !!! Attention: concatenated with the previous messages!!!
 #: main.c:2808
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%u]: Entering directory `%s'\n"
-msgstr "»%s«\n"
+msgstr "%s[%u]: Gehe in Verzeichnis »%s«\n"
 
 # !!! Attention: concatenated with the previous messages!!!
 #: main.c:2811
-#, fuzzy, c-format
+#, c-format
 msgid "%s[%u]: Leaving directory `%s'\n"
-msgstr "»%s«\n"
+msgstr "%s[%u]: Verlasse Verzeichnis »%s«\n"
 
 #: misc.c:309
 msgid ".  Stop.\n"
@@ -1246,39 +1248,37 @@ msgstr "Unbekannter Fehler %d"
 #: misc.c:342
 #, c-format
 msgid "%s%s: %s"
-msgstr ""
+msgstr "%s%s: %s"
 
 #: misc.c:351
 #, c-format
 msgid "%s: %s"
-msgstr ""
+msgstr "%s: %s"
 
 #: misc.c:371 misc.c:386 misc.c:404 read.c:3094
 msgid "virtual memory exhausted"
 msgstr "Der virtuelle Speicher ist verbraucht"
 
 #: misc.c:654
-#, fuzzy, c-format
+#, c-format
 msgid "%s: user %lu (real %lu), group %lu (real %lu)\n"
-msgstr ""
-"%s Zugriff: Nutzer %lu (tatsächlich %lu), Gruppe %lu (tatsächlich %lu)\n"
+msgstr "%s: Nutzer %lu (tatsächlich %lu), Gruppe %lu (tatsächlich %lu)\n"
 
 #: misc.c:675
-#, fuzzy
 msgid "Initialized access"
-msgstr "Initialisiert"
+msgstr "Initialisierte Zugriff"
 
 #: misc.c:754
 msgid "User access"
-msgstr ""
+msgstr "Benutzerzugriff"
 
 #: misc.c:802
 msgid "Make access"
-msgstr ""
+msgstr "Make-Zugriff"
 
 #: misc.c:836
 msgid "Child access"
-msgstr ""
+msgstr "Kindzugriff"
 
 #: read.c:159
 msgid "Reading makefiles...\n"
@@ -1340,7 +1340,7 @@ msgstr "Es fehlt eine Regel vor den Befehlen"
 
 # Untranslatable because of weird %s usage -ke-
 #: read.c:983
-#, fuzzy, c-format
+#, c-format
 msgid "missing separator%s"
 msgstr "Fehlendes Trennzeichen%s"
 
@@ -1485,6 +1485,7 @@ msgstr "Die Datei »%s« existiert nicht.\n"
 msgid ""
 "*** Warning: .LOW_RESOLUTION_TIME file `%s' has a high resolution time stamp"
 msgstr ""
+"*** Warning: .LOW_RESOLUTION_TIME-Datei »%s« hat einen hochauflösenden Zetistempel"
 
 #: remake.c:419 remake.c:872
 #, c-format
@@ -1527,9 +1528,9 @@ msgid "Target `%s' not remade because of errors."
 msgstr "Das Target »%s« wurde wegen Fehlern nicht aktualisiert."
 
 #: remake.c:606
-#, fuzzy, c-format
+#, c-format
 msgid "Prerequisite `%s' is order-only for target `%s'.\n"
-msgstr "Die Datei »%s« ist älter als das davon abhängige Ziel »%s«.\n"
+msgstr "Vorbedingung »%s« ist order-only für das Ziel »%s«.\n"
 
 #: remake.c:611
 #, c-format
@@ -1565,7 +1566,7 @@ msgstr ""
 #: remake.c:649
 #, c-format
 msgid "Making `%s' due to always-make flag.\n"
-msgstr ""
+msgstr "Mache »%s« aufgrund des »always-make«-Markers"
 
 #: remake.c:657
 #, c-format
@@ -1620,14 +1621,14 @@ msgstr ""
 "  benötigt von »%s«, zu erstellen%s"
 
 #: remake.c:1227
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: File `%s' has modification time in the future"
-msgstr "*** Warnung: Datei »%s« hat zukünftige Änderungszeit (%s > %s)!"
+msgstr "Warnung: Datei »%s« hat zukünftige Änderungszeit"
 
 #: remake.c:1234
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: File `%s' has modification time %.2g s in the future"
-msgstr "*** Warnung: Datei »%s« hat zukünftige Änderungszeit (%s > %s)!"
+msgstr "Warnung: Datei »%s« hat Änderungszeit %.2g s in der Zukunft"
 
 #: remake.c:1355
 #, c-format
@@ -1640,13 +1641,12 @@ msgid "Customs won't export: %s\n"
 msgstr "Customs wird nicht exportieren: %s\n"
 
 #: rule.c:657
-#, fuzzy
 msgid ""
 "\n"
 "# Implicit Rules"
 msgstr ""
 "\n"
-"# Keine impliziten Regeln vorhanden."
+"# Implizite Regeln"
 
 #: rule.c:672
 msgid ""
@@ -1884,14 +1884,13 @@ msgid "automatic"
 msgstr "automatisch"
 
 #: variable.c:1167
-#, fuzzy, c-format
+#, c-format
 msgid " (from `%s', line %lu)"
-msgstr " (aus »%s«, Zeile %lu):\n"
+msgstr " (aus »%s«, Zeile %lu)"
 
 #: variable.c:1211
-#, fuzzy
 msgid "# variable set hash-table stats:\n"
-msgstr "# %u Variablen für %u hash-Werte.\n"
+msgstr "# Variabel gesetzte Hashtable-Statistiken:\n"
 
 #: variable.c:1222
 msgid ""

@@ -6,6 +6,8 @@ AC_PREREQ(2.54)
 
 AC_REVISION([[$Id: configure.in,v 1.114 2002/10/03 05:46:12 psmith Exp $]])
 
+AM_MAINTAINER_MODE
+
 # Autoconf setup
 AC_CONFIG_AUX_DIR(config)
 AC_CONFIG_SRCDIR(vpath.c)

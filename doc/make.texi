@@ -4183,7 +4183,7 @@ from getting implicit commands (from implicit rules or the
 foo: stamp-foo ;
 stamp-foo: foo.in
         create foo frm foo.in
-        touch $@
+        touch $@@
 @end ignore
 
 You may be inclined to define empty command strings for targets that are

@@ -160,6 +160,7 @@ define_variable_in_set (name, length, value, origin, recursive, set, flocp)
   v->per_target = 0;
   v->append = 0;
   v->export = v_default;
+	v->special = 0;
 
   v->exportable = 1;
   if (*name != '_' && (*name < 'A' || *name > 'Z')

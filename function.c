@@ -1281,7 +1281,17 @@ func_eval (o, argv, funcname)
      char **argv;
      const char *funcname;
 {
+  char *buf;
+  unsigned int len;
+
+  /* Eval the buffer.  Pop the current variable buffer setting so that the
+     eval'd code can use its own without conflicting.  */
+
+  install_variable_buffer (&buf, &len);
+
   eval_buffer (argv[0]);
+
+  restore_variable_buffer (buf, len);
 
   return o;
 }

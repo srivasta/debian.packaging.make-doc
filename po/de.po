@@ -871,7 +871,7 @@ msgid ""
 "them.\n"
 msgstr ""
 "  -n, --just-print, --dry-run, --recon\n"
-"                              Führe die Kommandos nicht wirlich aus; zeige sie "
+"                              Führe die Kommandos nicht wirklich aus; zeige sie "
 "nur an.\n"
 
 #: main.c:299
@@ -1485,7 +1485,7 @@ msgstr "Die Datei »%s« existiert nicht.\n"
 msgid ""
 "*** Warning: .LOW_RESOLUTION_TIME file `%s' has a high resolution time stamp"
 msgstr ""
-"*** Warning: .LOW_RESOLUTION_TIME-Datei »%s« hat einen hochauflösenden Zetistempel"
+"*** Warning: .LOW_RESOLUTION_TIME-Datei »%s« hat einen hochauflösenden Zeitstempel"
 
 #: remake.c:419 remake.c:872
 #, c-format

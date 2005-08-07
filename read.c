@@ -271,7 +271,7 @@ read_all_makefiles (makefiles)
 
   return read_makefiles;
 }
-
+
 static int
 eval_makefile (filename, flags)
      char *filename;
@@ -386,11 +386,37 @@ eval_makefile (filename, flags)
   return r;
 }
 
+static struct conditionals *
+install_conditionals (struct conditionals *new)
+{
+  struct conditionals *save = conditionals;
+
+  bzero ((char *) new, sizeof (*new));
+  conditionals = new;
+
+  return save;
+}
+
+static void
+restore_conditionals (struct conditionals *saved)
+{
+  /* Free any space allocated by conditional_line.  */
+  if (conditionals->ignoring)
+    free (conditionals->ignoring);
+  if (conditionals->seen_else)
+    free (conditionals->seen_else);
+
+  /* Restore state.  */
+  conditionals = saved;
+}
+
 int
 eval_buffer (buffer)
      char *buffer;
 {
   struct ebuffer ebuf;
+  struct conditionals *saved;
+  struct conditionals new;
   const struct floc *curfile;
   int r;
 
@@ -405,7 +431,11 @@ eval_buffer (buffer)
   curfile = reading_file;
   reading_file = &ebuf.floc;
 
+  saved = install_conditionals (&new);
+
   r = eval (&ebuf, 1);
+
+  restore_conditionals (saved);
 
   reading_file = curfile;
 

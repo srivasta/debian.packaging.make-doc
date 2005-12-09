@@ -65,7 +65,7 @@ struct file
     short int update_status;	/* Status of the last attempt to update,
 				   or -1 if none has been made.  */
 
-    enum			/* State of the commands.  */
+    enum cmd_state		/* State of the commands.  */
       {		/* Note: It is important that cs_not_started be zero.  */
 	cs_not_started,		/* Not yet started.  */
 	cs_deps_running,	/* Dep commands running.  */
@@ -100,6 +100,7 @@ struct file
 
 
 extern struct file *default_goal_file, *suffix_file, *default_file;
+extern char **default_goal_name;
 
 
 extern struct file *lookup_file PARAMS ((char *name));
@@ -108,7 +109,7 @@ extern void remove_intermediates PARAMS ((int sig));
 extern void snap_deps PARAMS ((void));
 extern void rename_file PARAMS ((struct file *file, char *name));
 extern void rehash_file PARAMS ((struct file *file, char *name));
-extern void set_command_state PARAMS ((struct file *file, int state));
+extern void set_command_state PARAMS ((struct file *file, enum cmd_state state));
 extern void notice_finished_file PARAMS ((struct file *file));
 extern void init_hash_files PARAMS ((void));
 extern char *build_target_list PARAMS ((char *old_list));
@@ -197,3 +198,6 @@ extern FILE_TIMESTAMP f_mtime PARAMS ((struct file *file, int search));
 
 #define check_renamed(file) \
   while ((file)->renamed != 0) (file) = (file)->renamed /* No ; here.  */
+
+/* Have we snapped deps yet?  */
+extern int snapped_deps;

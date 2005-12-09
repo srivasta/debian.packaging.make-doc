@@ -210,6 +210,7 @@ extern unsigned int get_path_max PARAMS ((void));
 #  define __printf__ printf
 # endif
 #endif
+#define UNUSED  __attribute__ ((unused))
 
 #if defined (STDC_HEADERS) || defined (__GNU_LIBRARY__)
 # include <stdlib.h>
@@ -275,15 +276,14 @@ extern void bzero PARAMS ((char *, int));
 extern void bcopy PARAMS ((const char *b1, char *b2, int));
 # endif
 
-#endif  /* ANSI_STRING.  */
-#undef  ANSI_STRING
-
 /* SCO Xenix has a buggy macro definition in <string.h>.  */
 #undef  strerror
-
-#if !defined(ANSI_STRING) && !defined(__DECC)
+#if !defined(__DECC)
 extern char *strerror PARAMS ((int errnum));
 #endif
+
+#endif  /* !ANSI_STRING.  */
+#undef  ANSI_STRING
 
 #if HAVE_INTTYPES_H
 # include <inttypes.h>
@@ -349,15 +349,17 @@ extern int strcmpi (const char *,const char *);
 #define S_(msg1,msg2,num)   ngettext (msg1,msg2,num)
 
 /* Handle other OSs.  */
-
-#if defined(__MSDOS__) || defined(WINDOWS32)
+#if defined(HAVE_DOS_PATHS)
 # define PATH_SEPARATOR_CHAR ';'
+#elif defined(VMS)
+# define PATH_SEPARATOR_CHAR ','
 #else
-# if defined(VMS)
-#  define PATH_SEPARATOR_CHAR ','
-# else
-#  define PATH_SEPARATOR_CHAR ':'
-# endif
+# define PATH_SEPARATOR_CHAR ':'
+#endif
+
+/* This is needed for getcwd() and chdir().  */
+#if defined(_MSC_VER) || defined(__BORLANDC__)
+# include <direct.h>
 #endif
 
 #ifdef WINDOWS32
@@ -368,7 +370,6 @@ extern int strcmpi (const char *,const char *);
 
 extern void sync_Path_environment(void);
 extern int kill(int pid, int sig);
-extern int safe_stat(char *file, struct stat *sb);
 extern char *end_of_token_w32(char *s, char stopchar);
 extern int find_and_set_default_shell(char *token);
 
@@ -389,9 +390,16 @@ struct floc
 #define STRING_SIZE_TUPLE(_s) (_s), (sizeof (_s)-1)
 
 
-/* Fancy processing for variadic functions in both ANSI and pre-ANSI
-   compilers.  */
-#if defined __STDC__ && __STDC__
+/* We have to have stdarg.h or varargs.h AND v*printf or doprnt to use
+   variadic versions of these functions.  */
+
+#if HAVE_STDARG_H || HAVE_VARARGS_H
+# if HAVE_VPRINTF || HAVE_DOPRNT
+#  define USE_VARIADIC 1
+# endif
+#endif
+
+#if HAVE_ANSI_COMPILER && USE_VARIADIC && HAVE_STDARG_H
 extern void message (int prefix, const char *fmt, ...)
                      __attribute__ ((__format__ (__printf__, 2, 3)));
 extern void error (const struct floc *flocp, const char *fmt, ...)
@@ -415,15 +423,11 @@ extern char *xrealloc PARAMS ((char *, unsigned int));
 extern char *xstrdup PARAMS ((const char *));
 extern char *find_next_token PARAMS ((char **, unsigned int *));
 extern char *next_token PARAMS ((const char *));
-extern char *end_of_token PARAMS ((char *));
+extern char *end_of_token PARAMS ((const char *));
 extern void collapse_continuations PARAMS ((char *));
-extern void remove_comments PARAMS((char *));
-extern char *sindex PARAMS ((const char *, unsigned int, \
-                             const char *, unsigned int));
 extern char *lindex PARAMS ((const char *, const char *, int));
 extern int alpha_compare PARAMS ((const void *, const void *));
 extern void print_spaces PARAMS ((unsigned int));
-extern char *find_char_unquote PARAMS ((char *, int, int, int));
 extern char *find_percent PARAMS ((char *));
 extern FILE *open_tmpfile PARAMS ((char **, const char *));
 
@@ -449,13 +453,18 @@ extern void install_default_implicit_rules PARAMS ((void));
 extern void build_vpath_lists PARAMS ((void));
 extern void construct_vpath_list PARAMS ((char *pattern, char *dirpath));
 extern int vpath_search PARAMS ((char **file, FILE_TIMESTAMP *mtime_ptr));
-extern int gpath_search PARAMS ((char *file, int len));
+extern int gpath_search PARAMS ((char *file, unsigned int len));
 
 extern void construct_include_path PARAMS ((char **arg_dirs));
 
 extern void user_access PARAMS ((void));
 extern void make_access PARAMS ((void));
 extern void child_access PARAMS ((void));
+
+extern void close_stdout PARAMS ((void));
+
+extern char *strip_whitespace PARAMS ((const char **begpp, const char **endpp));
+
 
 #ifdef  HAVE_VFORK_H
 # include <vfork.h>
@@ -476,7 +485,7 @@ extern long int lseek ();
 #ifdef  HAVE_GETCWD
 # if !defined(VMS) && !defined(__DECC)
 extern char *getcwd ();
-#endif
+# endif
 #else
 extern char *getwd ();
 # define getcwd(buf, len)       getwd (buf)
@@ -489,9 +498,9 @@ extern char **environ;
 extern int just_print_flag, silent_flag, ignore_errors_flag, keep_going_flag;
 extern int print_data_base_flag, question_flag, touch_flag, always_make_flag;
 extern int env_overrides, no_builtin_rules_flag, no_builtin_variables_flag;
-extern int print_version_flag, print_directory_flag;
+extern int print_version_flag, print_directory_flag, check_symlink_flag;
 extern int warn_undefined_variables_flag, posix_pedantic, not_parallel;
-extern int clock_skew_detected;
+extern int clock_skew_detected, rebuilding_makefiles;
 
 /* can we run commands via 'sh -c xxx' or must we use batch files? */
 extern int batch_mode_shell;
@@ -508,7 +517,7 @@ extern int max_load_average;
 extern char *program;
 extern char *starting_directory;
 extern unsigned int makelevel;
-extern char *version_string, *remote_description;
+extern char *version_string, *remote_description, *make_host;
 
 extern unsigned int commands_started;
 
@@ -538,25 +547,59 @@ extern int handling_fatal_signal;
 #include <dmalloc.h>
 #endif
 
-
-/* If we have broken SA_RESTART support, then wrap stat() and readdir() with
-   versions that handle EINTR.  Note that there are still plenty of system
-   calls that can fail with EINTR but this, reportedly, gets the vast
-   majority of failure cases.  If you still experience failures you'll need
-   to either get a system where SA_RESTART works, or you need to avoid -j.  */
-
-#ifdef HAVE_BROKEN_RESTART
-
-/* Here we make an assumption that a system with a broken SA_RESTART has
-   dirent.h.  Right now the only system I know of in this category is PTX, and
-   it does have dirent.h.
-*/
-#include <dirent.h>
-
-#define stat(_f,_b)     atomic_stat ((_f), (_b))
-#define readdir(_d)     atomic_readdir (_d)
-
-extern int atomic_stat PARAMS ((const char *file, struct stat *buf));
-extern struct dirent *atomic_readdir PARAMS ((DIR *dir));
-
+#ifndef initialize_main
+# ifdef __EMX__
+#  define initialize_main(pargc, pargv) \
+                          { _wildcard(pargc, pargv); _response(pargc, pargv); }
+# else
+#  define initialize_main(pargc, pargv)
+# endif
 #endif
+
+
+#ifdef __EMX__
+# if !HAVE_STRCASECMP
+#  define strcasecmp stricmp
+# endif
+
+# if !defined chdir
+#  define chdir _chdir2
+# endif
+# if !defined getcwd
+#  define getcwd _getcwd2
+# endif
+
+/* NO_CHDIR2 causes make not to use _chdir2() and _getcwd2() instead of
+   chdir() and getcwd(). This avoids some error messages for the
+   make testsuite but restricts the drive letter support. */
+# ifdef NO_CHDIR2
+#  warning NO_CHDIR2: usage of drive letters restricted
+#  undef chdir
+#  undef getcwd
+# endif
+#endif
+
+#ifndef initialize_main
+# define initialize_main(pargc, pargv)
+#endif
+
+
+/* Some systems (like Solaris, PTX, etc.) do not support the SA_RESTART flag
+   properly according to POSIX.  So, we try to wrap common system calls with
+   checks for EINTR.  Note that there are still plenty of system calls that
+   can fail with EINTR but this, reportedly, gets the vast majority of
+   failure cases.  If you still experience failures you'll need to either get
+   a system where SA_RESTART works, or you need to avoid -j.  */
+
+#define EINTRLOOP(_v,_c)   while (((_v)=_c)==-1 && errno==EINTR)
+
+/* While system calls that return integers are pretty consistent about
+   returning -1 on failure and setting errno in that case, functions that
+   return pointers are not always so well behaved.  Sometimes they return
+   NULL for expected behavior: one good example is readdir() which returns
+   NULL at the end of the directory--and _doesn't_ reset errno.  So, we have
+   to do it ourselves here.  */
+
+#define ENULLLOOP(_v,_c)   do{ errno = 0; \
+                               while (((_v)=_c)==0 && errno==EINTR); }while(0)
+

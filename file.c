@@ -31,26 +31,31 @@ Boston, MA 02111-1307, USA.  */
 #include "hash.h"
 
 
+/* Remember whether snap_deps has been invoked: we need this to be sure we
+   don't add new rules (via $(eval ...)) afterwards.  In the future it would
+   be nice to support this, but it means we'd need to re-run snap_deps() or
+   at least its functionality... it might mean changing snap_deps() to be run
+   per-file, so we can invoke it after the eval... or remembering which files
+   in the hash have been snapped (a new boolean flag?) and having snap_deps()
+   only work on files which have not yet been snapped. */
+int snapped_deps = 0;
+
 /* Hash table of files the makefile knows how to make.  */
 
 static unsigned long
-file_hash_1 (key)
-    const void *key;
+file_hash_1 (const void *key)
 {
   return_ISTRING_HASH_1 (((struct file const *) key)->hname);
 }
 
 static unsigned long
-file_hash_2 (key)
-    const void *key;
+file_hash_2 (const void *key)
 {
   return_ISTRING_HASH_2 (((struct file const *) key)->hname);
 }
 
 static int
-file_hash_cmp (x, y)
-    const void *x;
-    const void *y;
+file_hash_cmp (const void *x, const void *y)
 {
   return_ISTRING_COMPARE (((struct file const *) x)->hname,
 			  ((struct file const *) y)->hname);
@@ -70,8 +75,7 @@ static int all_secondary = 0;
    enter_file   similar, but create one if there is none.  */
 
 struct file *
-lookup_file (name)
-     char *name;
+lookup_file (char *name)
 {
   register struct file *f;
   struct file file_key;
@@ -128,8 +132,7 @@ lookup_file (name)
 }
 
 struct file *
-enter_file (name)
-     char *name;
+enter_file (char *name)
 {
   register struct file *f;
   register struct file *new;
@@ -195,9 +198,7 @@ enter_file (name)
    and possibly merged with an existing file called NAME.  */
 
 void
-rename_file (from_file, to_hname)
-     register struct file *from_file;
-     char *to_hname;
+rename_file (struct file *from_file, char *to_hname)
 {
   rehash_file (from_file, to_hname);
   while (from_file)
@@ -212,9 +213,7 @@ rename_file (from_file, to_hname)
    and possibly merged with an existing file called NAME.  */
 
 void
-rehash_file (from_file, to_hname)
-     register struct file *from_file;
-     char *to_hname;
+rehash_file (struct file *from_file, char *to_hname)
 {
   struct file file_key;
   struct file **file_slot;
@@ -333,8 +332,7 @@ rehash_file (from_file, to_hname)
    the message will go to stderr rather than stdout.  */
 
 void
-remove_intermediates (sig)
-     int sig;
+remove_intermediates (int sig)
 {
   register struct file **file_slot;
   register struct file **file_end;
@@ -353,6 +351,10 @@ remove_intermediates (sig)
     if (! HASH_VACANT (*file_slot))
       {
 	register struct file *f = *file_slot;
+        /* Is this file eligible for automatic deletion?
+           Yes, IFF: it's marked intermediate, it's not secondary, it wasn't
+           given on the command-line, and it's either a -include makefile or
+           it's not precious.  */
 	if (f->intermediate && (f->dontcare || !f->precious)
 	    && !f->secondary && !f->cmd_target)
 	  {
@@ -403,6 +405,128 @@ remove_intermediates (sig)
     }
 }
 
+/* Set the intermediate flag.  */
+
+static void
+set_intermediate (const void *item)
+{
+  struct file *f = (struct file *) item;
+  f->intermediate = 1;
+}
+
+/* Expand and parse each dependency line. */
+static void
+expand_deps (struct file *f)
+{
+  struct dep *d, *d1;
+  struct dep *new = 0;
+  struct dep *old = f->deps;
+  unsigned int last_dep_has_cmds = f->updating;
+  int initialized = 0;
+
+  f->updating = 0;
+  f->deps = 0;
+
+  for (d = old; d != 0; d = d->next)
+    {
+      if (d->name != 0)
+        {
+          char *p;
+
+          /* If we need a second expansion on these, set up the file
+             variables, etc.  It takes a lot of extra memory and processing
+             to do this, so only do it if it's needed.  */
+          if (! d->need_2nd_expansion)
+            p = d->name;
+          else
+            {
+              /* We are going to do second expansion so initialize file
+                 variables for the file. */
+              if (!initialized)
+                {
+                  initialize_file_variables (f, 0);
+                  initialized = 1;
+                }
+
+              set_file_variables (f);
+
+              p = variable_expand_for_file (d->name, f);
+            }
+
+          /* Parse the dependencies.  */
+          new = (struct dep *)
+            multi_glob (
+              parse_file_seq (&p, '|', sizeof (struct dep), 1),
+              sizeof (struct dep));
+
+          if (*p)
+            {
+              /* Files that follow '|' are special prerequisites that
+                 need only exist in order to satisfy the dependency.
+                 Their modification times are irrelevant.  */
+              struct dep **d_ptr;
+
+              for (d_ptr = &new; *d_ptr; d_ptr = &(*d_ptr)->next)
+                ;
+              ++p;
+
+              *d_ptr = (struct dep *)
+                multi_glob (
+                  parse_file_seq (&p, '\0', sizeof (struct dep), 1),
+                  sizeof (struct dep));
+
+              for (d1 = *d_ptr; d1 != 0; d1 = d1->next)
+                d1->ignore_mtime = 1;
+            }
+
+          /* Enter them as files. */
+          for (d1 = new; d1 != 0; d1 = d1->next)
+            {
+              d1->file = lookup_file (d1->name);
+              if (d1->file == 0)
+                d1->file = enter_file (d1->name);
+              else
+                free (d1->name);
+              d1->name = 0;
+              d1->need_2nd_expansion = 0;
+            }
+
+          /* Add newly parsed deps to f->deps. If this is the last
+             dependency line and this target has commands then put
+             it in front so the last dependency line (the one with
+             commands) ends up being the first. This is important
+             because people expect $< to hold first prerequisite
+             from the rule with commands. If it is not the last
+             dependency line or the rule does not have commands
+             then link it at the end so it appears in makefile
+             order.  */
+
+          if (new != 0)
+            {
+              if (d->next == 0 && last_dep_has_cmds)
+                {
+                  struct dep **d_ptr;
+                  for (d_ptr = &new; *d_ptr; d_ptr = &(*d_ptr)->next)
+                    ;
+
+                  *d_ptr = f->deps;
+                  f->deps = new;
+                }
+              else
+                {
+                  struct dep **d_ptr;
+                  for (d_ptr = &f->deps; *d_ptr; d_ptr = &(*d_ptr)->next)
+                    ;
+
+                  *d_ptr = new;
+                }
+            }
+        }
+    }
+
+  free_ns_chain ((struct nameseq *) old);
+}
+
 /* For each dependency of each file, make the `struct dep' point
    at the appropriate `struct file' (which may have to be created).
 
@@ -410,33 +534,34 @@ remove_intermediates (sig)
    and various other special targets.  */
 
 void
-snap_deps ()
+snap_deps (void)
 {
-  register struct file *f;
-  register struct file *f2;
-  register struct dep *d;
-  register struct file **file_slot_0;
-  register struct file **file_slot;
-  register struct file **file_end;
+  struct file *f;
+  struct file *f2;
+  struct dep *d;
+  struct file **file_slot_0;
+  struct file **file_slot;
+  struct file **file_end;
 
-  /* Enter each dependency name as a file.  */
+  /* Perform second expansion and enter each dependency
+     name as a file. */
+
+  /* Expand .SUFFIXES first; it's dependencies are used for
+     $$* calculation. */
+  for (f = lookup_file (".SUFFIXES"); f != 0; f = f->prev)
+    expand_deps (f);
+
   /* We must use hash_dump (), because within this loop
      we might add new files to the table, possibly causing
      an in-situ table expansion.  */
   file_slot_0 = (struct file **) hash_dump (&files, 0, 0);
   file_end = file_slot_0 + files.ht_fill;
   for (file_slot = file_slot_0; file_slot < file_end; file_slot++)
-    for (f2 = *file_slot; f2 != 0; f2 = f2->prev)
-      for (d = f2->deps; d != 0; d = d->next)
-	if (d->name != 0)
-	  {
-	    d->file = lookup_file (d->name);
-	    if (d->file == 0)
-	      d->file = enter_file (d->name);
-	    else
-	      free (d->name);
-	    d->name = 0;
-	  }
+    for (f = *file_slot; f != 0; f = f->prev)
+      {
+        if (strcmp (f->name, ".SUFFIXES") != 0)
+          expand_deps (f);
+      }
   free (file_slot_0);
 
   for (f = lookup_file (".PRECIOUS"); f != 0; f = f->prev)
@@ -453,8 +578,9 @@ snap_deps ()
     for (d = f->deps; d != 0; d = d->next)
       for (f2 = d->file; f2 != 0; f2 = f2->prev)
 	{
-	  /* Mark this file as phony and nonexistent.  */
+	  /* Mark this file as phony nonexistent target.  */
 	  f2->phony = 1;
+          f2->is_target = 1;
 	  f2->last_mtime = NONEXISTENT_MTIME;
 	  f2->mtime_before_update = NONEXISTENT_MTIME;
 	}
@@ -484,7 +610,10 @@ snap_deps ()
             f2->intermediate = f2->secondary = 1;
       /* .SECONDARY with no deps listed marks *all* files that way.  */
       else
-        all_secondary = 1;
+        {
+          all_secondary = 1;
+          hash_map (&files, set_intermediate);
+        }
     }
 
   f = lookup_file (".EXPORT_ALL_VARIABLES");
@@ -520,14 +649,15 @@ snap_deps ()
   f = lookup_file (".NOTPARALLEL");
   if (f != 0 && f->is_target)
     not_parallel = 1;
+
+  /* Remember that we've done this. */
+  snapped_deps = 1;
 }
 
 /* Set the `command_state' member of FILE and all its `also_make's.  */
 
 void
-set_command_state (file, state)
-     struct file *file;
-     int state;
+set_command_state (struct file *file, enum cmd_state state)
 {
   struct dep *d;
 
@@ -540,10 +670,7 @@ set_command_state (file, state)
 /* Convert an external file timestamp to internal form.  */
 
 FILE_TIMESTAMP
-file_timestamp_cons (fname, s, ns)
-     char const *fname;
-     time_t s;
-     int ns;
+file_timestamp_cons (const char *fname, time_t s, int ns)
 {
   int offset = ORDINARY_MTIME_MIN + (FILE_TIMESTAMP_HI_RES ? ns : 0);
   FILE_TIMESTAMP product = (FILE_TIMESTAMP) s << FILE_TIMESTAMP_LO_BITS;
@@ -565,8 +692,7 @@ file_timestamp_cons (fname, s, ns)
 /* Return the current time as a file timestamp, setting *RESOLUTION to
    its resolution.  */
 FILE_TIMESTAMP
-file_timestamp_now (resolution)
-     int *resolution;
+file_timestamp_now (int *resolution)
 {
   int r;
   time_t s;
@@ -606,7 +732,9 @@ file_timestamp_now (resolution)
   s = time ((time_t *) 0);
   ns = 0;
 
+#if FILE_TIMESTAMP_HI_RES
  got_time:
+#endif
   *resolution = r;
   return file_timestamp_cons (0, s, ns);
 }
@@ -614,9 +742,7 @@ file_timestamp_now (resolution)
 /* Place into the buffer P a printable representation of the file
    timestamp TS.  */
 void
-file_timestamp_sprintf (p, ts)
-     char *p;
-     FILE_TIMESTAMP ts;
+file_timestamp_sprintf (char *p, FILE_TIMESTAMP ts)
 {
   time_t t = FILE_TIMESTAMP_S (ts);
   struct tm *tm = localtime (&t);
@@ -648,9 +774,9 @@ file_timestamp_sprintf (p, ts)
 /* Print the data base of files.  */
 
 static void
-print_file (f)
-     struct file *f;
+print_file (const void *item)
 {
+  struct file *f = (struct file *) item;
   struct dep *d;
   struct dep *ood = 0;
 
@@ -684,7 +810,7 @@ print_file (f)
   if (f->cmd_target)
     puts (_("#  Command-line target."));
   if (f->dontcare)
-    puts (_("#  A default or MAKEFILES makefile."));
+    puts (_("#  A default, MAKEFILES, or -include/sinclude makefile."));
   puts (f->tried_implicit
         ? _("#  Implicit rule search has been done.")
         : _("#  Implicit rule search has not been done."));
@@ -756,10 +882,13 @@ print_file (f)
 
   if (f->cmds != 0)
     print_commands (f->cmds);
+
+  if (f->prev)
+    print_file ((const void *) f->prev);
 }
 
 void
-print_file_data_base ()
+print_file_data_base (void)
 {
   puts (_("\n# Files"));
 
@@ -772,8 +901,7 @@ print_file_data_base ()
 #define EXPANSION_INCREMENT(_l)  ((((_l) / 500) + 1) * 500)
 
 char *
-build_target_list (value)
-     char *value;
+build_target_list (char *value)
 {
   static unsigned long last_targ_count = 0;
 
@@ -819,7 +947,7 @@ build_target_list (value)
 }
 
 void
-init_hash_files ()
+init_hash_files (void)
 {
   hash_init (&files, 1000, file_hash_1, file_hash_2, file_hash_cmp);
 }

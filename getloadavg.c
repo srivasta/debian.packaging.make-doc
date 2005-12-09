@@ -355,7 +355,7 @@ extern int errno;
 
 /* LOAD_AVE_TYPE should only get defined if we're going to use the
    nlist method.  */
-# if !defined(LOAD_AVE_TYPE) && (defined(BSD) || defined(LDAV_CVT) || defined(KERNEL_FILE) || defined(LDAV_SYMBOL))
+# if !defined(LOAD_AVE_TYPE) && (defined(BSD) || defined(LDAV_CVT) || defined(KERNEL_FILE) || defined(LDAV_SYMBOL)) && !defined(__riscos__)
 #  define LOAD_AVE_TYPE double
 # endif
 
@@ -498,9 +498,7 @@ static kvm_t *kd;
    or -1 if an error occurred.  */
 
 int
-getloadavg (loadavg, nelem)
-     double loadavg[];
-     int nelem;
+getloadavg (double loadavg[], int nelem)
 {
   int elem = 0;			/* Return value.  */
 
@@ -994,9 +992,7 @@ getloadavg (loadavg, nelem)
 #include "make.h"
 
 int
-main (argc, argv)
-     int argc;
-     char **argv;
+main (int argc, char **argv)
 {
   int naptime = 0;
 

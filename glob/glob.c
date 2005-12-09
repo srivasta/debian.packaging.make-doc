@@ -299,11 +299,8 @@ static int glob_in_dir __P ((const char *pattern, const char *directory,
 static int prefix_array __P ((const char *prefix, char **array, size_t n));
 static int collated_compare __P ((const __ptr_t, const __ptr_t));
 
-#ifdef VMS
-/* these compilers like prototypes */
 #if !defined _LIBC || !defined NO_GLOB_PATTERN_P
-int __glob_pattern_p (const char *pattern, int quote);
-#endif
+int __glob_pattern_p __P ((const char *pattern, int quote));
 #endif
 
 /* Find the end of the sub-pattern in a brace expression.  We define
@@ -1303,7 +1300,7 @@ glob_in_dir (pattern, directory, flags, errfunc, pglob)
 	    {
 	      int fnm_flags = ((!(flags & GLOB_PERIOD) ? FNM_PERIOD : 0)
 			       | ((flags & GLOB_NOESCAPE) ? FNM_NOESCAPE : 0)
-#if defined _AMIGA || defined VMS
+#if defined HAVE_CASE_INSENSITIVE_FS
 				   | FNM_CASEFOLD
 #endif
 				   );

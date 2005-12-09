@@ -51,14 +51,6 @@ unsigned int max_pattern_deps;
 
 unsigned int max_pattern_dep_length;
 
-/* Chain of all pattern-specific variables.  */
-
-static struct pattern_var *pattern_vars;
-
-/* Pointer to last struct in the chain, so we can add onto the end.  */
-
-static struct pattern_var *last_pattern_var;
-
 /* Pointer to structure for the file .SUFFIXES
    whose dependencies are the suffixes to be searched.  */
 
@@ -74,10 +66,10 @@ unsigned int maxsuffix;
    completely when appropriate.  */
 
 void
-count_implicit_rule_limits ()
+count_implicit_rule_limits (void)
 {
   char *name;
-  unsigned int namelen;
+  int namelen;
   register struct rule *rule, *lastrule;
 
   num_pattern_rules = max_pattern_targets = max_pattern_deps = 0;
@@ -143,20 +135,6 @@ count_implicit_rule_limits ()
 		 nonexistent subdirectory.  */
 
 	      dep->changed = !dir_file_exists_p (name, "");
-#ifdef VMS
-              if (dep->changed && strchr (name, ':') != 0)
-#else
-	      if (dep->changed && *name == '/')
-#endif
-		{
-		  /* The name is absolute and the directory does not exist.
-		     This rule can never possibly match, since this dependency
-		     can never possibly exist.  So just remove the rule from
-		     the list.  */
-		  freerule (rule, lastrule);
-		  --num_pattern_rules;
-		  goto end_main_loop;
-		}
 	    }
 	  else
 	    /* This dependency does not reside in a subdirectory.  */
@@ -167,7 +145,6 @@ count_implicit_rule_limits ()
 	max_pattern_deps = ndeps;
 
       lastrule = rule;
-    end_main_loop:
       rule = next;
     }
 
@@ -182,9 +159,7 @@ count_implicit_rule_limits ()
    If SOURCE is nil, it means there should be no deps.  */
 
 static void
-convert_suffix_rule (target, source, cmds)
-     char *target, *source;
-     struct commands *cmds;
+convert_suffix_rule (char *target, char *source, struct commands *cmds)
 {
   char *targname, *targpercent, *depname;
   char **names, **percents;
@@ -231,6 +206,7 @@ convert_suffix_rule (target, source, cmds)
       deps->next = 0;
       deps->name = depname;
       deps->ignore_mtime = 0;
+      deps->need_2nd_expansion = 0;
     }
 
   create_pattern_rule (names, percents, 0, deps, cmds, 0);
@@ -241,7 +217,7 @@ convert_suffix_rule (target, source, cmds)
    are converted and added to the chain of pattern rules.  */
 
 void
-convert_to_pattern ()
+convert_to_pattern (void)
 {
   register struct dep *d, *d2;
   register struct file *f;
@@ -310,9 +286,7 @@ convert_to_pattern ()
    list.  Return nonzero if RULE is used; zero if not.  */
 
 int
-new_pattern_rule (rule, override)
-     register struct rule *rule;
-     int override;
+new_pattern_rule (struct rule *rule, int override)
 {
   register struct rule *r, *lastrule;
   register unsigned int i, j;
@@ -387,9 +361,7 @@ new_pattern_rule (rule, override)
    TERMINAL specifies what the `terminal' field of the rule should be.  */
 
 void
-install_pattern_rule (p, terminal)
-     struct pspec *p;
-     int terminal;
+install_pattern_rule (struct pspec *p, int terminal)
 {
   register struct rule *r;
   char *ptr;
@@ -439,8 +411,7 @@ install_pattern_rule (p, terminal)
    points to RULE.  */
 
 static void
-freerule (rule, lastrule)
-     register struct rule *rule, *lastrule;
+freerule (struct rule *rule, struct rule *lastrule)
 {
   struct rule *next = rule->next;
   register unsigned int i;
@@ -501,13 +472,9 @@ freerule (rule, lastrule)
    it may be freed.  */
 
 void
-create_pattern_rule (targets, target_percents,
-		     terminal, deps, commands, override)
-     char **targets, **target_percents;
-     int terminal;
-     struct dep *deps;
-     struct commands *commands;
-     int override;
+create_pattern_rule (char **targets, char **target_percents,
+		     int terminal, struct dep *deps,
+                     struct commands *commands, int override)
 {
   register struct rule *r = (struct rule *) xmalloc (sizeof (struct rule));
   register unsigned int max_targets, i;
@@ -548,83 +515,10 @@ create_pattern_rule (targets, target_percents,
     r->terminal = terminal;
 }
 
-/* Create a new pattern-specific variable struct.  */
-
-struct pattern_var *
-create_pattern_var (target, suffix)
-     char *target, *suffix;
-{
-  register struct pattern_var *p = 0;
-  unsigned int len = strlen(target);
-
-  /* Look to see if this pattern already exists in the list.  */
-  for (p = pattern_vars; p != NULL; p = p->next)
-    if (p->len == len && !strcmp(p->target, target))
-      break;
-
-  if (p == 0)
-    {
-      p = (struct pattern_var *) xmalloc (sizeof (struct pattern_var));
-      if (last_pattern_var != 0)
-        last_pattern_var->next = p;
-      else
-        pattern_vars = p;
-      last_pattern_var = p;
-      p->next = 0;
-      p->target = target;
-      p->len = len;
-      p->suffix = suffix + 1;
-      p->vars = create_new_variable_set();
-    }
-
-  return p;
-}
-
-/* Look up a target in the pattern-specific variable list.  */
-
-struct pattern_var *
-lookup_pattern_var (target)
-     char *target;
-{
-  struct pattern_var *p;
-  unsigned int targlen = strlen(target);
-
-  for (p = pattern_vars; p != 0; p = p->next)
-    {
-      char *stem;
-      unsigned int stemlen;
-
-      if (p->len > targlen)
-        /* It can't possibly match.  */
-        continue;
-
-      /* From the lengths of the filename and the pattern parts,
-         find the stem: the part of the filename that matches the %.  */
-      stem = target + (p->suffix - p->target - 1);
-      stemlen = targlen - p->len + 1;
-
-      /* Compare the text in the pattern before the stem, if any.  */
-      if (stem > target && !strneq (p->target, target, stem - target))
-        continue;
-
-      /* Compare the text in the pattern after the stem, if any.
-         We could test simply using streq, but this way we compare the
-         first two characters immediately.  This saves time in the very
-         common case where the first character matches because it is a
-         period.  */
-      if (*p->suffix == stem[stemlen]
-          && (*p->suffix == '\0' || streq (&p->suffix[1], &stem[stemlen+1])))
-        break;
-    }
-
-  return p;
-}
-
 /* Print the data base of rules.  */
 
 static void			/* Useful to call from gdb.  */
-print_rule (r)
-     struct rule *r;
+print_rule (struct rule *r)
 {
   register unsigned int i;
   register struct dep *d;
@@ -649,7 +543,7 @@ print_rule (r)
 }
 
 void
-print_rule_data_base ()
+print_rule_data_base (void)
 {
   register unsigned int rules, terminal;
   register struct rule *r;
@@ -692,26 +586,4 @@ print_rule_data_base ()
         fatal (NILF, _("BUG: num_pattern_rules wrong!  %u != %u"),
                num_pattern_rules, rules);
     }
-
-  puts (_("\n# Pattern-specific variable values"));
-
-  {
-    struct pattern_var *p;
-
-    rules = 0;
-    for (p = pattern_vars; p != 0; p = p->next)
-      {
-        ++rules;
-
-        printf ("\n%s :\n", p->target);
-        print_variable_set (p->vars->set, "# ");
-      }
-
-    if (rules == 0)
-      puts (_("\n# No pattern-specific variable values."));
-    else
-      {
-        printf (_("\n# %u pattern-specific variable values"), rules);
-      }
-  }
 }

@@ -157,8 +157,7 @@ build_vpath_lists ()
    VPATHS chain.  */
 
 void
-construct_vpath_list (pattern, dirpath)
-     char *pattern, *dirpath;
+construct_vpath_list (char *pattern, char *dirpath)
 {
   register unsigned int elem;
   register char *p;
@@ -248,7 +247,7 @@ construct_vpath_list (pattern, dirpath)
       len = p - v;
       /* Make sure there's no trailing slash,
 	 but still allow "/" as a directory.  */
-#ifdef __MSDOS__
+#if defined(__MSDOS__) || defined(__EMX__)
       /* We need also to leave alone a trailing slash in "d:/".  */
       if (len > 3 || (len > 1 && v[1] != ':'))
 #endif
@@ -317,11 +316,9 @@ construct_vpath_list (pattern, dirpath)
    in.  If it is found, return 1.  Otherwise we return 0.  */
 
 int
-gpath_search (file, len)
-     char *file;
-     int len;
+gpath_search (char *file, unsigned int len)
 {
-  register char **gp;
+  char **gp;
 
   if (gpaths && (len <= gpaths->maxlen))
     for (gp = gpaths->searchpath; *gp != NULL; ++gp)
@@ -338,9 +335,7 @@ gpath_search (file, len)
    Otherwise we return 0.  */
 
 int
-vpath_search (file, mtime_ptr)
-     char **file;
-     FILE_TIMESTAMP *mtime_ptr;
+vpath_search (char **file, FILE_TIMESTAMP *mtime_ptr)
 {
   register struct vpath *v;
 
@@ -375,10 +370,8 @@ vpath_search (file, mtime_ptr)
    Otherwise we return 0.  */
 
 static int
-selective_vpath_search (path, file, mtime_ptr)
-     struct vpath *path;
-     char **file;
-     FILE_TIMESTAMP *mtime_ptr;
+selective_vpath_search (struct vpath *path, char **file,
+                        FILE_TIMESTAMP *mtime_ptr)
 {
   int not_target;
   char *name, *n;
@@ -514,27 +507,33 @@ selective_vpath_search (path, file, mtime_ptr)
 	  *n = '/';
 #endif
 
-	  if (!exists_in_cache	/* Makefile-mentioned file need not exist.  */
-	      || stat (name, &st) == 0) /* Does it really exist?  */
+	  if (exists_in_cache)	/* Makefile-mentioned file need not exist.  */
 	    {
-	      /* We have found a file.
-		 Store the name we found into *FILE for the caller.  */
+              int e;
 
-	      *file = savestring (name, (n + 1 - name) + flen);
+              EINTRLOOP (e, stat (name, &st)); /* Does it really exist?  */
+              if (e != 0)
+                {
+                  exists = 0;
+                  continue;
+                }
+            }
 
-	      if (mtime_ptr != 0)
-		/* Store the modtime into *MTIME_PTR for the caller.
-		   If we have had no need to stat the file here,
-		   we record UNKNOWN_MTIME to indicate this.  */
-		*mtime_ptr = (exists_in_cache
-			      ? FILE_TIMESTAMP_STAT_MODTIME (name, st)
-			      : UNKNOWN_MTIME);
+          /* We have found a file.
+             Store the name we found into *FILE for the caller.  */
 
-	      free (name);
-	      return 1;
-	    }
-	  else
-	    exists = 0;
+          *file = savestring (name, (n + 1 - name) + flen);
+
+          if (mtime_ptr != 0)
+            /* Store the modtime into *MTIME_PTR for the caller.
+               If we have had no need to stat the file here,
+               we record UNKNOWN_MTIME to indicate this.  */
+            *mtime_ptr = (exists_in_cache
+                          ? FILE_TIMESTAMP_STAT_MODTIME (name, st)
+                          : UNKNOWN_MTIME);
+
+          free (name);
+          return 1;
 	}
     }
 
@@ -545,7 +544,7 @@ selective_vpath_search (path, file, mtime_ptr)
 /* Print the data base of VPATH search paths.  */
 
 void
-print_vpath_data_base ()
+print_vpath_data_base (void)
 {
   register unsigned int nvpaths;
   register struct vpath *v;

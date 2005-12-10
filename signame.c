@@ -27,7 +27,7 @@ Boston, MA 02111-1307, USA.  */
    Otherwise create our own.
  */
 
-#if !defined(SYS_SIGLIST_DECLARED)
+#if !defined(HAVE_DECL_SYS_SIGLIST)
 
 /* Some systems do not define NSIG in <signal.h>.  */
 #ifndef	NSIG
@@ -63,10 +63,7 @@ static int sig_table_nelts = 0;
 /* Enter signal number NUMBER into the tables with ABBREV and NAME.  */
 
 static void
-init_sig (number, abbrev, name)
-     int number;
-     const char *abbrev;
-     const char *name;
+init_sig (int number, const char *abbrev, const char *name)
 {
   /* If this value is ever greater than NSIG it seems like it'd be a bug in
      the system headers, but... better safe than sorry.  We know, for
@@ -83,7 +80,7 @@ init_sig (number, abbrev, name)
 }
 
 static int
-signame_init ()
+signame_init (void)
 {
   int i;
 
@@ -229,16 +226,15 @@ signame_init ()
   return 1;
 }
 
-#endif  /* SYS_SIGLIST_DECLARED */
+#endif  /* HAVE_DECL_SYS_SIGLIST */
 
 
 char *
-strsignal (signal)
-     int signal;
+strsignal (int signal)
 {
   static char buf[] = "Signal 12345678901234567890";
 
-#if !defined(SYS_SIGLIST_DECLARED)
+#if ! HAVE_DECL_SYS_SIGLIST
   static char sig_initted = 0;
 
   if (!sig_initted)

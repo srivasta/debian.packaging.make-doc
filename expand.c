@@ -577,28 +577,3 @@ restore_variable_buffer (char *buf, unsigned int len)
   variable_buffer = buf;
   variable_buffer_length = len;
 }
-
-/* Install a new variable_buffer context, returning the current one for
-   safe-keeping.  */
-
-void
-install_variable_buffer (char **bufp, unsigned int *lenp)
-{
-  *bufp = variable_buffer;
-  *lenp = variable_buffer_length;
-
-  variable_buffer = 0;
-  initialize_variable_output ();
-}
-
-/* Restore a previously-saved variable_buffer setting (free the current one).
- */
-
-void
-restore_variable_buffer (char *buf, unsigned int len)
-{
-  free (variable_buffer);
-
-  variable_buffer = buf;
-  variable_buffer_length = len;
-}

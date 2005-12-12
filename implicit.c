@@ -477,12 +477,6 @@ pattern_search (struct file *file, int archive,
 
 	  /* Try each dependency; see if it "exists".  */
 
-          /* @@ There is always only one dep line for any given implicit
-                rule. So the loop is not necessary. Can rule->deps be 0?
-
-                Watch out for conversion of suffix rules to implicit rules.
-          */
-
 	  for (dep = rule->deps; dep != 0; dep = dep->next)
 	    {
               unsigned int len;
@@ -490,13 +484,13 @@ pattern_search (struct file *file, int archive,
               unsigned int order_only = 0; /* Set if '|' was seen. */
 
               /* In an ideal world we would take the dependency line,
-                 substitute the stem, re-expand the whole line and
-                 chop it into individual prerequisites. Unfortunately
-                 this won't work because of the "check_lastslash" twist.
-                 Instead, we will have to go word by word, taking $()'s
-                 into account, for each word we will substitute the stem,
-                 re-expand, chop it up, and, if check_lastslash != 0,
-                 add the directory part to each resulting prerequisite.  */
+                 substitute the stem, re-expand the whole line and chop it
+                 into individual prerequisites. Unfortunately this won't work
+                 because of the "check_lastslash" twist.  Instead, we will
+                 have to go word by word, taking $()'s into account, for each
+                 word we will substitute the stem, re-expand, chop it up, and,
+                 if check_lastslash != 0, add the directory part to each
+                 resulting prerequisite.  */
 
               p = get_next_word (dep->name, &len);
 
@@ -508,41 +502,71 @@ pattern_search (struct file *file, int archive,
                   if (p == 0)
                     break; /* No more words */
 
-                  /* If the dependency name has %, substitute the stem.
-                     Watch out, we are going to do something tricky here. If
-                     we just replace % with the stem value, later, when we do
-                     the second expansion, we will re-expand this stem value
-                     once again. This is not good especially if you have
-                     certain characters in your setm (like $).
-
-                     Instead, we will replace % with $* and allow the second
-                     expansion to take care of it for us. This way (since $*
-                     is a simple variable) there won't be additional
-                     re-expansion of the stem.  */
+                  /* Is there a pattern in this prerequisite?  */
 
                   for (p2 = p; p2 < p + len && *p2 != '%'; ++p2)
                     ;
 
-                  if (p2 < p + len)
+                  if (dep->need_2nd_expansion)
                     {
-                      register unsigned int i = p2 - p;
-                      bcopy (p, depname, i);
-                      bcopy ("$*", depname + i, 2);
-                      bcopy (p2 + 1, depname + i + 2, len - i - 1);
-                      depname[len + 2 - 1] = '\0';
+                      /* If the dependency name has %, substitute the stem.
 
-                      if (check_lastslash)
-                        add_dir = 1;
+                         Watch out, we are going to do something tricky
+                         here. If we just replace % with the stem value,
+                         later, when we do the second expansion, we will
+                         re-expand this stem value once again. This is not
+                         good especially if you have certain characters in
+                         your stem (like $).
 
-                      had_stem = 1;
+                         Instead, we will replace % with $* and allow the
+                         second expansion to take care of it for us. This way
+                         (since $* is a simple variable) there won't be
+                         additional re-expansion of the stem.  */
+
+                      if (p2 < p + len)
+                        {
+                          register unsigned int i = p2 - p;
+                          bcopy (p, depname, i);
+                          bcopy ("$*", depname + i, 2);
+                          bcopy (p2 + 1, depname + i + 2, len - i - 1);
+                          depname[len + 2 - 1] = '\0';
+
+                          if (check_lastslash)
+                            add_dir = 1;
+
+                          had_stem = 1;
+                        }
+                      else
+                        {
+                          bcopy (p, depname, len);
+                          depname[len] = '\0';
+                        }
+
+                      p2 = variable_expand_for_file (depname, file);
                     }
                   else
                     {
-                      bcopy (p, depname, len);
-                      depname[len] = '\0';
-                    }
+                       if (p2 < p + len)
+                        {
+                          register unsigned int i = p2 - p;
+                          bcopy (p, depname, i);
+                          bcopy (stem_str, depname + i, stemlen);
+                          bcopy (p2 + 1, depname + i + stemlen, len - i - 1);
+                          depname[len + stemlen - 1] = '\0';
 
-                  p2 = variable_expand_for_file (depname, file);
+                          if (check_lastslash)
+                            add_dir = 1;
+
+                          had_stem = 1;
+                        }
+                      else
+                        {
+                          bcopy (p, depname, len);
+                          depname[len] = '\0';
+                        }
+
+                       p2 = depname;
+                    }
 
                   /* Parse the dependencies. */
 
@@ -561,8 +585,8 @@ pattern_search (struct file *file, int archive,
                                           1), sizeof (struct idep));
 
                       /* @@ It would be nice to teach parse_file_seq or
-                         multi_glob to add prefix. This would save us
-                         some reallocations. */
+                         multi_glob to add prefix. This would save us some
+                         reallocations. */
 
                       if (order_only || add_dir || had_stem)
                         {
@@ -618,10 +642,9 @@ pattern_search (struct file *file, int archive,
 
               if (file_impossible_p (name))
                 {
-                  /* If this dependency has already been ruled
-                     "impossible", then the rule fails and don't
-                     bother trying it on the second pass either
-                     since we know that will fail too.  */
+                  /* If this dependency has already been ruled "impossible",
+                     then the rule fails and don't bother trying it on the
+                     second pass either since we know that will fail too.  */
                   DBS (DB_IMPLICIT,
                        (d->had_stem
                         ? _("Rejecting impossible implicit prerequisite `%s'.\n")
@@ -638,10 +661,9 @@ pattern_search (struct file *file, int archive,
                     ? _("Trying implicit prerequisite `%s'.\n")
                     : _("Trying rule prerequisite `%s'.\n"), name));
 
-              /* If this prerequisite also happened to be explicitly
-                 mentioned for FILE skip all the test below since it
-                 it has to be built anyway, no matter which implicit
-                 rule we choose. */
+              /* If this prerequisite also happened to be explicitly mentioned
+                 for FILE skip all the test below since it it has to be built
+                 anyway, no matter which implicit rule we choose. */
 
               for (expl_d = file->deps; expl_d != 0; expl_d = expl_d->next)
                 if (strcmp (dep_name (expl_d), name) == 0) break;
@@ -681,9 +703,9 @@ pattern_search (struct file *file, int archive,
                 }
 
 
-              /* We could not find the file in any place we should look.
-                 Try to make this dependency as an intermediate file,
-                 but only on the second pass.  */
+              /* We could not find the file in any place we should look.  Try
+                 to make this dependency as an intermediate file, but only on
+                 the second pass.  */
 
               if (intermed_ok)
                 {
@@ -836,6 +858,7 @@ pattern_search (struct file *file, int archive,
 
       dep = (struct dep *) xmalloc (sizeof (struct dep));
       dep->ignore_mtime = d->ignore_mtime;
+      dep->staticpattern = 0;
       dep->need_2nd_expansion = 0;
       s = d->name; /* Hijacking the name. */
       d->name = 0;
@@ -917,6 +940,7 @@ pattern_search (struct file *file, int archive,
 	  struct dep *new = (struct dep *) xmalloc (sizeof (struct dep));
 	  /* GKM FIMXE: handle '|' here too */
 	  new->ignore_mtime = 0;
+          new->staticpattern = 0;
 	  new->need_2nd_expansion = 0;
 	  new->name = p = (char *) xmalloc (rule->lens[i] + fullstemlen + 1);
 	  bcopy (rule->targets[i], p,
@@ -928,12 +952,17 @@ pattern_search (struct file *file, int archive,
 		 rule->lens[i] - (rule->suffixes[i] - rule->targets[i]) + 1);
 	  new->file = enter_file (new->name);
 	  new->next = file->also_make;
-	  
+
 	  /* Set precious flag. */
 	  f = lookup_file (rule->targets[i]);
 	  if (f && f->precious)
             new->file->precious = 1;
-	  
+
+          /* Set the is_target flag so that this file is not treated
+             as intermediate by the pattern rule search algorithm and
+             file_exists_p cannot pick it up yet.  */
+          new->file->is_target = 1;
+
 	  file->also_make = new;
 	}
 

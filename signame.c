@@ -21,13 +21,13 @@ Boston, MA 02111-1307, USA.  */
 
 /* If the system provides strsignal, we don't need it. */
 
-#if !defined(HAVE_STRSIGNAL)
+#if !HAVE_STRSIGNAL
 
 /* If the system provides sys_siglist, we'll use that.
    Otherwise create our own.
  */
 
-#if !defined(HAVE_DECL_SYS_SIGLIST)
+#if !HAVE_DECL_SYS_SIGLIST
 
 /* Some systems do not define NSIG in <signal.h>.  */
 #ifndef	NSIG
@@ -235,10 +235,16 @@ strsignal (int signal)
   static char buf[] = "Signal 12345678901234567890";
 
 #if ! HAVE_DECL_SYS_SIGLIST
+# if HAVE_DECL__SYS_SIGLIST
+#  define sys_siglist _sys_siglist
+# elif HAVE_DECL___SYS_SIGLIST
+#  define sys_siglist __sys_siglist
+# else
   static char sig_initted = 0;
 
   if (!sig_initted)
     sig_initted = signame_init ();
+# endif
 #endif
 
   if (signal > 0 || signal < NSIG)

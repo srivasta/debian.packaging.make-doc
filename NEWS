@@ -18,15 +18,21 @@ Version 3.81beta3
 
 * WARNING: Backward-incompatibility!
   GNU make now implements a generic "second expansion" feature on the
-  prerequisites of both explicit and implicit (pattern) rules.  After
-  all rules have been parsed the prerequisites are expanded again, this
-  time with all the automatic variables in scope.  This means that in
-  addition to using standard SysV $$@ in prerequisites lists, you can
-  also use complex functions such as $$(notdir $$@) etc.  This behavior
-  applies to implicit rules, as well, where the second expansion occurs
-  after the rule is matched.  However, this means that you need to
-  double-quote any "$" in your filenames; instead of "foo: boo$$bar" you
-  now must write "foo: foo$$$$bar".
+  prerequisites of both explicit and implicit (pattern) rules.  In order
+  to enable this feature, the special target '.SECONDEXPANSION' must be
+  defined before the first target which takes advantage of it.  If this
+  feature is enabled then after all rules have been parsed the
+  prerequisites are expanded again, this time with all the automatic
+  variables in scope.  This means that in addition to using standard
+  SysV $$@ in prerequisites lists, you can also use complex functions
+  such as $$(notdir $$@) etc.  This behavior applies to implicit rules,
+  as well, where the second expansion occurs when the rule is matched.
+  However, this means that you need to double-quote any "$" in your
+  filenames; instead of "foo: boo$$bar" you now must write "foo:
+  foo$$$$bar".  Note that the SysV $$@ etc. feature, which used to be
+  available by default, is now ONLY available when the .SECONDEXPANSION
+  target is defined.  If your makefiles take advantage of this SysV
+  feature you will need to update them.
 
 * WARNING: Backward-incompatibility!
   In order to comply with POSIX, the way in which GNU make processes
@@ -60,6 +66,8 @@ Version 3.81beta3
   load average accordingly.
 
 * New special variables available in this release:
+   - .INCLUDE_DIRS: Expands to a list of directories that make searches
+     for included makefiles.
    - .FEATURES: Contains a list of special features available in this
      version of GNU make.
    - .DEFAULT_GOAL: Set the name of the default goal make will
@@ -79,8 +87,9 @@ Version 3.81beta3
    - $(realpath ...) returns the canonical pathname for each path
      provided.  The canonical pathname is the absolute pathname, with
      all symbolic links resolved as well.
-   - $(info ...) prints informative messages to stdout.  No makefile
-     name or line number info, etc. is printed, just the message.
+   - $(info ...) prints its arguments to stdout.  No makefile name or
+     line number info, etc. is printed.
+   - $(flavor ...) returns the flavor of a variable.
 
 * Changes made for POSIX compatibility:
    - Only touch targets (under -t) if they have at least one command.
@@ -94,7 +103,7 @@ Version 3.81beta3
   use the DOS command interpreter in batch mode even if a UNIX-like
   shell could be found on the system.
 
-* Updated to autoconf 2.59, automake 1.8.2, and gettext 0.14.1.  Users
+* Updated to autoconf 2.59, automake 1.9.5, and gettext 0.14.1.  Users
   should not be impacted.
 
 * New translations for Swedish, Chinese (simplified), Ukrainian,

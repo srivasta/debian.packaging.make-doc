@@ -1,3 +1,229 @@
+2005-12-11  Paul D. Smith  <psmith@gnu.org>
+
+	* implicit.c (pattern_search): If 2nd expansion is not set for
+	this implicit rule, replace the pattern with the stem directly,
+	and don't re-expand the variable list.  Along with the other
+	.SECONDEXPANSION changes below, fixes bug #13781.
+
+2005-12-09  Boris Kolpackov  <boris@kolpackov.net>
+
+	* implicit.c (pattern_search): Mark other files that this rule
+	builds as targets so that they are not treated as intermediates
+	by the pattern rule search algorithm. Fixes bug #13022.
+
+2005-12-07  Boris Kolpackov  <boris@kolpackov.net>
+
+	* remake.c (notice_finished_file): Propagate the change of
+	modification time to all the double-colon entries only if
+	it is the last one to be updated. Fixes bug #14334.
+
+2005-11-17  Boris Kolpackov  <boris@kolpackov.net>
+
+	* function.c (func_flavor): Implement the flavor function which
+	returns the flavor of a variable.
+	* doc/make.texi (Functions for Transforming Text): Document it.
+	* NEWS: Add it to the list of new functions.
+
+2005-11-14  Boris Kolpackov  <boris@kolpackov.net>
+
+	* read.c (construct_include_path): Set the .INCLUDE_DIRS special
+	variable.
+	* doc/make.texi (Special Variables): Document .INCLUDE_DIRS.
+	* NEWS: Add .INCLUDE_DIRS to the list of new special variables.
+
+2005-10-26  Paul Smith  <psmith@gnu.org>
+
+	* read.c (record_files): Don't set deps flags if there are no deps.
+	* maintMakefile: We only need to build the templates when we are
+	creating a distribution, so don't do it for "all".
+
+2005-10-24  Paul D. Smith  <psmith@gnu.org>
+
+	Make secondary expansion optional: its enabled by declaring the
+	special target .SECONDEXPANSION.
+
+	* NEWS: Update information on second expansion capabilities.
+	* doc/make.texi (Secondary Expansion): Document the
+	.SECONDEXPANSION special target and its behavior.
+	* dep.h (struct dep): Add a flag STATICPATTERN, set to true if the
+	prerequisite list was found in a static pattern rule.
+	(free_dep_chain): Declare a prototype.
+	* file.c (parse_prereqs): New function: break out some complexity
+	from expand_deps().
+	(expand_deps): If we aren't doing second expansion, replace % with
+	the stem for static pattern rules.  Call the new function.
+	* filedef.h (parse_prereqs): Declare a prototype.
+	* implicit.c (pattern_search): Initialize the new staticpattern
+	field.
+	* main.c (second_expansion): Declare a global variable to remember
+	if the special target has been seen.  Initialize the new
+	staticpattern field for prerequisites.
+	* make.h: Extern for second_expansion.
+	* misc.c (free_dep_chain): New function: frees a struct dep list.
+	* read.c (read_all_makefiles): Initialize the staticpattern field.
+	(eval_makefile): Ditto.
+	(record_files): Check for the .SECONDEXPANSION target and set
+	second_expansion global if it's found.
+	Use the new free_dep_chain() instead of doing it by hand.
+	Set the staticpattern field for prereqs of static pattern targets.
+
+2005-10-16  Paul D. Smith  <psmith@gnu.org>
+
+	* main.c (main): Set CURDIR to be a file variable instead of a
+	default, so that values of CURDIR inherited from the environment
+	won't override the make value.
+
+2005-09-26  Paul D. Smith  <psmith@gnu.org>
+
+	* job.c (construct_command_argv_internal): If the line is empty
+	remember to free the temporary argv strings.
+	Fixes bug # 14527.
+
+2005-09-16  Paul D. Smith  <psmith@gnu.org>
+
+	* job.c (start_job_command): The noerror flag is a boolean (single
+	bit); set it appropriately.
+	Reported by Mark Eichin <eichin@metacarta.com>
+
+2005-08-29  Paul D. Smith  <psmith@gnu.org>
+
+	* function.c (func_error): On Windows, output from $(info ...)
+	seems to come in the wrong order.  Try to force it with fflush().
+
+2005-08-10  Boris Kolpackov  <boris@kolpackov.net>
+
+	* read.c (record_files): Move code that sets stem for static
+	pattern rules out of the if (!two_colon) condition so it is
+	also executed for two-colon rules. Fixes Savannah bug #13881.
+
+2005-08-08  Paul D. Smith  <psmith@gnu.org>
+
+	* make.h: Don't test that __STDC__ is non-0.  Some compilers
+	(Windows for example) set it to 0 to denote "ISO C + extensions".
+	Fixes bug # 13594.
+
+2005-08-07  Paul D. Smith  <psmith@gnu.org>
+
+	* w32/pathstuff.c (getcwd_fs): Fix warning about assignment in a
+	conditional (slightly different version of a fix from Eli).
+
+	Fix a bug reported by Michael Matz <matz@suse.de>: patch included.
+	If make is running in parallel without -k and two jobs die in a
+	row, but not too close to each other, then make will quit without
+	waiting for the rest of the jobs to die.
+
+	* main.c (die): Don't reset err before calling reap_children() the
+	second time: we still want it to be in the error condition.
+	* job.c (reap_children): Use a static variable, rather than err,
+	to control whether or not the error message should be printed.
+
+2005-08-06  Eli Zaretskii  <eliz@gnu.org>
+
+	* w32/subproc/sub_proc.c: Include signal.h.
+	(process_pipe_io, process_file_io): Pass a pointer to a local
+	DWORD variable to GetExitCodeProcess.  If the exit code is
+	CONTROL_C_EXIT, put SIGINT into pproc->signal.
+
+	* job.c [WINDOWS32]: Include windows.h.
+	(main_thread) [WINDOWS32]: New global variable.
+	(reap_children) [WINDOWS32]: Get the handle for the main thread
+	and store it in main_thread.
+
+	* commands.c [WINDOWS32]: Include windows.h and w32err.h.
+	(fatal_error_signal) [WINDOWS32]: Suspend the main thread before
+	doing anything else.  When we are done, close the main thread
+	handle and exit with status 130.
+
+2005-07-30  Eli Zaretskii  <eliz@gnu.org>
+
+	* w32/subproc/sub_proc.c (process_begin): Don't pass a NULL
+	pointer to fprintf.
+
+	* main.c (find_and_set_default_shell): If found a DOSish shell,
+	set sh_found and the value of default_shell, and report the
+	findings in debug mode.
+
+	* job.c (construct_command_argv_internal): Check unixy_shell, not
+	no_default_sh_exe, to decide whether to use Unixy or DOSish
+	builtin commands.
+
+	* README.W32: Update with info about the MinGW build.
+
+	* build_w32.bat: Support MinGW.
+
+	* w32/subproc/build.bat: Likewise.
+
+	* w32/subproc/sub_proc.c (process_easy): Fix format strings for
+	printing DWORD args.
+
+	* function.c (windows32_openpipe): Fix format strings for printing
+	DWORD args.
+
+	* job.c (reap_children) [WINDOWS32]: Don't declare 'status' and
+	'reap_mode'.
+	(start_job_command): Fix format string for printing the result of
+	process_easy.
+	(start_job_command) [WINDOWS32]: Do not define.
+	(exec_command): Fix format string for printing HANDLE args.
+
+	* main.c (handle_runtime_exceptions): Fix sprintf format strings
+	to avoid compiler warnings.
+	(open_tmpfile): Declare fd only if HAVE_FDOPEN is defined.
+	(Note: some of these fixes were submitted independently by J. Grant)
+
+2005-07-30  J. Grant <jg@jguk.org>
+
+	* prepare_w32.bat: Copy config.h.w32 to config.h if not exist.
+	* make_msvc_net2003.vcproj, make_msvc_net2003.sln: MSVC Project files.
+	* Makefile.am (EXTRA_DIST): Add MSVC Project files.
+
+2005-07-15  Paul Smith  <psmith@gnu.org>
+
+	* job.c (construct_command_argv_internal) [DOS,WINDOWS32,OS/2]: If
+	we don't have a POSIX shell, then revert to the old
+	backslash-newline behavior (where they are stripped).
+	Fixes bug #13665.
+
+2005-07-08  Paul D. Smith  <psmith@gnu.org>
+
+	* config.h.W32.template: Reorder to match the standard config.h,
+	for easier comparisons.
+	From J. Grant <jg@jguk.org>
+
+	* maintMakefile: Remove .dep_segment before overwriting it, in
+	case it's not writable or noclobber is set.
+	* expand.c (variable_expand_string): Cast result of pointer
+	arithmetic to avoid a warning.
+	* main.c (switches): Add full-fledged final initializer.
+
+2005-07-06  Paul D. Smith  <psmith@gnu.org>
+
+	* configure.in: IRIX has _sys_siglist.  Tru64 UNIX has __sys_siglist.
+	* signame.c (strsignal): If we found _sys_siglist[] or
+	__sys_siglist[] use those instead of sys_siglist[].
+	From Albert Chin <china@thewrittenword.com>
+
+2005-07-04  Paul D. Smith  <psmith@gnu.org>
+
+	* config.h-vms.template [VMS]: Latest VMS has its own glob() and
+	globfree(); set up to use the GNU versions.
+	From Martin Zinser <zinser@zinser.no-ip.info>
+
+2005-07-03  Paul D. Smith  <psmith@gnu.org>
+
+	From J. Grant <jg@jguk.org>:
+
+	* README.W32.template: Update the Windows and tested MSVC versions.
+	* NMakefile.template (CFLAGS_any): Change warning level from W3 to W4.
+	* w32/subproc/NMakefile (CFLAGS_any): Ditto.
+	* build_w32.bat: Ditto.
+	* w32/subproc/build.bat: Ditto.
+
+2005-06-28  Paul D. Smith  <psmith@gnu.org>
+
+	* signame.c: HAVE_DECL_* macros are set to 0, not undef, if the
+	declaration was checked but not present.
+
 2005-06-27  Paul D. Smith  <psmith@gnu.org>
 
 	* dir.c (find_directory): Change type of fs_serno/fs_flags/fs_len
@@ -85,26 +311,26 @@
 
 2005-06-10  Paul D. Smith  <psmith@gnu.org>
 
-        VMS build updates from Hartmut Becker <Hartmut.Becker@hp.com>:
+	VMS build updates from Hartmut Becker <Hartmut.Becker@hp.com>:
 
-        * vmsjobs.c [VMS]: Updates to compile on VMS: add some missing
-        headers; make vmsWaitForChildren() static; extern vmsify().
-        * job.c [VMS]: Move vmsWaitForChildren() prototype to be global.
-        Don't create child_execute_job() here (it's in vmsjobs.c).
-        * makefile.vms (job.obj) [VMS]: Add vmsjobs.c as a prerequisite.
+	* vmsjobs.c [VMS]: Updates to compile on VMS: add some missing
+	headers; make vmsWaitForChildren() static; extern vmsify().
+	* job.c [VMS]: Move vmsWaitForChildren() prototype to be global.
+	Don't create child_execute_job() here (it's in vmsjobs.c).
+	* makefile.vms (job.obj) [VMS]: Add vmsjobs.c as a prerequisite.
 
 2005-06-09  Paul D. Smith  <psmith@gnu.org>
 
-        * variable.c (push_new_variable_scope): File variables point
-        directly to the global_setlist variable.  So, inserting a new
-        scope in front of that has no effect on those variables: they
-        don't go through current_variable_set_list.  If we're pushing a
-        scope and the current scope is global, push it "the other way" so
-        that the new setlist is in the global_setlist variable, and
-        next points to a new setlist with the global variable set.
-        (pop_variable_scope): Properly undo a push with the new
-        semantics.
-        Fixes Savannah bug #11913.
+	* variable.c (push_new_variable_scope): File variables point
+	directly to the global_setlist variable.  So, inserting a new
+	scope in front of that has no effect on those variables: they
+	don't go through current_variable_set_list.  If we're pushing a
+	scope and the current scope is global, push it "the other way" so
+	that the new setlist is in the global_setlist variable, and
+	next points to a new setlist with the global variable set.
+	(pop_variable_scope): Properly undo a push with the new
+	semantics.
+	Fixes Savannah bug #11913.
 
 2005-05-31  Boris Kolpackov  <boris@kolpackov.net>
 
@@ -463,22 +689,22 @@
 2005-02-24  Jonathan Grant  <jg@jguk.org>
 
 	* configure.in: Add MinGW configuration options, and extra w32 code
-        directory.
+	directory.
 	* Makefile.am: Add MinGW configuration options, and extra w32 code
-        directory.
+	directory.
 	* main.c: Determine correct program string (after last \ without .exe).
 	* subproc/sub_proc.c: `GetExitCodeProcess' from incompatible pointer
-        type fix x2
+	type fix x2
 	* w32/Makefile.am: Import to build win32 lib of sub_proc etc.
 	* subproc/w32err.c: MSVC thread directive not applied to MinGW builds.
 	* tests/run_make_tests.pl, tests/test_driver.pl: MSYS testing
-        environment support.
+	environment support.
 
 2004-04-16  Dmitry V. Levin  <ldv@altlinux.org>
 
-        * function.c (func_shell): When initializing error_prefix, check
-        that reading file name is not null.  This fixes long-standing
-        segfault in cases like "make 'a1=$(shell :)' 'a2:=$(a1)'".
+	* function.c (func_shell): When initializing error_prefix, check
+	that reading file name is not null.  This fixes long-standing
+	segfault in cases like "make 'a1=$(shell :)' 'a2:=$(a1)'".
 
 2005-02-09  Paul D. Smith  <psmith@gnu.org>
 
@@ -1639,13 +1865,13 @@
 	* rule.c (convert_suffix_rule): Likewise.
 	* read.c (read_all_makefiles, read_makefile, multi_glob): Likewise.
 	(read_makefile): Parse '|' in prerequisite list.
-        (uniquize_deps): Consider ignore_mtime when comparing deps.
+	(uniquize_deps): Consider ignore_mtime when comparing deps.
 	* remake.c (update_file_1, check_dep): Don't force remake for
 	dependencies that have d->ignore_mtime.
 	* commands.c (FILE_LIST_SEPARATOR): New constant.
-        (set_file_variables): Don't include a
+	(set_file_variables): Don't include a
 	prerequisite in $+, $^ or $? if d->ignore_mtime.
-        Define $|.
+	Define $|.
 
 2002-06-18  Paul D. Smith  <psmith@gnu.org>
 
@@ -1679,10 +1905,10 @@
 
 2002-05-18  Eli Zaretskii  <eliz@is.elta.co.il>
 
-        * Makefile.DOS.template: Tweak according to changes in the
-        distribution.  Add back the dependencies of *.o files.
+	* Makefile.DOS.template: Tweak according to changes in the
+	distribution.  Add back the dependencies of *.o files.
 
-        * configh.dos.template: Synchronize with config.h.in.
+	* configh.dos.template: Synchronize with config.h.in.
 
 2002-05-09  Paul D. Smith  <psmith@gnu.org>
 

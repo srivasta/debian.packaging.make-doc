@@ -258,6 +258,7 @@ read_all_makefiles (char **makefiles)
 	      d->file = enter_file (*p);
 	      d->file->dontcare = 1;
               d->ignore_mtime = 0;
+              d->staticpattern = 0;
               d->need_2nd_expansion = 0;
 	      /* Tell update_goal_chain to bail out as soon as this file is
 		 made, and main not to die if we can't make this file.  */
@@ -378,6 +379,7 @@ eval_makefile (char *filename, int flags)
   filename = deps->file->name;
   deps->changed = flags;
   deps->ignore_mtime = 0;
+  deps->staticpattern = 0;
   deps->need_2nd_expansion = 0;
   if (flags & RM_DONTCARE)
     deps->file->dontcare = 1;
@@ -1160,7 +1162,7 @@ eval (struct ebuffer *ebuf, int set_default)
             pattern_percent = find_percent (pattern);
             if (pattern_percent == 0)
               fatal (fstart, _("target pattern contains no `%%'"));
-            free((char *)target);
+            free ((char *)target);
           }
         else
           pattern = 0;
@@ -1172,21 +1174,12 @@ eval (struct ebuffer *ebuf, int set_default)
 
         if (beg <= end && *beg != '\0')
           {
-            char *top;
-            const char *fromp = beg;
-
-            /* Make a copy of the dependency string.  Note if we find '$'.  */
-            deps = (struct dep*) xmalloc (sizeof (struct dep));
+            /* Put all the prerequisites here; they'll be parsed later.  */
+            deps = (struct dep *) xmalloc (sizeof (struct dep));
             deps->next = 0;
-            deps->name = top = (char *) xmalloc (end - beg + 2);
+            deps->name = xstrdup (beg);
+            deps->staticpattern = 0;
             deps->need_2nd_expansion = 0;
-            while (fromp <= end)
-              {
-                if (*fromp == '$')
-                  deps->need_2nd_expansion = 1;
-                *(top++) = *(fromp++);
-              }
-            *top = '\0';
             deps->file = 0;
           }
         else
@@ -1918,19 +1911,19 @@ record_files (struct nameseq *filenames, char *pattern, char *pattern_percent,
     {
       char *name = filenames->name;
       struct file *f;
-      struct dep *d;
-      struct dep *this;
+      struct dep *this = 0;
       char *implicit_percent;
 
       nextf = filenames->next;
       free (filenames);
 
-      /* Check for .POSIX.  We used to do this in snap_deps() but that's not
-         good enough: it doesn't happen until after the makefile is read,
-         which means we cannot use its value during parsing.  */
+      /* Check for special targets.  Do it here instead of, say, snap_deps()
+         so that we can immediately use the value.  */
 
       if (streq (name, ".POSIX"))
         posix_pedantic = 1;
+      else if (streq (name, ".SECONDEXPANSION"))
+        second_expansion = 1;
 
       implicit_percent = find_percent (name);
       implicit |= implicit_percent != 0;
@@ -1965,40 +1958,20 @@ record_files (struct nameseq *filenames, char *pattern, char *pattern_percent,
 	  continue;
 	}
 
-      /* If there are multiple filenames, copy the chain DEPS
-	 for all but the last one.  It is not safe for the same deps
-	 to go in more than one place in the database.  */
-      this = nextf != 0 ? copy_dep_chain (deps) : deps;
-
-      if (pattern != 0)
-	{
-	  /* If this is an extended static rule:
-	     `targets: target%pattern: dep%pattern; cmds',
-	     translate each dependency pattern into a plain filename
-	     using the target pattern and this target's name.  */
-	  if (!pattern_matches (pattern, pattern_percent, name))
-	    {
-	      /* Give a warning if the rule is meaningless.  */
-	      error (flocp,
-		     _("target `%s' doesn't match the target pattern"), name);
-	      this = 0;
-	    }
-	  else
-            /* We use subst_expand to do the work of translating % to $* in
-               the dependency line.  */
-
-            if (this != 0 && find_percent (this->name) != 0)
-              {
-                char *o;
-                char *buffer = variable_expand ("");
-
-                o = subst_expand (buffer, this->name, "%", "$*", 1, 2, 0);
-
-                free (this->name);
-                this->name = savestring (buffer, o - buffer);
-                this->need_2nd_expansion = 1;
-              }
-	}
+      /* If this is a static pattern rule:
+         `targets: target%pattern: dep%pattern; cmds',
+         make sure the pattern matches this target name.  */
+      if (pattern && !pattern_matches (pattern, pattern_percent, name))
+        error (flocp, _("target `%s' doesn't match the target pattern"), name);
+      else if (deps)
+        {
+          /* If there are multiple filenames, copy the chain DEPS for all but
+             the last one.  It is not safe for the same deps to go in more
+             than one place in the database.  */
+          this = nextf != 0 ? copy_dep_chain (deps) : deps;
+          this->need_2nd_expansion = (second_expansion
+				      && strchr (this->name, '$'));
+        }
 
       if (!two_colon)
 	{
@@ -2038,18 +2011,11 @@ record_files (struct nameseq *filenames, char *pattern, char *pattern_percent,
 	  if (cmds != 0)
 	    f->cmds = cmds;
 
-	  /* Defining .SUFFIXES with no dependencies
-	     clears out the list of suffixes.  */
+	  /* Defining .SUFFIXES with no dependencies clears out the list of
+	     suffixes.  */
 	  if (f == suffix_file && this == 0)
 	    {
-	      d = f->deps;
-	      while (d != 0)
-		{
-		  struct dep *nextd = d->next;
- 		  free (d->name);
- 		  free ((char *)d);
-		  d = nextd;
-		}
+              free_dep_chain (f->deps);
 	      f->deps = 0;
 	    }
           else if (this != 0)
@@ -2064,22 +2030,19 @@ record_files (struct nameseq *filenames, char *pattern, char *pattern_percent,
                     d_ptr = &(*d_ptr)->next;
 
                   if (cmds != 0)
-                    {
-                      /* This is the rule with commands, so put its deps
-                         last. The rationale behind this is that $< expands
-                         to the first dep in the chain, and commands use $<
-                         expecting to get the dep that rule specifies.
-                         However the second expansion algorithm reverses
-                         the order thus we need to make it last here.  */
-
-                      (*d_ptr)->next = this;
-                    }
+                    /* This is the rule with commands, so put its deps
+                       last. The rationale behind this is that $< expands to
+                       the first dep in the chain, and commands use $<
+                       expecting to get the dep that rule specifies.  However
+                       the second expansion algorithm reverses the order thus
+                       we need to make it last here.  */
+                    (*d_ptr)->next = this;
                   else
                     {
                       /* This is the rule without commands. Put its
-                         dependencies at the end but before dependencies
-                         from the rule with commands (if any). This way
-                         everything appears in makefile order.  */
+                         dependencies at the end but before dependencies from
+                         the rule with commands (if any). This way everything
+                         appears in makefile order.  */
 
                       if (f->cmds != 0)
                         {
@@ -2109,42 +2072,44 @@ record_files (struct nameseq *filenames, char *pattern, char *pattern_percent,
               if (cmds != 0)
                 f->updating = 1;
 	    }
-
-	  /* If this is a static pattern rule, set the file's stem to
-	     the part of its name that matched the `%' in the pattern,
-	     so you can use $* in the commands.  */
-	  if (pattern != 0)
-	    {
-	      static char *percent = "%";
-	      char *buffer = variable_expand ("");
-	      char *o = patsubst_expand (buffer, name, pattern, percent,
-					 pattern_percent+1, percent+1);
-	      f->stem = savestring (buffer, o - buffer);
-	    }
 	}
       else
 	{
-	  /* Double-colon.  Make a new record
-	     even if the file already has one.  */
+	  /* Double-colon.  Make a new record even if there already is one.  */
 	  f = lookup_file (name);
+
 	  /* Check for both : and :: rules.  Check is_target so
 	     we don't lose on default suffix rules or makefiles.  */
 	  if (f != 0 && f->is_target && !f->double_colon)
 	    fatal (flocp,
                    _("target file `%s' has both : and :: entries"), f->name);
 	  f = enter_file (name);
-	  /* If there was an existing entry and it was a double-colon
-	     entry, enter_file will have returned a new one, making it the
-	     prev pointer of the old one, and setting its double_colon
-	     pointer to the first one.  */
+	  /* If there was an existing entry and it was a double-colon entry,
+	     enter_file will have returned a new one, making it the prev
+	     pointer of the old one, and setting its double_colon pointer to
+	     the first one.  */
 	  if (f->double_colon == 0)
-	    /* This is the first entry for this name, so we must
-	       set its double_colon pointer to itself.  */
+	    /* This is the first entry for this name, so we must set its
+	       double_colon pointer to itself.  */
 	    f->double_colon = f;
 	  f->is_target = 1;
 	  f->deps = this;
 	  f->cmds = cmds;
 	}
+
+      /* If this is a static pattern rule, set the stem to the part of its
+         name that matched the `%' in the pattern, so you can use $* in the
+         commands.  */
+      if (pattern)
+        {
+          static char *percent = "%";
+          char *buffer = variable_expand ("");
+          char *o = patsubst_expand (buffer, name, pattern, percent,
+                                     pattern_percent+1, percent+1);
+          f->stem = savestring (buffer, o - buffer);
+          if (this)
+            this->staticpattern = 1;
+        }
 
       /* Free name if not needed further.  */
       if (f != 0 && name != f->name
@@ -2155,9 +2120,9 @@ record_files (struct nameseq *filenames, char *pattern, char *pattern_percent,
 	}
 
       /* If this target is a default target, update DEFAULT_GOAL_FILE.  */
-      if (strcmp (*default_goal_name, name) == 0
+      if (streq (*default_goal_name, name)
           && (default_goal_file == 0
-              || strcmp (default_goal_file->name, name) != 0))
+              || ! streq (default_goal_file->name, name)))
         default_goal_file = f;
     }
 
@@ -2165,6 +2130,8 @@ record_files (struct nameseq *filenames, char *pattern, char *pattern_percent,
     {
       targets[target_idx] = 0;
       target_percents[target_idx] = 0;
+      if (deps)
+        deps->need_2nd_expansion = second_expansion;
       create_pattern_rule (targets, target_percents, two_colon, deps, cmds, 1);
       free ((char *) target_percents);
     }
@@ -2294,9 +2261,9 @@ find_percent (char *pattern)
 struct nameseq *
 parse_file_seq (char **stringp, int stopchar, unsigned int size, int strip)
 {
-  register struct nameseq *new = 0;
-  register struct nameseq *new1, *lastnew1;
-  register char *p = *stringp;
+  struct nameseq *new = 0;
+  struct nameseq *new1, *lastnew1;
+  char *p = *stringp;
   char *q;
   char *name;
 
@@ -2946,7 +2913,8 @@ construct_include_path (char **arg_dirs)
 
   dirs[idx] = 0;
 
-  /* Now compute the maximum length of any name in it.  */
+  /* Now compute the maximum length of any name in it. Also add each
+     dir to the .INCLUDE_DIRS variable.  */
 
   max_incl_len = 0;
   for (i = 0; i < idx; ++i)
@@ -2959,6 +2927,10 @@ construct_include_path (char **arg_dirs)
 	dirs[i] = savestring (dirs[i], len - 1);
       if (len > max_incl_len)
 	max_incl_len = len;
+
+      /* Append to .INCLUDE_DIRS.   */
+      do_variable_definition (NILF, ".INCLUDE_DIRS", dirs[i],
+                              o_default, f_append, 0);
     }
 
   include_directories = dirs;

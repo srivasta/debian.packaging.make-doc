@@ -1,0 +1,1989 @@
+# Dutch translation of make.
+# Copyright (C) 2004, 2005 Free Software Foundation, Inc.
+# This file is distributed under the same license as the make package.
+# Taco Witte <tcwitte@cs.uu.nl>, 2004, 2005.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: make 3.80\n"
+"Report-Msgid-Bugs-To: bug-make@gnu.org\n"
+"POT-Creation-Date: 2005-06-27 18:49-0400\n"
+"PO-Revision-Date: 2005-03-09 22:33+0200\n"
+"Last-Translator: Taco Witte <tcwitte@cs.uu.nl>\n"
+"Language-Team: Dutch <vertaling@vrijschrift.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ar.c:55
+#, c-format
+msgid "attempt to use unsupported feature: `%s'"
+msgstr "poging om een niet-ondersteunde functie te gebruiken: `%s'"
+
+#: ar.c:139
+msgid "touch archive member is not available on VMS"
+msgstr "touch: archiefonderdeel is niet beschikbaar op VMS"
+
+#: ar.c:170
+#, c-format
+msgid "touch: Archive `%s' does not exist"
+msgstr "touch: Archief `%s' bestaat niet"
+
+#: ar.c:173
+#, c-format
+msgid "touch: `%s' is not a valid archive"
+msgstr "touch: `%s' is geen geldig archief"
+
+#: ar.c:180
+#, c-format
+msgid "touch: Member `%s' does not exist in `%s'"
+msgstr "touch: Onderdeel `%s' bestaat niet in `%s'"
+
+#: ar.c:187
+#, c-format
+msgid "touch: Bad return code from ar_member_touch on `%s'"
+msgstr "touch: Slechte afsluitcode van ar_member_touch bij `%s'"
+
+#: arscan.c:69
+#, c-format
+msgid "lbr$set_module failed to extract module info, status = %d"
+msgstr "lbr$set_module kon geen module-info uitpakken, status = %d"
+
+#: arscan.c:154
+#, c-format
+msgid "lbr$ini_control failed with status = %d"
+msgstr "lbr$ini_control mislukt met status = %d"
+
+#: arscan.c:165
+#, c-format
+msgid "unable to open library `%s' to lookup member `%s'"
+msgstr "kan bibliotheek `%s' niet openen om onderdeel `%s' op te zoeken"
+
+#: arscan.c:825
+#, c-format
+msgid "Member `%s'%s: %ld bytes at %ld (%ld).\n"
+msgstr "Onderdeel `%s'%s: %ld bytes bij %ld (%ld).\n"
+
+#: arscan.c:826
+msgid " (name might be truncated)"
+msgstr " (naam kan afgekapt zijn)"
+
+#: arscan.c:828
+#, c-format
+msgid "  Date %s"
+msgstr "  Datum %s"
+
+#: arscan.c:829
+#, c-format
+msgid "  uid = %d, gid = %d, mode = 0%o.\n"
+msgstr "  uid = %d, gid = %d, modus = 0%o.\n"
+
+#: commands.c:419
+msgid "*** Break.\n"
+msgstr "*** Afgebroken.\n"
+
+#: commands.c:518
+#, c-format
+msgid "*** [%s] Archive member `%s' may be bogus; not deleted"
+msgstr "*** [%s] Archiefonderdeel `%s' kan foutief zijn; niet verwijderd"
+
+#: commands.c:521
+#, c-format
+msgid "*** Archive member `%s' may be bogus; not deleted"
+msgstr "*** Archiefonderdeel `%s' kan foutief zijn; niet verwijderd"
+
+#: commands.c:534
+#, c-format
+msgid "*** [%s] Deleting file `%s'"
+msgstr "*** [%s] Bezig met verwijderen bestand `%s'"
+
+#: commands.c:536
+#, c-format
+msgid "*** Deleting file `%s'"
+msgstr "*** Bezig met verwijderen bestand `%s'"
+
+#: commands.c:572
+msgid "#  commands to execute"
+msgstr "#  uit te voeren opdrachten"
+
+#: commands.c:575
+msgid " (built-in):"
+msgstr " (ingebouwd):"
+
+#: commands.c:577
+#, c-format
+msgid " (from `%s', line %lu):\n"
+msgstr " (van `%s', regel %lu):\n"
+
+#: dir.c:963
+msgid ""
+"\n"
+"# Directories\n"
+msgstr ""
+"\n"
+"# Mappen\n"
+
+#: dir.c:975
+#, c-format
+msgid "# %s: could not be stat'd.\n"
+msgstr "# %s: kon niet worden gevonden.\n"
+
+#: dir.c:979
+#, c-format
+msgid "# %s (key %s, mtime %d): could not be opened.\n"
+msgstr "# %s (sleutel %s, wijzigingstijd %d): kon niet worden geopend.\n"
+
+#: dir.c:983
+#, c-format
+msgid "# %s (device %d, inode [%d,%d,%d]): could not be opened.\n"
+msgstr "# %s (apparaat %d, inode [%d,%d,%d]): kon niet worden geopend.\n"
+
+#: dir.c:988
+#, c-format
+msgid "# %s (device %ld, inode %ld): could not be opened.\n"
+msgstr "# %s (apparaat %ld, inode %ld): kon niet worden geopend.\n"
+
+#: dir.c:1015
+#, c-format
+msgid "# %s (key %s, mtime %d): "
+msgstr "# %s (sleutel %s, wijzigingstijd %d): "
+
+#: dir.c:1019
+#, c-format
+msgid "# %s (device %d, inode [%d,%d,%d]): "
+msgstr "# %s (apparaat %d, inode [%d,%d,%d]): "
+
+#: dir.c:1024
+#, c-format
+msgid "# %s (device %ld, inode %ld): "
+msgstr "# %s (apparaat %ld, inode %ld): "
+
+#: dir.c:1030 dir.c:1051
+msgid "No"
+msgstr "Geen"
+
+#: dir.c:1033 dir.c:1054
+msgid " files, "
+msgstr " bestanden, "
+
+#: dir.c:1035 dir.c:1056
+msgid "no"
+msgstr "geen"
+
+#: dir.c:1038
+msgid " impossibilities"
+msgstr " onmogelijkheden"
+
+#: dir.c:1042
+msgid " so far."
+msgstr " tot nu toe."
+
+#: dir.c:1059
+#, c-format
+msgid " impossibilities in %lu directories.\n"
+msgstr " onmogelijkheden in %lu mappen.\n"
+
+#: expand.c:107
+#, c-format
+msgid "Recursive variable `%s' references itself (eventually)"
+msgstr "Recursieve variabele `%s' verwijst naar zichzelf (uiteindelijk)"
+
+#: expand.c:249
+msgid "unterminated variable reference"
+msgstr "onafgemaakte variabele-verwijzing"
+
+#: file.c:266
+#, c-format
+msgid "Commands were specified for file `%s' at %s:%lu,"
+msgstr "Opdrachten waren opgegeven voor bestand `%s' bij %s:%lu,"
+
+#: file.c:271
+#, c-format
+msgid "Commands for file `%s' were found by implicit rule search,"
+msgstr ""
+"Opdrachten voor bestand `%s' werden gevonden met impliciete regel-"
+"zoekopdracht,"
+
+#: file.c:274
+#, c-format
+msgid "but `%s' is now considered the same file as `%s'."
+msgstr "maar `%s' wordt nu als hetzelfde bestand beschouwd als `%s'."
+
+#: file.c:277
+#, c-format
+msgid "Commands for `%s' will be ignored in favor of those for `%s'."
+msgstr ""
+"Opdrachten voor `%s' zullen worden genegeerd ten gunste van die voor `%s'."
+
+#: file.c:297
+#, c-format
+msgid "can't rename single-colon `%s' to double-colon `%s'"
+msgstr ""
+"kan enkele dubbele punt `%s' niet hernoemen tot dubbele-dubbele punt `%s'"
+
+#: file.c:302
+#, c-format
+msgid "can't rename double-colon `%s' to single-colon `%s'"
+msgstr ""
+"kan dubbele-dubbele punt `%s' niet hernoemen tot enkele dubbele punt `%s'"
+
+#: file.c:377
+#, c-format
+msgid "*** Deleting intermediate file `%s'"
+msgstr "*** Bezig met verwijderen tussentijds bestand `%s'"
+
+#: file.c:381
+msgid "Removing intermediate files...\n"
+msgstr "Bezig met verwijderen tussentijdse bestanden...\n"
+
+#: file.c:685
+#, c-format
+msgid "%s: Timestamp out of range; substituting %s"
+msgstr "%s: Tijdsstempel buiten bereik; %s wordt vervangen"
+
+#: file.c:686
+msgid "Current time"
+msgstr "Huidige tijd"
+
+#: file.c:785
+msgid "# Not a target:"
+msgstr "# Geen doel:"
+
+#: file.c:807
+msgid "#  Precious file (prerequisite of .PRECIOUS)."
+msgstr "#  Waardevol bestand (vereiste van .PRECIOUS)."
+
+#: file.c:809
+msgid "#  Phony target (prerequisite of .PHONY)."
+msgstr "#  Nepdoel (vereiste van .PHONY)."
+
+#: file.c:811
+msgid "#  Command-line target."
+msgstr "#  Doel van opdrachtregel."
+
+#: file.c:813
+#, fuzzy
+msgid "#  A default, MAKEFILES, or -include/sinclude makefile."
+msgstr "#  Een standaard of MAKEFILES makefile."
+
+#: file.c:815
+msgid "#  Implicit rule search has been done."
+msgstr "#  Impliciete regel-zoekopdracht is gedaan."
+
+#: file.c:816
+msgid "#  Implicit rule search has not been done."
+msgstr "#  Impliciete regel-zoekopdracht is niet gedaan."
+
+#: file.c:818
+#, c-format
+msgid "#  Implicit/static pattern stem: `%s'\n"
+msgstr "#  Impliciete/statische patroonstam: `%s'\n"
+
+#: file.c:820
+msgid "#  File is an intermediate prerequisite."
+msgstr "#  Bestand is een tussentijdse vereiste."
+
+#: file.c:823
+msgid "#  Also makes:"
+msgstr "#  Maakt ook:"
+
+#: file.c:829
+msgid "#  Modification time never checked."
+msgstr "#  Wijzigingstijd nooit gecontroleerd."
+
+#: file.c:831
+msgid "#  File does not exist."
+msgstr "#  Bestand bestaat niet."
+
+#: file.c:833
+msgid "#  File is very old."
+msgstr "#  Bestand is erg oud."
+
+#: file.c:838
+#, c-format
+msgid "#  Last modified %s\n"
+msgstr "#  Laatst gewijzigd %s\n"
+
+#: file.c:841
+msgid "#  File has been updated."
+msgstr "#  Bestand is bijgewerkt."
+
+#: file.c:841
+msgid "#  File has not been updated."
+msgstr "#  Bestand is niet bijgewerkt."
+
+#: file.c:845
+msgid "#  Commands currently running (THIS IS A BUG)."
+msgstr "#  Op dit moment lopende opdrachten (DIT IS EEN PROGRAMMAFOUT)."
+
+#: file.c:848
+msgid "#  Dependencies commands running (THIS IS A BUG)."
+msgstr ""
+"#  Op dit moment lopende afhankelijkheden-opdrachten (DIT IS EEN "
+"PROGRAMMAFOUT)."
+
+#: file.c:857
+msgid "#  Successfully updated."
+msgstr "#  Succesvol bijgewerkt."
+
+#: file.c:861
+msgid "#  Needs to be updated (-q is set)."
+msgstr "#  Moet worden bijgewerkt (-q is ingesteld)."
+
+#: file.c:864
+msgid "#  Failed to be updated."
+msgstr "#  Bijwerken mislukt."
+
+#: file.c:867
+msgid "#  Invalid value in `update_status' member!"
+msgstr "#  Ongeldige waarde in `update_status' onderdeel!"
+
+#: file.c:874
+msgid "#  Invalid value in `command_state' member!"
+msgstr "#  Ongeldige waarde in `command_state' onderdeel!"
+
+#: file.c:893
+msgid ""
+"\n"
+"# Files"
+msgstr ""
+"\n"
+"# Bestanden"
+
+#: file.c:897
+msgid ""
+"\n"
+"# files hash-table stats:\n"
+"# "
+msgstr ""
+"\n"
+"# bestanden hash-tabel statistieken:\n"
+"# "
+
+#: function.c:744
+msgid "non-numeric first argument to `word' function"
+msgstr "niet-numeriek eerste argument aan `word'-functie"
+
+#: function.c:748
+msgid "first argument to `word' function must be greater than 0"
+msgstr "eerste argument aan `word'-functie moet groter zijn dan 0"
+
+#: function.c:769
+msgid "non-numeric first argument to `wordlist' function"
+msgstr "niet-numeriek eerste argument aan `wordlist'-functie"
+
+#: function.c:771
+msgid "non-numeric second argument to `wordlist' function"
+msgstr "niet-numeriek tweede argument aan `wordlist'-functie"
+
+#: function.c:1332
+#, c-format
+msgid "create_child_process: DuplicateHandle(In) failed (e=%d)\n"
+msgstr "create_child_process: DuplicateHandle(In) mislukt (e=%d)\n"
+
+#: function.c:1343
+#, c-format
+msgid "create_child_process: DuplicateHandle(Err) failed (e=%d)\n"
+msgstr "create_child_process: DuplicateHandle(Err) mislukt (e=%d)\n"
+
+#: function.c:1348
+#, c-format
+msgid "CreatePipe() failed (e=%d)\n"
+msgstr "CreatePipe() mislukt (e=%d)\n"
+
+#: function.c:1353
+msgid "windows32_openpipe (): process_init_fd() failed\n"
+msgstr "windows32_openpipe (): process_init_fd() mislukt\n"
+
+#: function.c:1606
+#, c-format
+msgid "Cleaning up temporary batch file %s\n"
+msgstr "Bezig met opschonen tijdelijk batch-bestand %s\n"
+
+#: function.c:1981
+#, c-format
+msgid "Insufficient number of arguments (%d) to function `%s'"
+msgstr "Onvoldoende aantal argumenten (%d) voor functie `%s'"
+
+#: function.c:1992
+#, c-format
+msgid "Unimplemented on this platform: function `%s'"
+msgstr "Niet-geïmplementeerd op dit platform: functie `%s'"
+
+#: function.c:2043
+#, c-format
+msgid "unterminated call to function `%s': missing `%c'"
+msgstr "onafgemaakte aanroep van functie `%s': `%c' ontbreekt"
+
+#: getopt.c:663
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: optie `%s' is dubbelzinnig\n"
+
+#: getopt.c:687
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: optie `--%s' staat geen argument toe\n"
+
+#: getopt.c:692
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: optie `%c%s' staat geen argument toe\n"
+
+#: getopt.c:709 getopt.c:882
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: optie `%s' vereist een argument\n"
+
+#: getopt.c:738
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: optie niet herkend `--%s'\n"
+
+#: getopt.c:742
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: optie `%c%s' niet herkend\n"
+
+#: getopt.c:768
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: ongeldige optie -- %c\n"
+
+#: getopt.c:771
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: ongeldige optie -- %c\n"
+
+#: getopt.c:801 getopt.c:931
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: optie vereist een argument -- %c\n"
+
+#: getopt.c:848
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: optie`-W %s' is dubbelzinnig\n"
+
+#: getopt.c:866
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: optie`-W %s' staat geen argument toe\n"
+
+#: hash.c:52
+#, c-format
+msgid "can't allocate %ld bytes for hash table: memory exhausted"
+msgstr "kan niet %ld bytes toewijzen voor hash-tabel: geheugen uitgeput"
+
+#: hash.c:283
+#, c-format
+msgid "Load=%ld/%ld=%.0f%%, "
+msgstr "Belasting=%ld/%ld=%.0f%%, "
+
+#: hash.c:285
+#, c-format
+msgid "Rehash=%d, "
+msgstr "Rehash=%d, "
+
+#: hash.c:286
+#, c-format
+msgid "Collisions=%ld/%ld=%.0f%%"
+msgstr "Botsingen=%ld/%ld=%.0f%%"
+
+#: implicit.c:42
+#, c-format
+msgid "Looking for an implicit rule for `%s'.\n"
+msgstr "Bezig met zoeken impliciete regel voor `%s'.\n"
+
+#: implicit.c:58
+#, c-format
+msgid "Looking for archive-member implicit rule for `%s'.\n"
+msgstr "Bezig met zoeken archiefonderdeel impliciete regel voor `%s'.\n"
+
+#: implicit.c:322
+msgid "Avoiding implicit rule recursion.\n"
+msgstr "Impliciete regelrecursie wordt ontweken.\n"
+
+#: implicit.c:468
+#, c-format
+msgid "Trying pattern rule with stem `%.*s'.\n"
+msgstr "Patroonregel wordt geprobeerd met stam `%.*s'.\n"
+
+#: implicit.c:627
+#, c-format
+msgid "Rejecting impossible implicit prerequisite `%s'.\n"
+msgstr "Onmogelijke impliciete vereiste `%s' wordt verworpen.\n"
+
+#: implicit.c:628
+#, c-format
+msgid "Rejecting impossible rule prerequisite `%s'.\n"
+msgstr "Onmogelijke regelvereiste `%s' wordt verworpen.\n"
+
+#: implicit.c:638
+#, c-format
+msgid "Trying implicit prerequisite `%s'.\n"
+msgstr "Bezig met proberen impliciete vereiste `%s'.\n"
+
+#: implicit.c:639
+#, c-format
+msgid "Trying rule prerequisite `%s'.\n"
+msgstr "Bezig met proberen regelvereiste `%s'.\n"
+
+#: implicit.c:675
+#, c-format
+msgid "Found prerequisite `%s' as VPATH `%s'\n"
+msgstr "Vereiste `%s' gevonden als VPATH `%s'\n"
+
+#: implicit.c:695
+#, c-format
+msgid "Looking for a rule with intermediate file `%s'.\n"
+msgstr "Bezig met zoeken naar regel met tussentijds bestand `%s'.\n"
+
+#: job.c:319
+#, fuzzy
+msgid "Cannot create a temporary file\n"
+msgstr "fwrite (tijdelijk bestand)"
+
+#: job.c:386
+#, c-format
+msgid "*** [%s] Error 0x%x (ignored)"
+msgstr "*** [%s] Fout 0x%x (genegeerd)"
+
+#: job.c:387
+#, c-format
+msgid "*** [%s] Error 0x%x"
+msgstr "*** [%s] Fout 0x%x"
+
+#: job.c:391
+#, c-format
+msgid "[%s] Error %d (ignored)"
+msgstr "[%s] Fout %d (genegeerd)"
+
+#: job.c:392
+#, c-format
+msgid "*** [%s] Error %d"
+msgstr "*** [%s] Fout %d"
+
+#: job.c:397
+msgid " (core dumped)"
+msgstr " (geheugendump gemaakt)"
+
+#: job.c:480
+msgid "*** Waiting for unfinished jobs...."
+msgstr "*** Bezig met wachten op onvoltooide taken...."
+
+#: job.c:509
+#, c-format
+msgid "Live child 0x%08lx (%s) PID %ld %s\n"
+msgstr "Levend kind 0x%08lx (%s) PID %ld %s\n"
+
+#: job.c:511 job.c:672 job.c:775 job.c:1422
+msgid " (remote)"
+msgstr " (op afstand)"
+
+#: job.c:669
+#, c-format
+msgid "Reaping losing child 0x%08lx PID %ld %s\n"
+msgstr "Bezig met beëindigen van verliezend kind 0x%08lx PID %ld %s\n"
+
+#: job.c:670
+#, c-format
+msgid "Reaping winning child 0x%08lx PID %ld %s\n"
+msgstr "Bezig met beëindigen van winnend kind 0x%08lx PID %ld %s\n"
+
+#: job.c:675
+#, c-format
+msgid "Cleaning up temp batch file %s\n"
+msgstr "Bezig met opschonen van tijdelijk batch-bestand %s\n"
+
+#: job.c:773
+#, c-format
+msgid "Removing child 0x%08lx PID %ld%s from chain.\n"
+msgstr "Bezig met verwijderen van kind 0x%08lx PID %ld%s uit ketting.\n"
+
+#: job.c:833
+msgid "write jobserver"
+msgstr "schrijven taakserver"
+
+#: job.c:835
+#, c-format
+msgid "Released token for child 0x%08lx (%s).\n"
+msgstr "Token losgelaten voor kind 0x%08lx (%s).\n"
+
+#: job.c:1354 job.c:1971
+#, c-format
+msgid "process_easy() failed failed to launch process (e=%d)\n"
+msgstr "process_easy() kon niet proces starten (e=%d)\n"
+
+#: job.c:1358 job.c:1975
+#, c-format
+msgid ""
+"\n"
+"Counted %d args in failed launch\n"
+msgstr ""
+"\n"
+"%d argumenten geteld bij mislukte start\n"
+
+#: job.c:1420
+#, c-format
+msgid "Putting child 0x%08lx (%s) PID %ld%s on the chain.\n"
+msgstr "Bezig met opnemen van kind 0x%08lx (%s) PID %ld%s in de ketting.\n"
+
+#: job.c:1670
+#, c-format
+msgid "Obtained token for child 0x%08lx (%s).\n"
+msgstr "Token verkregen voor kind 0x%08lx (%s).\n"
+
+#: job.c:1679
+msgid "read jobs pipe"
+msgstr "pijp om taken te lezen"
+
+#: job.c:1787
+msgid "cannot enforce load limits on this operating system"
+msgstr "kan belastingsgrenzen niet afdwingen op dit besturingssysteem"
+
+#: job.c:1789
+msgid "cannot enforce load limit: "
+msgstr "kan belastingsgrens niet afdwingen: "
+
+#: job.c:1862
+msgid "no more file handles: could not duplicate stdin\n"
+msgstr ""
+
+#: job.c:1864
+msgid "no more file handles: could not duplicate stdout\n"
+msgstr ""
+
+#: job.c:1892
+msgid "Could not restore stdin\n"
+msgstr ""
+
+#: job.c:1900
+msgid "Could not restore stdout\n"
+msgstr ""
+
+#: job.c:2001
+#, c-format
+msgid "make reaped child pid %d, still waiting for pid %d\n"
+msgstr "make heeft kind met PID %d verwerkt, wacht nog op PID %d\n"
+
+#: job.c:2040
+#, c-format
+msgid "%s: Command not found"
+msgstr "%s: Opdracht niet gevonden"
+
+#: job.c:2100
+#, c-format
+msgid "%s: Shell program not found"
+msgstr "%s: Shell-programma niet gevonden"
+
+#: job.c:2109
+msgid "spawnvpe: environment space might be exhausted"
+msgstr ""
+
+#: job.c:2317
+#, fuzzy, c-format
+msgid "$SHELL changed (was `%s', now `%s')\n"
+msgstr "$SHELL gewijzigd (was `%s', is nu `%s')"
+
+#: job.c:2715
+#, c-format
+msgid "Creating temporary batch file %s\n"
+msgstr "Bezig met maken van tijdelijk batch-bestand %s\n"
+
+#: job.c:2826
+#, c-format
+msgid "%s (line %d) Bad shell context (!unixy && !batch_mode_shell)\n"
+msgstr "%s (regel %d) Slechte shell-context (!unixy && !batch_mode_shell)\n"
+
+#: main.c:292
+msgid "Options:\n"
+msgstr "Opties:\n"
+
+#: main.c:293
+msgid "  -b, -m                      Ignored for compatibility.\n"
+msgstr "  -b, -m                      Genegeerd voor compatibiliteit.\n"
+
+#: main.c:295
+msgid "  -B, --always-make           Unconditionally make all targets.\n"
+msgstr "  -B, --always-make           Onvoorwaardelijk alle doelen maken.\n"
+
+#: main.c:297
+msgid ""
+"  -C DIRECTORY, --directory=DIRECTORY\n"
+"                              Change to DIRECTORY before doing anything.\n"
+msgstr "  -C MAP, --directory=MAP  Naar MAP gaan alvorens iets te doen.\n"
+
+#: main.c:300
+msgid "  -d                          Print lots of debugging information.\n"
+msgstr ""
+"  -d                          Veel informatie geven voor oplossen fouten.\n"
+
+#: main.c:302
+msgid ""
+"  --debug[=FLAGS]             Print various types of debugging information.\n"
+msgstr ""
+"  --debug[=VLAGGEN]           Verschillende soorten debug-informatie geven.\n"
+
+#: main.c:304
+msgid ""
+"  -e, --environment-overrides\n"
+"                              Environment variables override makefiles.\n"
+msgstr ""
+"  -e, --environment-overrides\n"
+"                              Omgevingsvariabelen gaan boven makefiles.\n"
+
+#: main.c:307
+msgid ""
+"  -f FILE, --file=FILE, --makefile=FILE\n"
+"                              Read FILE as a makefile.\n"
+msgstr ""
+"  -f BESTAND, --file=BESTAND, --makefile=BESTAND\n"
+"                              BESTAND lezen als een makefile.\n"
+
+#: main.c:310
+msgid "  -h, --help                  Print this message and exit.\n"
+msgstr "  -h, --help                  Dit bericht weergeven en afsluiten.\n"
+
+#: main.c:312
+msgid "  -i, --ignore-errors         Ignore errors from commands.\n"
+msgstr "  -i, --ignore-errors         Fouten van opdrachten negeren.\n"
+
+#: main.c:314
+msgid ""
+"  -I DIRECTORY, --include-dir=DIRECTORY\n"
+"                              Search DIRECTORY for included makefiles.\n"
+msgstr ""
+"  -I MAP, --include-dir=MAP\n"
+"                              MAP doorzoeken voor ingesloten makefiles.\n"
+
+#: main.c:317
+msgid ""
+"  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no "
+"arg.\n"
+msgstr ""
+"  -j [N], --jobs[=N]          N taken tegelijk toestaan; oneindig bij geen "
+"argument.\n"
+
+#: main.c:319
+msgid ""
+"  -k, --keep-going            Keep going when some targets can't be made.\n"
+msgstr ""
+"  -k, --keep-going            Doorgaan als sommige doelen niet gemaakt "
+"kunnen worden.\n"
+
+#: main.c:321
+msgid ""
+"  -l [N], --load-average[=N], --max-load[=N]\n"
+"                              Don't start multiple jobs unless load is below "
+"N.\n"
+msgstr ""
+"  -l [N], --load-average[=N], --max-load[=N]\n"
+"                              Niet meerdere taken starten behalve als onder "
+"systeembelasting N.\n"
+
+#: main.c:324
+msgid ""
+"  -L, --check-symlink-times   Use the latest mtime between symlinks and "
+"target.\n"
+msgstr ""
+
+#: main.c:326
+msgid ""
+"  -n, --just-print, --dry-run, --recon\n"
+"                              Don't actually run any commands; just print "
+"them.\n"
+msgstr ""
+"  -n, --just-print, --dry-run, --recon\n"
+"                              Niet echt opdrachten uitvoeren, maar alleen "
+"weergeven.\n"
+
+#: main.c:329
+msgid ""
+"  -o FILE, --old-file=FILE, --assume-old=FILE\n"
+"                              Consider FILE to be very old and don't remake "
+"it.\n"
+msgstr ""
+"  -o BESTAND, --old-file=BESTAND, --assume-old=BESTAND\n"
+"                              Beschouw BESTAND als erg oud en maak het niet "
+"opnieuw.\n"
+
+#: main.c:332
+msgid "  -p, --print-data-base       Print make's internal database.\n"
+msgstr ""
+"  -p, --print-data-base       Interne gegevensbank van make weergeven.\n"
+
+#: main.c:334
+msgid ""
+"  -q, --question              Run no commands; exit status says if up to "
+"date.\n"
+msgstr ""
+"  -q, --question              Geen opdrachten uitvoeren; afsluitstatus geeft "
+"aan of alles bijgewerkt is.\n"
+
+#: main.c:336
+msgid "  -r, --no-builtin-rules      Disable the built-in implicit rules.\n"
+msgstr ""
+"  -r, --no-builtin-rules      Ingebouwde impliciete regels uit zetten.\n"
+
+#: main.c:338
+msgid "  -R, --no-builtin-variables  Disable the built-in variable settings.\n"
+msgstr ""
+"  -R, --no-builtin-variables  Ingebouwde variabele-instellingen uit zetten.\n"
+
+#: main.c:340
+msgid "  -s, --silent, --quiet       Don't echo commands.\n"
+msgstr "  -s, --silent, --quiet       Opdrachten niet weergeven.\n"
+
+#: main.c:342
+msgid ""
+"  -S, --no-keep-going, --stop\n"
+"                              Turns off -k.\n"
+msgstr ""
+"  -S, --no-keep-going, --stop\n"
+"                              -k uitzetten.\n"
+
+#: main.c:345
+msgid "  -t, --touch                 Touch targets instead of remaking them.\n"
+msgstr ""
+"  -t, --touch                 Doelen aanraken in plaats van opnieuw maken.\n"
+
+#: main.c:347
+msgid ""
+"  -v, --version               Print the version number of make and exit.\n"
+msgstr ""
+"  -v, --version               Versienummer van make weergeven en afsluiten.\n"
+
+#: main.c:349
+msgid "  -w, --print-directory       Print the current directory.\n"
+msgstr "  -w, --print-directory       De huidige map weergeven.\n"
+
+#: main.c:351
+msgid ""
+"  --no-print-directory        Turn off -w, even if it was turned on "
+"implicitly.\n"
+msgstr ""
+"  --no-print-directory        -w uit zetten, zelfs als het impliciet aan "
+"gezet was.\n"
+
+#: main.c:353
+msgid ""
+"  -W FILE, --what-if=FILE, --new-file=FILE, --assume-new=FILE\n"
+"                              Consider FILE to be infinitely new.\n"
+msgstr ""
+"  -W BESTAND, --what-if=BESTAND, --new-file=BESTAND, --assume-new=BESTAND\n"
+"                              BESTAND als oneindig nieuw beschouwen.\n"
+
+#: main.c:356
+msgid ""
+"  --warn-undefined-variables  Warn when an undefined variable is "
+"referenced.\n"
+msgstr ""
+"  --warn-undefined-variables  Waarschuwen als naar een ongedefinieerde "
+"variabele wordt verwezen.\n"
+
+#: main.c:544
+msgid "empty string invalid as file name"
+msgstr "lege tekenreeks is ongeldig als bestandsnaam"
+
+#: main.c:625
+#, c-format
+msgid "unknown debug level specification `%s'"
+msgstr "onbekende aanduiding `%s' voor debug-niveau"
+
+#: main.c:665
+#, c-format
+msgid "%s: Interrupt/Exception caught (code = 0x%x, addr = 0x%x)\n"
+msgstr "%s: Onderbreking/uitzondering gekregen (code = 0x%x, adres = 0x%x)\n"
+
+#: main.c:672
+#, c-format
+msgid ""
+"\n"
+"Unhandled exception filter called from program %s\n"
+"ExceptionCode = %x\n"
+"ExceptionFlags = %x\n"
+"ExceptionAddress = %x\n"
+msgstr ""
+"\n"
+"Filter voor onbehandelde uitzondering aangeroepen vanuit programma %s\n"
+"ExceptionCode = %x\n"
+"ExceptionFlags = %x\n"
+"ExceptionAddress = %x\n"
+
+#: main.c:680
+#, c-format
+msgid "Access violation: write operation at address %x\n"
+msgstr "Toegangsovertreding: schrijfopdracht op adres %x\n"
+
+#: main.c:681
+#, c-format
+msgid "Access violation: read operation at address %x\n"
+msgstr "Toegangsovertreding: leesopdracht bij adres %x\n"
+
+#: main.c:764
+#, c-format
+msgid "find_and_set_shell setting default_shell = %s\n"
+msgstr "find_and_set_shell stelt in default_shell = %s\n"
+
+#: main.c:805
+#, c-format
+msgid "find_and_set_shell path search set default_shell = %s\n"
+msgstr "find_and_set_shell zoekpad stelt default_shell in op = %s\n"
+
+#: main.c:1225
+#, c-format
+msgid "%s is suspending for 30 seconds..."
+msgstr "%s slaapt gedurende 30 seconden..."
+
+#: main.c:1227
+#, c-format
+msgid "done sleep(30). Continuing.\n"
+msgstr "klaar met 30 seconden slapen.  Make gaat verder.\n"
+
+#: main.c:1455
+msgid "Makefile from standard input specified twice."
+msgstr "Makefile op standaardinvoer dubbel opgegeven."
+
+#: main.c:1494 vmsjobs.c:473
+msgid "fopen (temporary file)"
+msgstr "fopen (tijdelijk bestand)"
+
+#: main.c:1500
+msgid "fwrite (temporary file)"
+msgstr "fwrite (tijdelijk bestand)"
+
+#: main.c:1593
+msgid "Do not specify -j or --jobs if sh.exe is not available."
+msgstr "Geef niet -j of --jobs op als sh.exe niet beschikbaar is."
+
+#: main.c:1594
+msgid "Resetting make for single job mode."
+msgstr "Make wordt opnieuw ingesteld op enkele-taakmodus."
+
+#: main.c:1635
+msgid "Parallel jobs (-j) are not supported on this platform."
+msgstr "Parallele taken (-j) worden niet ondersteund op dit platform."
+
+#: main.c:1636
+msgid "Resetting to single job (-j1) mode."
+msgstr "Bezig met opnieuw instellen op enkele-taakmodus (-j1)."
+
+#: main.c:1651
+msgid "internal error: multiple --jobserver-fds options"
+msgstr "interne fout: meerdere --jobserver-fds opties"
+
+#: main.c:1659
+#, c-format
+msgid "internal error: invalid --jobserver-fds string `%s'"
+msgstr "interne fout: ongeldige --jobserver-fds tekenreeks `%s'"
+
+#: main.c:1669
+msgid "warning: -jN forced in submake: disabling jobserver mode."
+msgstr ""
+"waarschuwing: -jN afgedwongen in een deelproces: taakserver-modus uitgezet."
+
+#: main.c:1679
+msgid "dup jobserver"
+msgstr "dubbele taakserver"
+
+#: main.c:1682
+msgid ""
+"warning: jobserver unavailable: using -j1.  Add `+' to parent make rule."
+msgstr ""
+"waarschuwing: taakserver onbeschikbaar: -j1 wordt gebruikt.  Voeg `+' toe "
+"aan ouderlijke make-regel."
+
+#: main.c:1705
+msgid "creating jobs pipe"
+msgstr "bezig met maken pijp voor taken"
+
+#: main.c:1720
+msgid "init jobserver pipe"
+msgstr "bezig met initialiseren taakserver pijp"
+
+#: main.c:1739
+msgid "Symbolic links not supported: disabling -L."
+msgstr ""
+
+#: main.c:1815
+msgid "Updating makefiles....\n"
+msgstr "Bezig met bijwerken makefiles...\n"
+
+#: main.c:1840
+#, c-format
+msgid "Makefile `%s' might loop; not remaking it.\n"
+msgstr "Makefile `%s' bevat mogelijk een lus; wordt niet opnieuw gemaakt.\n"
+
+#: main.c:1919
+#, c-format
+msgid "Failed to remake makefile `%s'."
+msgstr "Opnieuw maken van makefile `%s' is mislukt."
+
+#: main.c:1936
+#, c-format
+msgid "Included makefile `%s' was not found."
+msgstr "Ingesloten makefile `%s' werd niet gevonden."
+
+#: main.c:1941
+#, c-format
+msgid "Makefile `%s' was not found"
+msgstr "Makefile `%s' werd niet gevonden"
+
+#: main.c:2009
+msgid "Couldn't change back to original directory."
+msgstr "Kon niet terugkeren naar oorspronkelijke map."
+
+#: main.c:2017
+#, fuzzy, c-format
+msgid "Re-executing[%u]:"
+msgstr "Bezig met opnieuw uitvoeren:"
+
+#: main.c:2133
+msgid "unlink (temporary file): "
+msgstr "verwijderen (tijdelijk bestand): "
+
+#: main.c:2162
+msgid ".DEFAULT_GOAL contains more than one target"
+msgstr ""
+
+#: main.c:2186
+msgid "No targets specified and no makefile found"
+msgstr "Geen doelen opgegeven en geen makefile gevonden"
+
+#: main.c:2188
+msgid "No targets"
+msgstr "Geen doelen"
+
+#: main.c:2193
+msgid "Updating goal targets....\n"
+msgstr "Bezig met bijwerken doelen....\n"
+
+#: main.c:2219
+msgid "warning:  Clock skew detected.  Your build may be incomplete."
+msgstr ""
+"waarschuwing:  Klokafwijking gevonden.  Uw bouw is mogelijk onvolledig."
+
+#: main.c:2382
+#, c-format
+msgid "Usage: %s [options] [target] ...\n"
+msgstr "Gebruik: %s [opties] [doel] ...\n"
+
+#: main.c:2388
+#, c-format
+msgid ""
+"\n"
+"This program built for %s\n"
+msgstr ""
+"\n"
+"Dit programma is gebouwd voor %s\n"
+
+#: main.c:2390
+#, c-format
+msgid ""
+"\n"
+"This program built for %s (%s)\n"
+msgstr ""
+"\n"
+"Dit programma is gebouwd voor %s (%s)\n"
+
+#: main.c:2393
+#, c-format
+msgid "Report bugs to <bug-make@gnu.org>\n"
+msgstr ""
+"Rapporteer programmafouten aan <bug-make@gnu.org>\n"
+"en fouten in de Nederlandse vertaling aan <vertaling@nl.linux.org>\n"
+
+#: main.c:2465
+#, fuzzy, c-format
+msgid "the `-%c' option requires a non-empty string argument"
+msgstr "de `-%c' optie vereist een positief, geheel argument"
+
+#: main.c:2517
+#, c-format
+msgid "the `-%c' option requires a positive integral argument"
+msgstr "de `-%c' optie vereist een positief, geheel argument"
+
+#: main.c:2941
+#, c-format
+msgid ""
+"%sThis is free software; see the source for copying conditions.\n"
+"%sThere is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A\n"
+"%sPARTICULAR PURPOSE.\n"
+msgstr ""
+"%sDit is vrije software; zie de bron voor kopieervoorwaarden.\n"
+"%sEr is GEEN garantie; zelfs niet voor VERHANDELBAARHEID of\n"
+"%sGESCHIKTHEID VOOR EEN BEPAALD DOEL.\n"
+
+#: main.c:2947
+#, fuzzy, c-format
+msgid ""
+"\n"
+"%sThis program built for %s\n"
+msgstr ""
+"\n"
+"Dit programma is gebouwd voor %s\n"
+
+#: main.c:2949
+#, fuzzy, c-format
+msgid ""
+"\n"
+"%sThis program built for %s (%s)\n"
+msgstr ""
+"\n"
+"Dit programma is gebouwd voor %s (%s)\n"
+
+#: main.c:2967
+#, c-format
+msgid ""
+"\n"
+"# Make data base, printed on %s"
+msgstr ""
+"\n"
+"# Make-gegevensbank, weergegeven op %s"
+
+#: main.c:2976
+#, c-format
+msgid ""
+"\n"
+"# Finished Make data base on %s\n"
+msgstr ""
+"\n"
+"# Make-gegevensbank voltooid op %s\n"
+
+#: main.c:3089
+#, fuzzy, c-format
+msgid "%s: Entering an unknown directory\n"
+msgstr "%s: Binnengaan onbekende map"
+
+#: main.c:3091
+#, fuzzy, c-format
+msgid "%s: Leaving an unknown directory\n"
+msgstr "%s: Uitgaan onbekende map"
+
+#: main.c:3094
+#, c-format
+msgid "%s: Entering directory `%s'\n"
+msgstr "%s: Binnengaan map `%s'\n"
+
+#: main.c:3097
+#, c-format
+msgid "%s: Leaving directory `%s'\n"
+msgstr "%s: Uitgaan map `%s'\n"
+
+#: main.c:3102
+#, fuzzy, c-format
+msgid "%s[%u]: Entering an unknown directory\n"
+msgstr "%s[%u]: Binnengaan onbekende map"
+
+#: main.c:3105
+#, fuzzy, c-format
+msgid "%s[%u]: Leaving an unknown directory\n"
+msgstr "%s[%u]: Uitgaan onbekende map"
+
+#: main.c:3109
+#, c-format
+msgid "%s[%u]: Entering directory `%s'\n"
+msgstr "%s[%u]: Binnengaan map `%s'\n"
+
+#: main.c:3112
+#, c-format
+msgid "%s[%u]: Leaving directory `%s'\n"
+msgstr "%s[%u]: Uitgaan map `%s'\n"
+
+#: misc.c:287
+msgid ".  Stop.\n"
+msgstr ".  Gestopt.\n"
+
+#: misc.c:308
+#, c-format
+msgid "Unknown error %d"
+msgstr "Onbekende fout %d"
+
+#: misc.c:318
+#, c-format
+msgid "%s%s: %s"
+msgstr "%s%s: %s"
+
+#: misc.c:326
+#, c-format
+msgid "%s: %s"
+msgstr "%s: %s"
+
+#: misc.c:346 misc.c:361 misc.c:378 read.c:3163
+msgid "virtual memory exhausted"
+msgstr "onvoldoende virtueel geheugen"
+
+#: misc.c:605
+#, c-format
+msgid "%s: user %lu (real %lu), group %lu (real %lu)\n"
+msgstr "%s: gebruiker %lu (echt %lu), groep %lu (echt %lu)\n"
+
+#: misc.c:626
+msgid "Initialized access"
+msgstr "Toegang geïnitialiseerd"
+
+#: misc.c:705
+msgid "User access"
+msgstr "Gebruikerstoegang"
+
+#: misc.c:753
+msgid "Make access"
+msgstr "Make-toegang"
+
+#: misc.c:787
+msgid "Child access"
+msgstr "Kindtoegang"
+
+#: misc.c:851
+#, fuzzy, c-format
+msgid "write error: %s"
+msgstr "Fouten omgeleid naar %s\n"
+
+#: misc.c:853
+#, fuzzy
+msgid "write error"
+msgstr "schrijven taakserver"
+
+#: read.c:162
+msgid "Reading makefiles...\n"
+msgstr "Bezig met lezen makefiles...\n"
+
+#: read.c:321
+#, c-format
+msgid "Reading makefile `%s'"
+msgstr "Bezig met lezen makefile `%s'"
+
+#: read.c:323
+#, c-format
+msgid " (no default goal)"
+msgstr " (geen standaarddoel)"
+
+#: read.c:325
+#, c-format
+msgid " (search path)"
+msgstr " (zoekpad)"
+
+#: read.c:327
+#, c-format
+msgid " (don't care)"
+msgstr " (maakt niet uit)"
+
+#: read.c:329
+#, c-format
+msgid " (no ~ expansion)"
+msgstr " (geen ~-uitbreiding)"
+
+#: read.c:627
+msgid "invalid syntax in conditional"
+msgstr "ongeldige syntaxis in voorwaardelijk deel"
+
+#: read.c:637
+msgid "extraneous `endef'"
+msgstr "extra `endef'"
+
+#: read.c:649 read.c:677 variable.c:1301
+msgid "empty variable name"
+msgstr "lege variabele-naam"
+
+#: read.c:666
+msgid "empty `override' directive"
+msgstr "lege `override'-richtlijn"
+
+#: read.c:691
+msgid "invalid `override' directive"
+msgstr "ongeldige `override'-richtlijn"
+
+#: read.c:858
+msgid "commands commence before first target"
+msgstr "opdrachten beginnen voor eerste doel"
+
+#: read.c:909
+msgid "missing rule before commands"
+msgstr "ontbrekende regel voor opdrachten"
+
+#: read.c:996
+#, c-format
+msgid "missing separator%s"
+msgstr "ontbrekend scheidingsteken%s"
+
+#: read.c:998
+msgid " (did you mean TAB instead of 8 spaces?)"
+msgstr " (bedoelde u TAB in plaats van 8 spaties?)"
+
+#: read.c:1156
+msgid "missing target pattern"
+msgstr "ontbrekend doelpatroon"
+
+#: read.c:1158
+msgid "multiple target patterns"
+msgstr "meerdere doelpatronen"
+
+#: read.c:1162
+#, c-format
+msgid "target pattern contains no `%%'"
+msgstr "doelpatroon bevat geen `%%'"
+
+#: read.c:1303
+msgid "missing `endif'"
+msgstr "ontbrekende `endif'"
+
+#: read.c:1394
+msgid "Extraneous text after `endef' directive"
+msgstr "Extra tekst na `endef'-richtlijn"
+
+#: read.c:1428
+msgid "missing `endef', unterminated `define'"
+msgstr "ontbrekende `endef', onafgemaakte `define'"
+
+#: read.c:1471
+#, c-format
+msgid "Extraneous text after `%s' directive"
+msgstr "Extra tekst na `%s'-richtlijn"
+
+#: read.c:1480 read.c:1494
+#, c-format
+msgid "extraneous `%s'"
+msgstr "extra `%s'"
+
+#: read.c:1499
+msgid "only one `else' per conditional"
+msgstr "slechts één `else' per voorwaardelijk deel"
+
+#: read.c:1841
+#, fuzzy
+msgid "Malformed target-specific variable definition"
+msgstr "Misvormde per-doel variabele definitie"
+
+#: read.c:1904
+msgid "prerequisites cannot be defined in command scripts"
+msgstr ""
+
+#: read.c:1939
+msgid "mixed implicit and static pattern rules"
+msgstr "gemengde impliciete en statische patroonregels"
+
+#: read.c:1942
+msgid "mixed implicit and normal rules"
+msgstr "gemengde impliciete en normale regels"
+
+#: read.c:1983
+#, c-format
+msgid "target `%s' doesn't match the target pattern"
+msgstr "doel `%s' komt niet overeen met doelpatroon"
+
+#: read.c:2011 read.c:2134
+#, c-format
+msgid "target file `%s' has both : and :: entries"
+msgstr "doelbestand `%s' heeft zowel : als :: ingangen"
+
+#: read.c:2017
+#, c-format
+msgid "target `%s' given more than once in the same rule."
+msgstr "doel `%s' meerdere keren gegeven in dezelfde regel."
+
+#: read.c:2026
+#, c-format
+msgid "warning: overriding commands for target `%s'"
+msgstr "waarschuwing: er wordt voorbijgegaan aan opdrachten voor doel `%s'"
+
+#: read.c:2029
+#, c-format
+msgid "warning: ignoring old commands for target `%s'"
+msgstr "waarschuwing: oude opdrachten voor doel `%s' worden genegeerd"
+
+#: read.c:2616
+msgid "warning: NUL character seen; rest of line ignored"
+msgstr "waarschuwing: NUL-teken gezien; de rest van de regel wordt genegeerd"
+
+#: remake.c:230
+#, c-format
+msgid "Nothing to be done for `%s'."
+msgstr "Niets te doen voor `%s'."
+
+#: remake.c:231
+#, c-format
+msgid "`%s' is up to date."
+msgstr "`%s' is bijgewerkt."
+
+#: remake.c:297
+#, c-format
+msgid "Pruning file `%s'.\n"
+msgstr "Bezig met opruimen van bestand `%s'.\n"
+
+#: remake.c:346
+#, c-format
+msgid "%sNo rule to make target `%s'%s"
+msgstr "%sGeen regel om doel `%s' te maken%s"
+
+#: remake.c:348
+#, c-format
+msgid "%sNo rule to make target `%s', needed by `%s'%s"
+msgstr "%sGeen regel om doel `%s' te maken, nodig voor `%s'%s"
+
+#: remake.c:375
+#, c-format
+msgid "Considering target file `%s'.\n"
+msgstr "Doelbestand `%s' wordt overwogen.\n"
+
+#: remake.c:382
+#, c-format
+msgid "Recently tried and failed to update file `%s'.\n"
+msgstr "Bijwerken bestand `%s' is recent geprobeerd en mislukt.\n"
+
+#: remake.c:397
+#, c-format
+msgid "File `%s' was considered already.\n"
+msgstr "Bestand `%s' was al overwogen.\n"
+
+#: remake.c:407
+#, c-format
+msgid "Still updating file `%s'.\n"
+msgstr "Bestand `%s' wordt toch bijgewerkt.\n"
+
+#: remake.c:410
+#, c-format
+msgid "Finished updating file `%s'.\n"
+msgstr "Bijwerken bestand `%s' voltooid.\n"
+
+#: remake.c:431
+#, c-format
+msgid "File `%s' does not exist.\n"
+msgstr "Bestand `%s' bestaat niet.\n"
+
+#: remake.c:438
+#, c-format
+msgid ""
+"*** Warning: .LOW_RESOLUTION_TIME file `%s' has a high resolution time stamp"
+msgstr ""
+"*** Waarschuwing: .LOW_RESOLUTION_TIME bestand `%s' heeft een hoge-resolutie "
+"tijdsstempel"
+
+#: remake.c:451 remake.c:932
+#, c-format
+msgid "Found an implicit rule for `%s'.\n"
+msgstr "Impliciete regel voor `%s' gevonden.\n"
+
+#: remake.c:453 remake.c:934
+#, c-format
+msgid "No implicit rule found for `%s'.\n"
+msgstr "Geen impliciete regel gevonden voor `%s'.\n"
+
+#: remake.c:459 remake.c:940
+#, c-format
+msgid "Using default commands for `%s'.\n"
+msgstr "Standaardopdrachten worden gebruikt voor `%s'.\n"
+
+#: remake.c:481 remake.c:966
+#, c-format
+msgid "Circular %s <- %s dependency dropped."
+msgstr "Circulaire %s <- %s afhankelijkheid verworpen."
+
+#: remake.c:593
+#, c-format
+msgid "Finished prerequisites of target file `%s'.\n"
+msgstr "Vereisten van doelbestand `%s' voltooid.\n"
+
+#: remake.c:599
+#, c-format
+msgid "The prerequisites of `%s' are being made.\n"
+msgstr "De vereisten van `%s' worden nu gemaakt.\n"
+
+#: remake.c:612
+#, c-format
+msgid "Giving up on target file `%s'.\n"
+msgstr "Doelbestand `%s' wordt opgegeven.\n"
+
+#: remake.c:617
+#, c-format
+msgid "Target `%s' not remade because of errors."
+msgstr "Doel `%s' niet opnieuw gemaakt vanwege fouten."
+
+#: remake.c:669
+#, c-format
+msgid "Prerequisite `%s' is order-only for target `%s'.\n"
+msgstr "Vereiste `%s' is alleen-ordenen voor doel `%s'.\n"
+
+#: remake.c:674
+#, c-format
+msgid "Prerequisite `%s' of target `%s' does not exist.\n"
+msgstr "Vereiste `%s' van doel `%s' bestaat niet.\n"
+
+#: remake.c:679
+#, c-format
+msgid "Prerequisite `%s' is newer than target `%s'.\n"
+msgstr "Vereiste `%s' is nieuwer dan doel `%s'.\n"
+
+#: remake.c:682
+#, c-format
+msgid "Prerequisite `%s' is older than target `%s'.\n"
+msgstr "Vereiste `%s' is ouder dan doel `%s'.\n"
+
+#: remake.c:700
+#, c-format
+msgid "Target `%s' is double-colon and has no prerequisites.\n"
+msgstr "Doel `%s' is dubbele-dubbele punt en heeft geen vereisten.\n"
+
+#: remake.c:707
+#, c-format
+msgid "No commands for `%s' and no prerequisites actually changed.\n"
+msgstr "Geen opdrachten voor `%s' en geen vereisten zijn veranderd.\n"
+
+#: remake.c:712
+#, c-format
+msgid "Making `%s' due to always-make flag.\n"
+msgstr "`%s' wordt gemaakt vanwege always-make vlag.\n"
+
+#: remake.c:720
+#, c-format
+msgid "No need to remake target `%s'"
+msgstr "Doel `%s' hoeft niet opnieuw gemaakt te worden"
+
+#: remake.c:722
+#, c-format
+msgid "; using VPATH name `%s'"
+msgstr "; VPATH naam `%s' wordt gebruikt"
+
+#: remake.c:742
+#, c-format
+msgid "Must remake target `%s'.\n"
+msgstr "`%s' moet opnieuw gemaakt worden.\n"
+
+#: remake.c:748
+#, c-format
+msgid "  Ignoring VPATH name `%s'.\n"
+msgstr "  VPATH naam `%s' wordt genegeerd.\n"
+
+#: remake.c:757
+#, c-format
+msgid "Commands of `%s' are being run.\n"
+msgstr "Opdrachten van `%s' worden nu uitgevoerd.\n"
+
+#: remake.c:764
+#, c-format
+msgid "Failed to remake target file `%s'.\n"
+msgstr "Opnieuw maken van doelbestand `%s' is mislukt.\n"
+
+#: remake.c:767
+#, c-format
+msgid "Successfully remade target file `%s'.\n"
+msgstr "Doelbestand `%s' is succesvol opnieuw gemaakt.\n"
+
+#: remake.c:770
+#, c-format
+msgid "Target file `%s' needs remade under -q.\n"
+msgstr "Doelbestand `%s' moet opnieuw worden gemaakt onder -q.\n"
+
+#: remake.c:1274
+#, c-format
+msgid "Warning: File `%s' has modification time in the future"
+msgstr "Waarschuwing: Bestand `%s' heeft wijzigingstijd in de toekomst"
+
+#: remake.c:1281
+#, c-format
+msgid "Warning: File `%s' has modification time %.2g s in the future"
+msgstr "Waarschuwing: Bestand `%s' heeft wijzigingstijd %.2g s in de toekomst"
+
+#: remake.c:1480
+#, c-format
+msgid ".LIBPATTERNS element `%s' is not a pattern"
+msgstr ".LIBPATTERNS element `%s' is geen patroon"
+
+#: remote-cstms.c:126
+#, c-format
+msgid "Customs won't export: %s\n"
+msgstr "Customs kan niet exporteren: %s\n"
+
+#: rule.c:551
+msgid ""
+"\n"
+"# Implicit Rules"
+msgstr ""
+"\n"
+"# Impliciete regels"
+
+#: rule.c:566
+msgid ""
+"\n"
+"# No implicit rules."
+msgstr ""
+"\n"
+"# Geen impliciete regels."
+
+#: rule.c:569
+#, c-format
+msgid ""
+"\n"
+"# %u implicit rules, %u"
+msgstr ""
+"\n"
+"# %u impliciete regels, %u"
+
+#: rule.c:578
+msgid " terminal."
+msgstr " terminal."
+
+#: rule.c:586
+#, c-format
+msgid "BUG: num_pattern_rules wrong!  %u != %u"
+msgstr "PROGRAMMAFOUT: num_pattern_rules verkeerd!  %u != %u"
+
+#: signame.c:87
+msgid "unknown signal"
+msgstr "onbekend signaal"
+
+#: signame.c:95
+msgid "Hangup"
+msgstr "Ophangen"
+
+#: signame.c:98
+msgid "Interrupt"
+msgstr "Onderbreken"
+
+#: signame.c:101
+msgid "Quit"
+msgstr "Afsluiten"
+
+#: signame.c:104
+msgid "Illegal Instruction"
+msgstr "Onjuiste bewerking"
+
+#: signame.c:107
+msgid "Trace/breakpoint trap"
+msgstr "Traceer/breekpunt val"
+
+#: signame.c:112
+msgid "Aborted"
+msgstr "Geannuleerd"
+
+#: signame.c:115
+msgid "IOT trap"
+msgstr "IOT-val"
+
+#: signame.c:118
+msgid "EMT trap"
+msgstr "EMT-val"
+
+#: signame.c:121
+msgid "Floating point exception"
+msgstr "Drijvende-komma-berekeningsfout"
+
+#: signame.c:124
+msgid "Killed"
+msgstr "Afgebroken"
+
+#: signame.c:127
+msgid "Bus error"
+msgstr "Busfout"
+
+#: signame.c:130
+msgid "Segmentation fault"
+msgstr "Segmentatiefout"
+
+#: signame.c:133
+msgid "Bad system call"
+msgstr "Slechte systeemaanroep"
+
+#: signame.c:136
+msgid "Broken pipe"
+msgstr "Gebroken pijp"
+
+#: signame.c:139
+msgid "Alarm clock"
+msgstr "Alarmklok"
+
+#: signame.c:142
+msgid "Terminated"
+msgstr "Afgebroken"
+
+#: signame.c:145
+msgid "User defined signal 1"
+msgstr "Door gebruiker gedefinieerd signaal 1"
+
+#: signame.c:148
+msgid "User defined signal 2"
+msgstr "Door gebruiker gedefinieerd signaal 2"
+
+#: signame.c:153 signame.c:156
+msgid "Child exited"
+msgstr "Kind is afgesloten"
+
+#: signame.c:159
+msgid "Power failure"
+msgstr "Stroomstoring"
+
+#: signame.c:162
+msgid "Stopped"
+msgstr "Gestopt"
+
+#: signame.c:165
+msgid "Stopped (tty input)"
+msgstr "Gestopt (tty-invoer)"
+
+#: signame.c:168
+msgid "Stopped (tty output)"
+msgstr "Gestopt (tty-uitvoer)"
+
+#: signame.c:171
+msgid "Stopped (signal)"
+msgstr "Gestopt (signaal)"
+
+#: signame.c:174
+msgid "CPU time limit exceeded"
+msgstr "Grens processortijd overschreden"
+
+#: signame.c:177
+msgid "File size limit exceeded"
+msgstr "Grens bestandsgrootte overschreden"
+
+#: signame.c:180
+msgid "Virtual timer expired"
+msgstr "Virtuele tijdopnemer verlopen"
+
+#: signame.c:183
+msgid "Profiling timer expired"
+msgstr "Profilerende tijdopnemer verlopen"
+
+#: signame.c:189
+msgid "Window changed"
+msgstr "Venster veranderd"
+
+#: signame.c:192
+msgid "Continued"
+msgstr "Doorgegaan"
+
+#: signame.c:195
+msgid "Urgent I/O condition"
+msgstr "Spoedeisende I/O-omstandigheid"
+
+#: signame.c:202 signame.c:211
+msgid "I/O possible"
+msgstr "I/O mogelijk"
+
+#: signame.c:205
+msgid "SIGWIND"
+msgstr "SIGWIND"
+
+#: signame.c:208
+msgid "SIGPHONE"
+msgstr "SIGPHONE"
+
+#: signame.c:214
+msgid "Resource lost"
+msgstr "Bron verloren"
+
+#: signame.c:217
+msgid "Danger signal"
+msgstr "Gevaar-signaal"
+
+#: signame.c:220
+msgid "Information request"
+msgstr "Verzoek om informatie"
+
+#: signame.c:223
+msgid "Floating point co-processor not available"
+msgstr "Drijvende-komma-co-processor niet beschikbaar"
+
+#: variable.c:1354
+msgid "default"
+msgstr "standaard"
+
+#: variable.c:1357
+msgid "environment"
+msgstr "omgeving"
+
+#: variable.c:1360
+msgid "makefile"
+msgstr "makefile"
+
+#: variable.c:1363
+msgid "environment under -e"
+msgstr "omgeving onder -e"
+
+#: variable.c:1366
+msgid "command line"
+msgstr "opdrachtregel"
+
+#: variable.c:1369
+msgid "`override' directive"
+msgstr "`override'-richtlijn"
+
+#: variable.c:1372
+msgid "automatic"
+msgstr "automatisch"
+
+#: variable.c:1381
+#, c-format
+msgid " (from `%s', line %lu)"
+msgstr " (van `%s', regel %lu)"
+
+#: variable.c:1423
+msgid "# variable set hash-table stats:\n"
+msgstr "# variabele verzameling hash-tabel statistieken:\n"
+
+#: variable.c:1434
+msgid ""
+"\n"
+"# Variables\n"
+msgstr ""
+"\n"
+"# Variabelen\n"
+
+#: variable.c:1438
+#, fuzzy
+msgid ""
+"\n"
+"# Pattern-specific Variable Values"
+msgstr ""
+"\n"
+"# Patroon-specifieke variabele waarden"
+
+#: variable.c:1452
+msgid ""
+"\n"
+"# No pattern-specific variable values."
+msgstr ""
+"\n"
+"# Geen patroon-specifieke variabele waarden."
+
+#: variable.c:1454
+#, c-format
+msgid ""
+"\n"
+"# %u pattern-specific variable values"
+msgstr ""
+"\n"
+"# %u patroon-specifieke variabele waarden"
+
+#: variable.h:189
+#, c-format
+msgid "warning: undefined variable `%.*s'"
+msgstr ""
+
+#: vmsfunctions.c:79
+#, c-format
+msgid "sys$search failed with %d\n"
+msgstr "sys$search mislukt met %d\n"
+
+#: vmsjobs.c:58
+#, c-format
+msgid "Warning: Empty redirection\n"
+msgstr "Waarschuwing: Lege omleiding\n"
+
+#: vmsjobs.c:162
+#, c-format
+msgid "internal error: `%s' command_state"
+msgstr "interne fout: `%s' command_state"
+
+#: vmsjobs.c:255
+#, c-format
+msgid "-warning, CTRL-Y will leave sub-process(es) around.\n"
+msgstr "-waarschuwing, CTRL-Y zal proces(sen) achterlaten.\n"
+
+#: vmsjobs.c:271
+#, c-format
+msgid "-warning, you may have to re-enable CTRL-Y handling from DCL.\n"
+msgstr ""
+"-waarschuwing, u dient CTRL-Y afhandeling opnieuw aan te zetten vanuit DCL.\n"
+
+#: vmsjobs.c:394
+#, c-format
+msgid "BUILTIN [%s][%s]\n"
+msgstr "INGEBOUWD [%s][%s]\n"
+
+#: vmsjobs.c:405
+#, c-format
+msgid "BUILTIN CD %s\n"
+msgstr "INGEBOUWD CD %s\n"
+
+#: vmsjobs.c:423
+#, c-format
+msgid "BUILTIN RM %s\n"
+msgstr "INGEBOUWD RM %s\n"
+
+#: vmsjobs.c:444
+#, c-format
+msgid "Unknown builtin command '%s'\n"
+msgstr "Onbekende ingebouwde opdracht '%s'\n"
+
+#: vmsjobs.c:466
+#, c-format
+msgid "Error, empty command\n"
+msgstr "Fout, lege opdracht\n"
+
+#: vmsjobs.c:478
+#, c-format
+msgid "Redirected input from %s\n"
+msgstr "Invoer omgeleid van %s\n"
+
+#: vmsjobs.c:485
+#, c-format
+msgid "Redirected error to %s\n"
+msgstr "Fouten omgeleid naar %s\n"
+
+#: vmsjobs.c:492
+#, c-format
+msgid "Redirected output to %s\n"
+msgstr "Uitvoer omgeleid naar %s\n"
+
+#: vmsjobs.c:555
+#, c-format
+msgid "Executing %s instead\n"
+msgstr "In plaats daarvan wordt %s uitgevoerd\n"
+
+#: vmsjobs.c:655
+#, c-format
+msgid "Error spawning, %d\n"
+msgstr "Fout bij voortbrengen, %d\n"
+
+#: vpath.c:552
+msgid ""
+"\n"
+"# VPATH Search Paths\n"
+msgstr ""
+"\n"
+"# VPATH zoekpaden\n"
+
+#: vpath.c:569
+msgid "# No `vpath' search paths."
+msgstr "# Geen `vpath' zoekpaden."
+
+#: vpath.c:571
+#, c-format
+msgid ""
+"\n"
+"# %u `vpath' search paths.\n"
+msgstr ""
+"\n"
+"# %u `vpath' zoekpaden.\n"
+
+#: vpath.c:574
+msgid ""
+"\n"
+"# No general (`VPATH' variable) search path."
+msgstr ""
+"\n"
+"# Geen algemeen (`VPATH' variabele) zoekpad."
+
+#: vpath.c:580
+msgid ""
+"\n"
+"# General (`VPATH' variable) search path:\n"
+"# "
+msgstr ""
+"\n"
+"# Algemeen (`VPATH' variabele) zoekpad:\n"
+"# "
+
+#~ msgid "Syntax error, still inside '\"'\n"
+#~ msgstr "Syntaxisfout, nog in '\"'\n"
+
+#~ msgid "Got a SIGCHLD; %u unreaped children.\n"
+#~ msgstr "Signaal SIGCHLD ontvangen; %u niet-beëindigde kinderen.\n"
+
+#~ msgid "no file name for `%sinclude'"
+#~ msgstr "geen bestandsnaam voor `%sinclude'"
+
+#~ msgid "target `%s' leaves prerequisite pattern empty"
+#~ msgstr "doel `%s' laat vereist patroon leeg"

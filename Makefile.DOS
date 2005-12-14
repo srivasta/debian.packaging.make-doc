@@ -60,7 +60,7 @@ PACKAGE = make
 PERL = perl
 RANLIB = ranlib
 REMOTE = stub
-VERSION = 3.81beta3
+VERSION = 3.81beta4
 
 AUTOMAKE_OPTIONS = 1.2
 
@@ -624,7 +624,7 @@ main.o main.o: main.c make.h config.h \
   getopt.h \
   gettext.h dep.h filedef.h hash.h variable.h \
   job.h commands.h rule.h \
-  debug.h \
+  debug.h getopt.h \
 
 # .deps/misc.Po
 misc.o misc.o: misc.c make.h config.h \

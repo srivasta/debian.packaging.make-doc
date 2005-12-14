@@ -1,4 +1,4 @@
-This is make.info, produced by makeinfo version 4.7 from make.texi.
+This is make.info, produced by makeinfo version 4.8 from make.texi.
 
 INFO-DIR-SECTION GNU Packages
 START-INFO-DIR-ENTRY
@@ -206,6 +206,7 @@ Functions for Transforming Text
 * Value Function::              Return the un-expanded value of a variable.
 * Eval Function::               Evaluate the arguments as makefile syntax.
 * Origin Function::             Find where a variable got its value.
+* Flavor Function::             Find out the flavor of a variable.
 * Shell Function::              Substitute the output of a shell command.
 * Make Control Functions::      Functions that control how make runs.
 
@@ -1141,6 +1142,10 @@ set by a makefile or on the command line.
           Summary of Options: Options Summary.
 
 
+`.INCLUDE_DIRS'
+     Expands to a list of directories that `make' searches for included
+     makefiles (*note Including Other Makefiles: Include.).
+
 
 
 File: make.info,  Node: Remaking Makefiles,  Next: Overriding Makefiles,  Prev: Special Variables,  Up: Makefiles
@@ -1345,19 +1350,27 @@ File: make.info,  Node: Secondary Expansion,  Prev: Reading Makefiles,  Up: Make
 
 In the previous section we learned that GNU `make' works in two
 distinct phases: a read-in phase and a target-update phase (*note How
-`make' Reads a Makefile: Reading Makefiles.).  There is an extra
-wrinkle that comes in between those two phases, right at the end of the
-read-in phase: at that time, all the prerequisites of all of the
-targets are expanded a _second time_.  In most circumstances this
-secondary expansion will have no effect, since all variable and
-function references will have been expanded during the initial parsing
-of the makefiles.  In order to take advantage of the secondary
-expansion phase of the parser, then, it's necessary to _escape_ the
-variable or function reference in the makefile.  In this case the first
-expansion merely un-escapes the reference but doesn't expand it, and
-expansion is left to the secondary expansion phase.  For example,
-consider this makefile:
+`make' Reads a Makefile: Reading Makefiles.).  GNU make also has the
+ability to enable a _second expansion_ of the prerequisites (only) for
+some or all targets defined in the makefile.  In order for this second
+expansion to occur, the special target `.SECONDEXPANSION' must be
+defined before the first prerequisite list that makes use of this
+feature.
 
+   If that special target is defined then in between the two phases
+mentioned above, right at the end of the read-in phase, all the
+prerequisites of the targets defined after the special target are
+expanded a _second time_.  In most circumstances this secondary
+expansion will have no effect, since all variable and function
+references will have been expanded during the initial parsing of the
+makefiles.  In order to take advantage of the secondary expansion phase
+of the parser, then, it's necessary to _escape_ the variable or
+function reference in the makefile.  In this case the first expansion
+merely un-escapes the reference but doesn't expand it, and expansion is
+left to the secondary expansion phase.  For example, consider this
+makefile:
+
+     .SECONDEXPANSION:
      ONEVAR = onefile
      TWOVAR = twofile
      myfile: $(ONEVAR) $$(TWOVAR)
@@ -1378,6 +1391,7 @@ could more easily have been achieved simply by having both variables
 appear, unescaped, in the prerequisites list.  One difference becomes
 apparent if the variables are reset; consider this example:
 
+     .SECONDEXPANSION:
      AVAR = top
      onefile: $(AVAR)
      twofile: $$(AVAR)
@@ -1396,8 +1410,9 @@ during the second expansion and they will have their expected values,
 just as in the command script.  All you have to do is defer the
 expansion by escaping the `$'.  Also, secondary expansion occurs for
 both explicit and implicit (pattern) rules.  Knowing this, the possible
-uses for this feature are almost endless.  For example:
+uses for this feature increase dramatically.  For example:
 
+     .SECONDEXPANSION:
      main_OBJS := main.o try.o test.o
      lib_OBJS := lib.o api.o
 
@@ -1416,6 +1431,7 @@ escaped:
      main_SRCS := main.c try.c test.c
      lib_SRCS := lib.c api.c
 
+     .SECONDEXPANSION:
      main lib: $$(patsubst %.c,%.o,$$($$@_SRCS))
 
    This version allows users to specify source files rather than object
@@ -1440,6 +1456,8 @@ target.  `$$^' and `$$+' evaluate to the list of all prerequisites of
 rules _that have already appeared_ for the same target (`$$+' with
 repetitions and `$$^' without). The following example will help
 illustrate these behaviors:
+
+     .SECONDEXPANSION:
 
      foo: foo.1 bar.1 $$< $$^ $$+    # line #1
 
@@ -1475,6 +1493,8 @@ then performs secondary expansion for every rule with a matching target
 pattern.  The value of the automatic variables is derived in the same
 fashion as for static pattern rules.  As an example:
 
+     .SECONDEXPANSION:
+
      foo: bar
 
      foo foz: fo%: bo%
@@ -1489,6 +1509,8 @@ fashion as for static pattern rules.  As an example:
 Rule Search Algorithm: Implicit Rule Search, is appended (after
 expansion) to all the patterns in the prerequisites list.  As an
 example:
+
+     .SECONDEXPANSION:
 
      /tmp/foo.o:
 
@@ -2395,6 +2417,16 @@ Certain names have special meanings if they appear as targets.
      `.SECONDARY' with no prerequisites causes all targets to be treated
      as secondary (i.e., no target is removed because it is considered
      intermediate).
+
+`.SECONDEXPANSION'
+     If `.SECONDEXPANSION' is mentioned as a target anwyeren in the
+     makefile, then all prerequisite lists defined _after_ it appears
+     will be expanded a second time after all makefiles have been read
+     in.  *Note Secondary Expansion: Secondary Expansion.
+
+     The prerequisites of the special target `.SUFFIXES' are the list
+     of suffixes to be used in checking for suffix rules.  *Note
+     Old-Fashioned Suffix Rules: Suffix Rules.
 
 `.DELETE_ON_ERROR'
      If `.DELETE_ON_ERROR' is mentioned as a target anywhere in the
@@ -4263,7 +4295,7 @@ essentially as if you had included the extra text in the initial
 definition of the variable.  If you defined it first with `:=', making
 it a simply-expanded variable, `+=' adds to that simply-expanded
 definition, and expands the new text before appending it to the old
-value just as `:=' does (*note Setting Variables: Setting, for a full
+value just as `:=' does (*note Setting Variables: Setting. for a full
 explanation of `:=').  In fact,
 
      variable := value
@@ -4892,6 +4924,7 @@ the call, just as a variable might be substituted.
 * Value Function::              Return the un-expanded value of a variable.
 * Eval Function::               Evaluate the arguments as makefile syntax.
 * Origin Function::             Find where a variable got its value.
+* Flavor Function::             Find out the flavor of a variable.
 * Shell Function::              Substitute the output of a shell command.
 * Make Control Functions::      Functions that control how make runs.
 
@@ -5596,7 +5629,7 @@ Now your individual makefiles are quite straightforward.
              rm -f $(ALL_OBJS) $(PROGRAMS)
 
 
-File: make.info,  Node: Origin Function,  Next: Shell Function,  Prev: Eval Function,  Up: Functions
+File: make.info,  Node: Origin Function,  Next: Flavor Function,  Prev: Eval Function,  Up: Functions
 
 8.9 The `origin' Function
 =========================
@@ -5682,9 +5715,42 @@ either `environment' or `environment override'.  *Note Functions for
 String Substitution and Analysis: Text Functions.
 
 
-File: make.info,  Node: Shell Function,  Next: Make Control Functions,  Prev: Origin Function,  Up: Functions
+File: make.info,  Node: Flavor Function,  Next: Shell Function,  Prev: Origin Function,  Up: Functions
 
-8.10 The `shell' Function
+8.10 The `flavor' Function
+==========================
+
+The `flavor' function is unlike most other functions (and like `origin'
+function) in that it does not operate on the values of variables; it
+tells you something _about_ a variable. Specifically, it tells you the
+flavor of a variable (*note The Two Flavors of Variables: Flavors.).
+
+   The syntax of the `flavor' function is:
+
+     $(flavor VARIABLE)
+
+   Note that VARIABLE is the _name_ of a variable to inquire about; not
+a _reference_ to that variable.  Therefore you would not normally use a
+`$' or parentheses when writing it.  (You can, however, use a variable
+reference in the name if you want the name not to be a constant.)
+
+   The result of this function is a string that identifies the flavor
+of the variable VARIABLE:
+
+`undefined'
+     if VARIABLE was never defined.
+
+`recursive'
+     if VARIABLE is a recursively expanded variable.
+
+`simple'
+     if VARIABLE is a simply expanded variable.
+
+
+
+File: make.info,  Node: Shell Function,  Next: Make Control Functions,  Prev: Flavor Function,  Up: Functions
+
+8.11 The `shell' Function
 =========================
 
 The `shell' function is unlike any other function other than the
@@ -5722,7 +5788,7 @@ as at least one `.c' file exists).
 
 File: make.info,  Node: Make Control Functions,  Prev: Shell Function,  Up: Functions
 
-8.11 Functions That Control Make
+8.12 Functions That Control Make
 ================================
 
 These functions control the way make runs.  Generally, they are used to

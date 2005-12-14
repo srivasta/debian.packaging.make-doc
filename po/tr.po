@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: make 3.80\n"
 "Report-Msgid-Bugs-To: bug-make@gnu.org\n"
-"POT-Creation-Date: 2005-06-27 18:49-0400\n"
+"POT-Creation-Date: 2005-12-13 09:46-0500\n"
 "PO-Revision-Date: 2002-10-05 18:13+0300\n"
 "Last-Translator: Nilgün Belma Bugüner <nilgun@superonline.com>\n"
 "Language-Team: Turkish <gnu-tr-u12a@lists.sourceforge.net>\n"
@@ -78,39 +78,39 @@ msgstr "  Tarih %s"
 msgid "  uid = %d, gid = %d, mode = 0%o.\n"
 msgstr "  Kull-kim = %d, Grup-kim = %d, kip = 0%o.\n"
 
-#: commands.c:419
+#: commands.c:423
 msgid "*** Break.\n"
 msgstr "*** Bırakıldı.\n"
 
-#: commands.c:518
+#: commands.c:546
 #, c-format
 msgid "*** [%s] Archive member `%s' may be bogus; not deleted"
 msgstr "*** [%s] Arşiv üyesi `%s' sahte olabilir; silinmedi"
 
-#: commands.c:521
+#: commands.c:549
 #, c-format
 msgid "*** Archive member `%s' may be bogus; not deleted"
 msgstr "*** Arşiv üyesi `%s' sahte olabilir; silinmedi"
 
-#: commands.c:534
+#: commands.c:562
 #, c-format
 msgid "*** [%s] Deleting file `%s'"
 msgstr "*** [%s] `%s' dosyası siliniyor"
 
-#: commands.c:536
+#: commands.c:564
 #, c-format
 msgid "*** Deleting file `%s'"
 msgstr "*** `%s' dosyası siliniyor"
 
-#: commands.c:572
+#: commands.c:600
 msgid "#  commands to execute"
 msgstr "#  çalıştırma komutları"
 
-#: commands.c:575
+#: commands.c:603
 msgid " (built-in):"
 msgstr " (paket içinde):"
 
-#: commands.c:577
+#: commands.c:605
 #, c-format
 msgid " (from `%s', line %lu):\n"
 msgstr " (`%s'den, satır %lu):\n"
@@ -231,115 +231,115 @@ msgstr "*** Aracı dosya `%s' siliniyor"
 msgid "Removing intermediate files...\n"
 msgstr "Aracı dosyalar siliniyor...\n"
 
-#: file.c:685
+#: file.c:761
 #, c-format
 msgid "%s: Timestamp out of range; substituting %s"
 msgstr "%s: Tarih damgası kapsamdışı; yerine %s kullanılıyor"
 
-#: file.c:686
+#: file.c:762
 msgid "Current time"
 msgstr "Şu an"
 
-#: file.c:785
+#: file.c:861
 msgid "# Not a target:"
 msgstr "# Bir hedef değil:"
 
-#: file.c:807
+#: file.c:883
 msgid "#  Precious file (prerequisite of .PRECIOUS)."
 msgstr "#  Kıymetli dosya (.PRECIOUS  önceden gerekliliği)."
 
-#: file.c:809
+#: file.c:885
 msgid "#  Phony target (prerequisite of .PHONY)."
 msgstr "#  Sahte hedef (.PHONY önceden gerekliliği)."
 
-#: file.c:811
+#: file.c:887
 msgid "#  Command-line target."
 msgstr "#  Komut-satırı hedefi."
 
-#: file.c:813
+#: file.c:889
 #, fuzzy
 msgid "#  A default, MAKEFILES, or -include/sinclude makefile."
 msgstr ""
 "#  Bir öntanımlı ya da MAKEFILES çevre değişkeni ile atanmış bir make dosyası"
 
-#: file.c:815
+#: file.c:891
 msgid "#  Implicit rule search has been done."
 msgstr "#  Örtük kural araştırması yapılmıştı."
 
-#: file.c:816
+#: file.c:892
 msgid "#  Implicit rule search has not been done."
 msgstr "#  Örtük kural araştırması yapılmamıştı."
 
-#: file.c:818
+#: file.c:894
 #, c-format
 msgid "#  Implicit/static pattern stem: `%s'\n"
 msgstr "#  Örtük/değişmeyen kalıp kökü: `%s'\n"
 
-#: file.c:820
+#: file.c:896
 msgid "#  File is an intermediate prerequisite."
 msgstr ""
 "#  Orta seviyede önceden gerekli bir dosya (öncelikle gerekli dosyalara "
 "aracılık eden dosya)"
 
-#: file.c:823
+#: file.c:899
 msgid "#  Also makes:"
 msgstr "#  Oluştursa da:"
 
-#: file.c:829
+#: file.c:905
 msgid "#  Modification time never checked."
 msgstr "#  Değişiklik zamanı hiç kontrol edilmedi."
 
-#: file.c:831
+#: file.c:907
 msgid "#  File does not exist."
 msgstr "#  Dosya yok."
 
-#: file.c:833
+#: file.c:909
 msgid "#  File is very old."
 msgstr "#  Dosya çok eski."
 
-#: file.c:838
+#: file.c:914
 #, c-format
 msgid "#  Last modified %s\n"
 msgstr "#  Son değişiklik tarihi %s\n"
 
-#: file.c:841
+#: file.c:917
 msgid "#  File has been updated."
 msgstr "#  Dosya güncelleştirilmişti."
 
-#: file.c:841
+#: file.c:917
 msgid "#  File has not been updated."
 msgstr "#  Dosya güncelleştirilmemişti."
 
-#: file.c:845
+#: file.c:921
 msgid "#  Commands currently running (THIS IS A BUG)."
 msgstr "#  Komutlar şu an işlemlerini sürdürüyor (BU BİR YAZILIM HATASI)."
 
-#: file.c:848
+#: file.c:924
 msgid "#  Dependencies commands running (THIS IS A BUG)."
 msgstr ""
 "#  Bağımlılıkların komutları işlemlerini sürdürüyor (BU BİR YAZILIM HATASI)."
 
-#: file.c:857
+#: file.c:933
 msgid "#  Successfully updated."
 msgstr "#   Tamamen güncellendi."
 
-#: file.c:861
+#: file.c:937
 msgid "#  Needs to be updated (-q is set)."
 msgstr "#   Güncellenmiş olması gerekir (-q verildi)."
 
-#: file.c:864
+#: file.c:940
 msgid "#  Failed to be updated."
 msgstr "#  Güncellenmiş olamadı."
 
-#: file.c:867
+#: file.c:943
 msgid "#  Invalid value in `update_status' member!"
 msgstr "#  `update_status' üyesinde geçersiz değer!"
 
-#: file.c:874
+#: file.c:950
 msgid "#  Invalid value in `command_state' member!"
 msgstr "#  `command_state' üyesinde geçersiz değer!"
 
-#: file.c:893
+#: file.c:969
 msgid ""
 "\n"
 "# Files"
@@ -347,7 +347,7 @@ msgstr ""
 "\n"
 "# Dosyalar"
 
-#: file.c:897
+#: file.c:973
 msgid ""
 "\n"
 "# files hash-table stats:\n"
@@ -357,57 +357,57 @@ msgstr ""
 "# dosyaların hash tablosu durumları:\n"
 "# "
 
-#: function.c:744
+#: function.c:760
 msgid "non-numeric first argument to `word' function"
 msgstr "`word' işlevinde sayısal olmayan ilk argüman"
 
-#: function.c:748
+#: function.c:764
 msgid "first argument to `word' function must be greater than 0"
 msgstr "`word' işlevinin ilk argümanı sıfırdan büyük olmalı"
 
-#: function.c:769
+#: function.c:785
 msgid "non-numeric first argument to `wordlist' function"
 msgstr "`wordlist' işlevinde sayısal olmayan ilk argüman"
 
-#: function.c:771
+#: function.c:787
 msgid "non-numeric second argument to `wordlist' function"
 msgstr "`wordlist' işlevinde sayısal olmayan ikinci argüman"
 
-#: function.c:1332
-#, c-format
-msgid "create_child_process: DuplicateHandle(In) failed (e=%d)\n"
+#: function.c:1349
+#, fuzzy, c-format
+msgid "create_child_process: DuplicateHandle(In) failed (e=%ld)\n"
 msgstr "create_child_process: DuplicateHandle(In) başarısız (e=%d)\n"
 
-#: function.c:1343
-#, c-format
-msgid "create_child_process: DuplicateHandle(Err) failed (e=%d)\n"
+#: function.c:1360
+#, fuzzy, c-format
+msgid "create_child_process: DuplicateHandle(Err) failed (e=%ld)\n"
 msgstr "create_child_process: DuplicateHandle(Err) başarısız (e=%d)\n"
 
-#: function.c:1348
-#, c-format
-msgid "CreatePipe() failed (e=%d)\n"
+#: function.c:1365
+#, fuzzy, c-format
+msgid "CreatePipe() failed (e=%ld)\n"
 msgstr "CreatePipe() başarısız (e=%d)\n"
 
-#: function.c:1353
+#: function.c:1370
 msgid "windows32_openpipe (): process_init_fd() failed\n"
 msgstr "windows32_openpipe (): process_init_fd() başarısız\n"
 
-#: function.c:1606
+#: function.c:1623
 #, c-format
 msgid "Cleaning up temporary batch file %s\n"
 msgstr "Geçici komut-listesi (batch) dosyası %s temizleniyor\n"
 
-#: function.c:1981
+#: function.c:1999
 #, c-format
 msgid "Insufficient number of arguments (%d) to function `%s'"
 msgstr "Argüman sayısı (%d) `%s' işlevinde yetersiz"
 
-#: function.c:1992
+#: function.c:2010
 #, c-format
 msgid "Unimplemented on this platform: function `%s'"
 msgstr "Bu platformda gerçekleştirilmemiş: işlev `%s'"
 
-#: function.c:2043
+#: function.c:2061
 #, c-format
 msgid "unterminated call to function `%s': missing `%c'"
 msgstr "`%s' işlemine çağrı sonlandırılmamış: `%c' kayıp"
@@ -506,114 +506,114 @@ msgstr "Örtük kural çevrimi görmezden geliniyor.\n"
 msgid "Trying pattern rule with stem `%.*s'.\n"
 msgstr "`%.*s' köküyle kalıp kuralı deneniyor.\n"
 
-#: implicit.c:627
+#: implicit.c:650
 #, c-format
 msgid "Rejecting impossible implicit prerequisite `%s'.\n"
 msgstr "Örtük önceden gereklilik `%s' olanaksız olduğundan reddediliyor.\n"
 
-#: implicit.c:628
+#: implicit.c:651
 #, c-format
 msgid "Rejecting impossible rule prerequisite `%s'.\n"
 msgstr "Kural önceden gerekliliği `%s' olanaksız olduğundan reddediliyor.\n"
 
-#: implicit.c:638
+#: implicit.c:661
 #, c-format
 msgid "Trying implicit prerequisite `%s'.\n"
 msgstr "Örtük önceden gereklilik `%s' deneniyor.\n"
 
-#: implicit.c:639
+#: implicit.c:662
 #, c-format
 msgid "Trying rule prerequisite `%s'.\n"
 msgstr "Kural önceden gerekliliği `%s' deneniyor.\n"
 
-#: implicit.c:675
+#: implicit.c:697
 #, c-format
 msgid "Found prerequisite `%s' as VPATH `%s'\n"
 msgstr "Önceden gereklilik `%s' VPATH `%s' olarak bulundu.\n"
 
-#: implicit.c:695
+#: implicit.c:717
 #, c-format
 msgid "Looking for a rule with intermediate file `%s'.\n"
 msgstr "Aracı dosya `%s' ile bir kural arıyor.\n"
 
-#: job.c:319
+#: job.c:321
 #, fuzzy
 msgid "Cannot create a temporary file\n"
 msgstr "fwrite (geçici dosya)"
 
-#: job.c:386
+#: job.c:388
 #, c-format
 msgid "*** [%s] Error 0x%x (ignored)"
 msgstr "*** [%s] Hata 0x%x (yoksayıldı)"
 
-#: job.c:387
+#: job.c:389
 #, c-format
 msgid "*** [%s] Error 0x%x"
 msgstr "*** [%s] Hata 0x%x"
 
-#: job.c:391
+#: job.c:393
 #, c-format
 msgid "[%s] Error %d (ignored)"
 msgstr "[%s] Hata %d (yoksayıldı)"
 
-#: job.c:392
+#: job.c:394
 #, c-format
 msgid "*** [%s] Error %d"
 msgstr "*** [%s] Hata %d"
 
-#: job.c:397
+#: job.c:399
 msgid " (core dumped)"
 msgstr " (bellek kopyası - core dosyası - diske yazıldı)"
 
-#: job.c:480
+#: job.c:488
 msgid "*** Waiting for unfinished jobs...."
 msgstr "*** Bitmemiş işler için bekliyor...."
 
-#: job.c:509
+#: job.c:518
 #, c-format
 msgid "Live child 0x%08lx (%s) PID %ld %s\n"
 msgstr "Ast dosya işini sürdürüyor: 0x%08lx (%s) PID %ld %s\n"
 
-#: job.c:511 job.c:672 job.c:775 job.c:1422
+#: job.c:520 job.c:701 job.c:804 job.c:1451
 msgid " (remote)"
 msgstr " (karşıdan)"
 
-#: job.c:669
+#: job.c:698
 #, c-format
 msgid "Reaping losing child 0x%08lx PID %ld %s\n"
 msgstr "Kaybeden ast dosya sağlanıyor: 0x%08lx PID %ld %s\n"
 
-#: job.c:670
+#: job.c:699
 #, c-format
 msgid "Reaping winning child 0x%08lx PID %ld %s\n"
 msgstr "Kazanan ast dosya sağlanıyor: 0x%08lx PID %ld %s\n"
 
-#: job.c:675
+#: job.c:704
 #, c-format
 msgid "Cleaning up temp batch file %s\n"
 msgstr "Geçici komut-listesi dosyası %s temizleniyor\n"
 
-#: job.c:773
+#: job.c:802
 #, c-format
 msgid "Removing child 0x%08lx PID %ld%s from chain.\n"
 msgstr "Ast 0x%08lx PID %ld%s zincirden kaldırılıyor\n"
 
-#: job.c:833
+#: job.c:862
 msgid "write jobserver"
 msgstr "iş-sunucusu yazıyor"
 
-#: job.c:835
+#: job.c:864
 #, c-format
 msgid "Released token for child 0x%08lx (%s).\n"
 msgstr "Ast 0x%08lx (%s) için simge (token) kullanıma sunuldu.\n"
 
-#: job.c:1354 job.c:1971
-#, c-format
-msgid "process_easy() failed failed to launch process (e=%d)\n"
+#: job.c:1383 job.c:2000
+#, fuzzy, c-format
+msgid "process_easy() failed failed to launch process (e=%ld)\n"
 msgstr ""
 "Başarısız olan süreç oluşturma işlemine process_easy() sebep oldu (e=%d)\n"
 
-#: job.c:1358 job.c:1975
+#: job.c:1387 job.c:2004
 #, c-format
 msgid ""
 "\n"
@@ -622,74 +622,74 @@ msgstr ""
 "\n"
 "Sayılan %d argüman ile başarısız oldu\n"
 
-#: job.c:1420
+#: job.c:1449
 #, c-format
 msgid "Putting child 0x%08lx (%s) PID %ld%s on the chain.\n"
 msgstr "Ast 0x%08lx (%s) PID %ld%s zincire konuluyor.\n"
 
-#: job.c:1670
+#: job.c:1699
 #, c-format
 msgid "Obtained token for child 0x%08lx (%s).\n"
 msgstr "Ast 0x%08lx (%s) için simge (token) sağlandı.\n"
 
-#: job.c:1679
+#: job.c:1708
 msgid "read jobs pipe"
 msgstr "görev listesi okunuyor"
 
-#: job.c:1787
+#: job.c:1816
 msgid "cannot enforce load limits on this operating system"
 msgstr "işletim sisteminde yük sınırlarına ulaşılamadı "
 
-#: job.c:1789
+#: job.c:1818
 msgid "cannot enforce load limit: "
 msgstr "ulaşılamayan yük sınırı: "
 
-#: job.c:1862
+#: job.c:1891
 msgid "no more file handles: could not duplicate stdin\n"
 msgstr ""
 
-#: job.c:1864
+#: job.c:1893
 msgid "no more file handles: could not duplicate stdout\n"
 msgstr ""
 
-#: job.c:1892
+#: job.c:1921
 msgid "Could not restore stdin\n"
 msgstr ""
 
-#: job.c:1900
+#: job.c:1929
 msgid "Could not restore stdout\n"
 msgstr ""
 
-#: job.c:2001
+#: job.c:2030
 #, c-format
 msgid "make reaped child pid %d, still waiting for pid %d\n"
 msgstr "make pid %d ast süreci kaldırdı ama hala pid %d için bekliyor\n"
 
-#: job.c:2040
+#: job.c:2069
 #, c-format
 msgid "%s: Command not found"
 msgstr "%s: Komut bulunamadı"
 
-#: job.c:2100
+#: job.c:2129
 #, c-format
 msgid "%s: Shell program not found"
 msgstr "%s: Kabuk uygulaması bulunamadı"
 
-#: job.c:2109
+#: job.c:2138
 msgid "spawnvpe: environment space might be exhausted"
 msgstr ""
 
-#: job.c:2317
+#: job.c:2347
 #, fuzzy, c-format
 msgid "$SHELL changed (was `%s', now `%s')\n"
 msgstr "$SHELL değişti (`%s' idi, şimdi `%s')"
 
-#: job.c:2715
+#: job.c:2766
 #, c-format
 msgid "Creating temporary batch file %s\n"
 msgstr "%s geçici komut-liste dosyasını oluşturuyor\n"
 
-#: job.c:2826
+#: job.c:2877
 #, c-format
 msgid "%s (line %d) Bad shell context (!unixy && !batch_mode_shell)\n"
 msgstr "%s (satır %d) kabuk bağlamı hatalı (!unixy && !batch_mode_shell)\n"
@@ -874,28 +874,28 @@ msgstr ""
 "  --warn-undefined-variables  Atanmamış bir değişkene bağıntı yapıldığında\n"
 "                              uyarır.\n"
 
-#: main.c:544
+#: main.c:549
 msgid "empty string invalid as file name"
 msgstr "dosyaismi olarak boş dizge geçersiz"
 
-#: main.c:625
+#: main.c:630
 #, c-format
 msgid "unknown debug level specification `%s'"
 msgstr "Hata ayıklama düzeyi özelliği `%s' bilinmiyor"
 
-#: main.c:665
-#, c-format
-msgid "%s: Interrupt/Exception caught (code = 0x%x, addr = 0x%x)\n"
+#: main.c:670
+#, fuzzy, c-format
+msgid "%s: Interrupt/Exception caught (code = 0x%lx, addr = 0x%lx)\n"
 msgstr "%s: Kesinti/Olağandışı durum saptandı (kod = 0x%x, adres = 0x%x)\n"
 
-#: main.c:672
-#, c-format
+#: main.c:677
+#, fuzzy, c-format
 msgid ""
 "\n"
 "Unhandled exception filter called from program %s\n"
-"ExceptionCode = %x\n"
-"ExceptionFlags = %x\n"
-"ExceptionAddress = %x\n"
+"ExceptionCode = %lx\n"
+"ExceptionFlags = %lx\n"
+"ExceptionAddress = %lx\n"
 msgstr ""
 "\n"
 "program %s tarafından elde edilmemiş olağandışı-durum süzgeci çağrıldı\n"
@@ -903,164 +903,164 @@ msgstr ""
 "OlağandışılıkBayrakları = %x\n"
 "OlağandışılıkAdresi = %x\n"
 
-#: main.c:680
-#, c-format
-msgid "Access violation: write operation at address %x\n"
+#: main.c:685
+#, fuzzy, c-format
+msgid "Access violation: write operation at address %lx\n"
 msgstr "Erişim uyumsuzluğu: %x adresine yazma işlemi\n"
 
-#: main.c:681
-#, c-format
-msgid "Access violation: read operation at address %x\n"
+#: main.c:686
+#, fuzzy, c-format
+msgid "Access violation: read operation at address %lx\n"
 msgstr "Erişim uyumsuzluğu: %x adresinden okuma işlemi\n"
 
-#: main.c:764
+#: main.c:762 main.c:773
 #, c-format
 msgid "find_and_set_shell setting default_shell = %s\n"
 msgstr "find_and_set_shell default_shell = %s olarak belirliyor\n"
 
-#: main.c:805
+#: main.c:814
 #, c-format
 msgid "find_and_set_shell path search set default_shell = %s\n"
 msgstr ""
 "find_and_set_shell yol aramasını default_shell = %s olarak belirliyor\n"
 
-#: main.c:1225
+#: main.c:1232
 #, c-format
 msgid "%s is suspending for 30 seconds..."
 msgstr "%s 30 saniyeliğine askıya alınıyor..."
 
-#: main.c:1227
+#: main.c:1234
 #, c-format
 msgid "done sleep(30). Continuing.\n"
 msgstr "sleep(30) bitti. Devam ediliyor.\n"
 
-#: main.c:1455
+#: main.c:1462
 msgid "Makefile from standard input specified twice."
 msgstr "Makefile standart girdiden iki kez belirtildi."
 
-#: main.c:1494 vmsjobs.c:473
+#: main.c:1501 vmsjobs.c:473
 msgid "fopen (temporary file)"
 msgstr "fopen (geçici dosya)"
 
-#: main.c:1500
+#: main.c:1507
 msgid "fwrite (temporary file)"
 msgstr "fwrite (geçici dosya)"
 
-#: main.c:1593
+#: main.c:1600
 msgid "Do not specify -j or --jobs if sh.exe is not available."
 msgstr "sh.exe yoksa -j veya --jobs belirtilemez."
 
-#: main.c:1594
+#: main.c:1601
 msgid "Resetting make for single job mode."
 msgstr "Tek iş kipi için make'i başlatma konumuna alıyor"
 
-#: main.c:1635
+#: main.c:1642
 msgid "Parallel jobs (-j) are not supported on this platform."
 msgstr "Bu platformda paralel işler (-j) desteklenmiyor."
 
-#: main.c:1636
+#: main.c:1643
 msgid "Resetting to single job (-j1) mode."
 msgstr "Tek iş kipi (-j1) için make'i başlatma konumuna alıyor"
 
-#: main.c:1651
+#: main.c:1658
 msgid "internal error: multiple --jobserver-fds options"
 msgstr "içsel hata: çok sayıda --jobserver-fds seçeneği"
 
-#: main.c:1659
+#: main.c:1666
 #, c-format
 msgid "internal error: invalid --jobserver-fds string `%s'"
 msgstr "içsel hata: --jobserver-fds dizgesi `%s' geçersiz"
 
-#: main.c:1669
+#: main.c:1676
 msgid "warning: -jN forced in submake: disabling jobserver mode."
 msgstr "uyarı: alt derlemede -jN zorlandı: iş sunucusu kipi kapatılıyor."
 
-#: main.c:1679
+#: main.c:1686
 msgid "dup jobserver"
 msgstr "çift iş sunucusu"
 
-#: main.c:1682
+#: main.c:1689
 msgid ""
 "warning: jobserver unavailable: using -j1.  Add `+' to parent make rule."
 msgstr ""
 "uyarı: iş sunucusu kullanımdışı: -j1 kullanılıyor. Üst make kuralına `+' "
 "ekle."
 
-#: main.c:1705
+#: main.c:1712
 msgid "creating jobs pipe"
 msgstr "işleri yaratıyor"
 
-#: main.c:1720
+#: main.c:1727
 msgid "init jobserver pipe"
 msgstr "işleri hazırlıyor"
 
-#: main.c:1739
+#: main.c:1746
 msgid "Symbolic links not supported: disabling -L."
 msgstr ""
 
-#: main.c:1815
+#: main.c:1822
 msgid "Updating makefiles....\n"
 msgstr "makefile'ları güncelliyor...\n"
 
-#: main.c:1840
+#: main.c:1847
 #, c-format
 msgid "Makefile `%s' might loop; not remaking it.\n"
 msgstr "`%s' make dosyası çevrime girdi; yeniden derlenemez.\n"
 
-#: main.c:1919
+#: main.c:1926
 #, c-format
 msgid "Failed to remake makefile `%s'."
 msgstr "`%s' make dosyası yeniden derlenemiyor."
 
-#: main.c:1936
+#: main.c:1943
 #, c-format
 msgid "Included makefile `%s' was not found."
 msgstr "İçerilen make dosyası `%s' bulunamadı."
 
-#: main.c:1941
+#: main.c:1948
 #, c-format
 msgid "Makefile `%s' was not found"
 msgstr "`%s' make dosyası bulunamadı"
 
-#: main.c:2009
+#: main.c:2016
 msgid "Couldn't change back to original directory."
 msgstr "Geriye, özgün dizine geçilemiyor."
 
-#: main.c:2017
+#: main.c:2024
 #, fuzzy, c-format
 msgid "Re-executing[%u]:"
 msgstr "Yeniden çalıştırılıyor:"
 
-#: main.c:2133
+#: main.c:2140
 msgid "unlink (temporary file): "
 msgstr "unlink (geçici dosya): "
 
-#: main.c:2162
+#: main.c:2169
 msgid ".DEFAULT_GOAL contains more than one target"
 msgstr ""
 
-#: main.c:2186
+#: main.c:2194
 msgid "No targets specified and no makefile found"
 msgstr "Hedefler belirtilmediğinden make dosyası yok"
 
-#: main.c:2188
+#: main.c:2196
 msgid "No targets"
 msgstr "Hedef yok"
 
-#: main.c:2193
+#: main.c:2201
 msgid "Updating goal targets....\n"
 msgstr "Amaçlanan hedefler güncelleniyor...\n"
 
-#: main.c:2219
+#: main.c:2227
 msgid "warning:  Clock skew detected.  Your build may be incomplete."
 msgstr "uyarı:  Clock skew saptandı. Derleme tamamlanamayabilir."
 
-#: main.c:2382
+#: main.c:2391
 #, c-format
 msgid "Usage: %s [options] [target] ...\n"
 msgstr "Kullanım: %s [seçenekler] [hedef] ...\n"
 
-#: main.c:2388
+#: main.c:2397
 #, c-format
 msgid ""
 "\n"
@@ -1069,7 +1069,7 @@ msgstr ""
 "\n"
 "Bu program %s için kurgulanmış\n"
 
-#: main.c:2390
+#: main.c:2399
 #, c-format
 msgid ""
 "\n"
@@ -1078,24 +1078,24 @@ msgstr ""
 "\n"
 "Bu program %s için kurgulanmış (%s)\n"
 
-#: main.c:2393
+#: main.c:2402
 #, c-format
 msgid "Report bugs to <bug-make@gnu.org>\n"
 msgstr ""
 "Yazılım hatalarını <bug-make@gnu.org> adresine,\n"
 "çeviri hatalarını <gnu-tr-u12a@lists.sourceforge.net> adresine bildiriniz.\n"
 
-#: main.c:2465
+#: main.c:2474
 #, fuzzy, c-format
 msgid "the `-%c' option requires a non-empty string argument"
 msgstr "`-%c' seçeneği bir pozitif tümleyici bağımsız değişkenle kullanılır"
 
-#: main.c:2517
+#: main.c:2526
 #, c-format
 msgid "the `-%c' option requires a positive integral argument"
 msgstr "`-%c' seçeneği bir pozitif tümleyici bağımsız değişkenle kullanılır"
 
-#: main.c:2941
+#: main.c:2950
 #, c-format
 msgid ""
 "%sThis is free software; see the source for copying conditions.\n"
@@ -1107,7 +1107,7 @@ msgstr ""
 "%sHiçbir garantisi yoktur; hatta SATILABİLİRLİĞİ veya ŞAHSİ KULLANIMINIZA\n"
 "%sUYGUNLUĞU için bile garanti verilmez.\n"
 
-#: main.c:2947
+#: main.c:2956
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1116,7 +1116,7 @@ msgstr ""
 "\n"
 "Bu program %s için kurgulanmış\n"
 
-#: main.c:2949
+#: main.c:2958
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -1125,7 +1125,7 @@ msgstr ""
 "\n"
 "Bu program %s için kurgulanmış (%s)\n"
 
-#: main.c:2967
+#: main.c:2976
 #, c-format
 msgid ""
 "\n"
@@ -1134,7 +1134,7 @@ msgstr ""
 "\n"
 "# Make veri tabanı, %s üzerine basıldı"
 
-#: main.c:2976
+#: main.c:2985
 #, c-format
 msgid ""
 "\n"
@@ -1143,42 +1143,42 @@ msgstr ""
 "\n"
 "# %s üzerindeki Make veri tabanı tamamlandı\n"
 
-#: main.c:3089
+#: main.c:3099
 #, fuzzy, c-format
 msgid "%s: Entering an unknown directory\n"
 msgstr "%s: bilinmeyen bir dizine giriliyor"
 
-#: main.c:3091
+#: main.c:3101
 #, fuzzy, c-format
 msgid "%s: Leaving an unknown directory\n"
 msgstr "%s: bilinmeyen dizinden çıkılıyor"
 
-#: main.c:3094
+#: main.c:3104
 #, c-format
 msgid "%s: Entering directory `%s'\n"
 msgstr "%s: `%s' dizine giriliyor\n"
 
-#: main.c:3097
+#: main.c:3107
 #, c-format
 msgid "%s: Leaving directory `%s'\n"
 msgstr "%s: `%s' dizininden çıkılıyor\n"
 
-#: main.c:3102
+#: main.c:3112
 #, fuzzy, c-format
 msgid "%s[%u]: Entering an unknown directory\n"
 msgstr "%s[%u]: Bilinmeyen bir dizine giriliyor"
 
-#: main.c:3105
+#: main.c:3115
 #, fuzzy, c-format
 msgid "%s[%u]: Leaving an unknown directory\n"
 msgstr "%s[%u]: Bilinmeyen dizinden çıkılıyor"
 
-#: main.c:3109
+#: main.c:3119
 #, c-format
 msgid "%s[%u]: Entering directory `%s'\n"
 msgstr "%s[%u]:`%s' dizinine giriliyor\n"
 
-#: main.c:3112
+#: main.c:3122
 #, c-format
 msgid "%s[%u]: Leaving directory `%s'\n"
 msgstr "%s[%u]: `%s' dizininden çıkılıyor\n"
@@ -1202,37 +1202,37 @@ msgstr "%s%s: %s"
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: misc.c:346 misc.c:361 misc.c:378 read.c:3163
+#: misc.c:346 misc.c:361 misc.c:378 read.c:3135
 msgid "virtual memory exhausted"
 msgstr "sanal bellek tükendi"
 
-#: misc.c:605
+#: misc.c:620
 #, c-format
 msgid "%s: user %lu (real %lu), group %lu (real %lu)\n"
 msgstr "%s: kullanıcı %lu (gerçekte %lu), grup %lu (gerçekte %lu)\n"
 
-#: misc.c:626
+#: misc.c:641
 msgid "Initialized access"
 msgstr "İlklendirilmiş erişim"
 
-#: misc.c:705
+#: misc.c:720
 msgid "User access"
 msgstr "Kullanıcı erişimi"
 
-#: misc.c:753
+#: misc.c:768
 msgid "Make access"
 msgstr "Make erişimi"
 
-#: misc.c:787
+#: misc.c:802
 msgid "Child access"
 msgstr "Asta erişim"
 
-#: misc.c:851
+#: misc.c:866
 #, fuzzy, c-format
 msgid "write error: %s"
 msgstr "%s e yönlendirilmiş hata\n"
 
-#: misc.c:853
+#: misc.c:868
 #, fuzzy
 msgid "write error"
 msgstr "iş-sunucusu yazıyor"
@@ -1241,150 +1241,150 @@ msgstr "iş-sunucusu yazıyor"
 msgid "Reading makefiles...\n"
 msgstr "Makefile'lar okunuyor...\n"
 
-#: read.c:321
+#: read.c:322
 #, c-format
 msgid "Reading makefile `%s'"
 msgstr "`%s' make dosyası okunuyor"
 
-#: read.c:323
+#: read.c:324
 #, c-format
 msgid " (no default goal)"
 msgstr " (öntanımlı amaç yok)"
 
-#: read.c:325
+#: read.c:326
 #, c-format
 msgid " (search path)"
 msgstr " (arama yolu)"
 
-#: read.c:327
+#: read.c:328
 #, c-format
 msgid " (don't care)"
 msgstr " (umurunda değil)"
 
-#: read.c:329
+#: read.c:330
 #, c-format
 msgid " (no ~ expansion)"
 msgstr "( ~ uzantısı yok)"
 
-#: read.c:627
+#: read.c:629
 msgid "invalid syntax in conditional"
 msgstr "şartlı ifade de yazılış hatası"
 
-#: read.c:637
+#: read.c:639
 msgid "extraneous `endef'"
 msgstr "yersiz `endef'"
 
-#: read.c:649 read.c:677 variable.c:1301
+#: read.c:651 read.c:679 variable.c:1301
 msgid "empty variable name"
 msgstr "boş değişken ismi"
 
-#: read.c:666
+#: read.c:668
 msgid "empty `override' directive"
 msgstr "boş `override' yönergesi"
 
-#: read.c:691
+#: read.c:693
 msgid "invalid `override' directive"
 msgstr "`override' yönergesi geçersiz"
 
-#: read.c:858
+#: read.c:860
 msgid "commands commence before first target"
 msgstr "komutlar ilk hedeften önce başlıyor"
 
-#: read.c:909
+#: read.c:911
 msgid "missing rule before commands"
 msgstr "komutlardan önceki kural kayıp"
 
-#: read.c:996
+#: read.c:998
 #, c-format
 msgid "missing separator%s"
 msgstr "kayıp ayraç%s"
 
-#: read.c:998
+#: read.c:1000
 msgid " (did you mean TAB instead of 8 spaces?)"
 msgstr "(8 boşluğu TAB'mı zannettiniz?)"
 
-#: read.c:1156
+#: read.c:1158
 msgid "missing target pattern"
 msgstr "hedef kalıp kayıp"
 
-#: read.c:1158
+#: read.c:1160
 msgid "multiple target patterns"
 msgstr "çok sayıda hedef kalıp"
 
-#: read.c:1162
+#: read.c:1164
 #, c-format
 msgid "target pattern contains no `%%'"
 msgstr "hedef kalıp `%%' içermiyor"
 
-#: read.c:1303
+#: read.c:1296
 msgid "missing `endif'"
 msgstr "`endif' kayıp"
 
-#: read.c:1394
+#: read.c:1387
 msgid "Extraneous text after `endef' directive"
 msgstr "`endef' yönergesinden sonraki metin yersiz"
 
-#: read.c:1428
+#: read.c:1421
 msgid "missing `endef', unterminated `define'"
 msgstr "`endef' kayıp, `define' sonlandırılmamış"
 
-#: read.c:1471
+#: read.c:1464
 #, c-format
 msgid "Extraneous text after `%s' directive"
 msgstr "`%s' yönergesinden sonraki metin yersiz"
 
-#: read.c:1480 read.c:1494
+#: read.c:1473 read.c:1487
 #, c-format
 msgid "extraneous `%s'"
 msgstr "`%s' yersiz"
 
-#: read.c:1499
+#: read.c:1492
 msgid "only one `else' per conditional"
 msgstr "her şartlı ifade de sadece bir `else'"
 
-#: read.c:1841
+#: read.c:1834
 #, fuzzy
 msgid "Malformed target-specific variable definition"
 msgstr "per-target değişken ataması bozuk"
 
-#: read.c:1904
+#: read.c:1897
 msgid "prerequisites cannot be defined in command scripts"
 msgstr ""
 
-#: read.c:1939
+#: read.c:1932
 msgid "mixed implicit and static pattern rules"
 msgstr "örtük ve durağan kalıp kuralları karışmış"
 
-#: read.c:1942
+#: read.c:1935
 msgid "mixed implicit and normal rules"
 msgstr "örtük ve normal kurallar karışmış"
 
-#: read.c:1983
+#: read.c:1965
 #, c-format
 msgid "target `%s' doesn't match the target pattern"
 msgstr "hedef `%s' hedef kalıpla eşleşmiyor"
 
-#: read.c:2011 read.c:2134
+#: read.c:1984 read.c:2085
 #, c-format
 msgid "target file `%s' has both : and :: entries"
 msgstr "hedef dosya `%s'hem : hem de :: girdilerine sahip"
 
-#: read.c:2017
+#: read.c:1990
 #, c-format
 msgid "target `%s' given more than once in the same rule."
 msgstr "hedef `%s' aynı kuralda birden fazla belirtilmiş."
 
-#: read.c:2026
+#: read.c:1999
 #, c-format
 msgid "warning: overriding commands for target `%s'"
 msgstr "uyarı: hedef `%s' için komutlar geçersiz kılınıyor"
 
-#: read.c:2029
+#: read.c:2002
 #, c-format
 msgid "warning: ignoring old commands for target `%s'"
 msgstr "uyarı: hedef `%s' için eski komutlar yoksayılıyor"
 
-#: read.c:2616
+#: read.c:2583
 msgid "warning: NUL character seen; rest of line ignored"
 msgstr "uyarı: NUL karakteri görüldü; satırın geri kalanı yoksayılıyor"
 
@@ -1453,22 +1453,22 @@ msgstr ""
 "*** Uyarı: .LOW_RESOLUTION_TIME dosyası `%s' yüksek çözünürlüklü bir zaman "
 "damgası içeriyor"
 
-#: remake.c:451 remake.c:932
+#: remake.c:451 remake.c:954
 #, c-format
 msgid "Found an implicit rule for `%s'.\n"
 msgstr "`%s' için bir örtük kural bulundu.\n"
 
-#: remake.c:453 remake.c:934
+#: remake.c:453 remake.c:956
 #, c-format
 msgid "No implicit rule found for `%s'.\n"
 msgstr "`%s' için bir örtük kural yok.\n"
 
-#: remake.c:459 remake.c:940
+#: remake.c:459 remake.c:962
 #, c-format
 msgid "Using default commands for `%s'.\n"
 msgstr "`%s' için öntanımlı komutlar kullanılıyor.\n"
 
-#: remake.c:481 remake.c:966
+#: remake.c:481 remake.c:988
 #, c-format
 msgid "Circular %s <- %s dependency dropped."
 msgstr "Çevrimsel %s <- %s bağımlılığı iptal edildi."
@@ -1568,17 +1568,17 @@ msgstr "Hedef dosya `%s' yeniden derlenmesi başarıyla tamamlandı.\n"
 msgid "Target file `%s' needs remade under -q.\n"
 msgstr "`%s' hedef dosyasının -q ile yeniden derlenmesi gerekir.\n"
 
-#: remake.c:1274
+#: remake.c:1296
 #, c-format
 msgid "Warning: File `%s' has modification time in the future"
 msgstr "Uyarı: `%s' dosyası gelecekteki bir değişiklik tarihini içeriyor"
 
-#: remake.c:1281
+#: remake.c:1303
 #, c-format
 msgid "Warning: File `%s' has modification time %.2g s in the future"
 msgstr "Uyarı: `%s' dosyasının  değişiklik tarihi %.2g s kadar gelecekte"
 
-#: remake.c:1480
+#: remake.c:1502
 #, c-format
 msgid ".LIBPATTERNS element `%s' is not a pattern"
 msgstr ".LIBPATTERNS elemanı `%s' bir kalıp değil"
@@ -1588,7 +1588,7 @@ msgstr ".LIBPATTERNS elemanı `%s' bir kalıp değil"
 msgid "Customs won't export: %s\n"
 msgstr "Özelleştirilmiş olanlar dışarı aktarılmayacak: %s\n"
 
-#: rule.c:551
+#: rule.c:552
 msgid ""
 "\n"
 "# Implicit Rules"
@@ -1596,7 +1596,7 @@ msgstr ""
 "\n"
 "# Örtük Kurallar"
 
-#: rule.c:566
+#: rule.c:567
 msgid ""
 "\n"
 "# No implicit rules."
@@ -1604,7 +1604,7 @@ msgstr ""
 "\n"
 "# Örtük kural yok."
 
-#: rule.c:569
+#: rule.c:570
 #, c-format
 msgid ""
 "\n"
@@ -1613,11 +1613,11 @@ msgstr ""
 "\n"
 "# %u örtük kural, %u"
 
-#: rule.c:578
+#: rule.c:579
 msgid " terminal."
 msgstr " terminal."
 
-#: rule.c:586
+#: rule.c:587
 #, c-format
 msgid "BUG: num_pattern_rules wrong!  %u != %u"
 msgstr "YAZILIM HATASI: num_pattern_rules yanlış!  %u != %u"

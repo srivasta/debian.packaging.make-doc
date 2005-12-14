@@ -175,7 +175,7 @@
 #define PACKAGE "make"
 
 /* Version of this package (needed by automake) */
-#define VERSION "3.81beta3"
+#define VERSION "3.81beta4"
 
 /* Define to the name of the SCCS `get' command.  */
 #define SCCS_GET "get"

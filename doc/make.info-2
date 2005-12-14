@@ -1,4 +1,4 @@
-This is make.info, produced by makeinfo version 4.7 from make.texi.
+This is make.info, produced by makeinfo version 4.8 from make.texi.
 
 INFO-DIR-SECTION GNU Packages
 START-INFO-DIR-ENTRY
@@ -2158,6 +2158,11 @@ Targets::, *Note Catalogue of Implicit Rules: Catalogue of Rules, and
      defined.
      *Note The `origin' Function: Origin Function.
 
+`$(flavor VARIABLE)'
+     Return a string describing the flavor of the `make' variable
+     VARIABLE.
+     *Note The `flavor' Function: Flavor Function.
+
 `$(foreach VAR,WORDS,TEXT)'
      Evaluate TEXT with VAR bound to each word in WORDS, and
      concatenate the results.
@@ -3496,7 +3501,7 @@ Index of Concepts
 * explicit rule, definition of:          Makefile Contents.   (line  10)
 * explicit rule, expansion:              Reading Makefiles.   (line  62)
 * explicit rules, secondary expansion of: Secondary Expansion.
-                                                              (line  95)
+                                                              (line 106)
 * exporting variables:                   Variables/Recursion. (line   6)
 * f77 <1>:                               Implicit Variables.  (line  54)
 * f77:                                   Catalogue of Rules.  (line  42)
@@ -3528,6 +3533,7 @@ Index of Concepts
 * finding strings:                       Text Functions.      (line 103)
 * flags:                                 Options Summary.     (line   6)
 * flags for compilers:                   Implicit Variables.  (line   6)
+* flavor of variable:                    Flavor Function.     (line   6)
 * flavors of variables:                  Flavors.             (line   6)
 * FORCE:                                 Force Targets.       (line   6)
 * force targets:                         Force Targets.       (line   6)
@@ -3569,7 +3575,7 @@ Index of Concepts
 * implicit rule, search algorithm:       Implicit Rule Search.
                                                               (line   6)
 * implicit rules, secondary expansion of: Secondary Expansion.
-                                                              (line 133)
+                                                              (line 146)
 * included makefiles, default directories: Include.           (line  52)
 * including (MAKEFILE_LIST variable):    MAKEFILE_LIST Variable.
                                                               (line   6)
@@ -3672,7 +3678,7 @@ Index of Concepts
 * overriding with override:              Override Directive.  (line   6)
 * parallel execution:                    Parallel.            (line   6)
 * parallel execution, and archive update: Archive Pitfalls.   (line   6)
-* parallel execution, overriding:        Special Targets.     (line 125)
+* parallel execution, overriding:        Special Targets.     (line 135)
 * parts of makefile rule:                Rule Introduction.   (line   6)
 * Pascal, rule to compile:               Catalogue of Rules.  (line  38)
 * pattern rule:                          Pattern Intro.       (line   6)
@@ -3772,7 +3778,7 @@ Index of Concepts
 * removal of target files <1>:           Interrupts.          (line   6)
 * removal of target files:               Errors.              (line  64)
 * removing duplicate words:              Text Functions.      (line 155)
-* removing targets on failure:           Special Targets.     (line  58)
+* removing targets on failure:           Special Targets.     (line  68)
 * removing, to clean up:                 Cleanup.             (line   6)
 * reporting bugs:                        Bugs.                (line   6)
 * rm:                                    Implicit Variables.  (line  98)
@@ -3816,11 +3822,11 @@ Index of Concepts
 * searching for strings:                 Text Functions.      (line 103)
 * secondary expansion:                   Secondary Expansion. (line   6)
 * secondary expansion and explicit rules: Secondary Expansion.
-                                                              (line  95)
+                                                              (line 106)
 * secondary expansion and implicit rules: Secondary Expansion.
-                                                              (line 133)
+                                                              (line 146)
 * secondary expansion and static pattern rules: Secondary Expansion.
-                                                              (line 125)
+                                                              (line 138)
 * secondary files:                       Chained Rules.       (line  46)
 * secondary targets:                     Special Targets.     (line  49)
 * sed (shell command):                   Automatic Prerequisites.
@@ -3865,7 +3871,7 @@ Index of Concepts
 * static pattern rule, versus implicit:  Static versus Implicit.
                                                               (line   6)
 * static pattern rules, secondary expansion of: Secondary Expansion.
-                                                              (line 125)
+                                                              (line 138)
 * stem <1>:                              Pattern Match.       (line   6)
 * stem:                                  Static Usage.        (line  17)
 * stem, variable for:                    Automatic Variables. (line  77)
@@ -3948,6 +3954,7 @@ Index of Concepts
 * variables, environment <1>:            Environment.         (line   6)
 * variables, environment:                Variables/Recursion. (line   6)
 * variables, exporting:                  Variables/Recursion. (line   6)
+* variables, flavor of:                  Flavor Function.     (line   6)
 * variables, flavors:                    Flavors.             (line   6)
 * variables, how they get their values:  Values.              (line   6)
 * variables, how to reference:           Reference.           (line   6)
@@ -4053,24 +4060,28 @@ Index of Functions, Variables, & Directives
 * .DEFAULT, and empty commands:          Empty Commands.      (line  16)
 * .DEFAULT_GOAL (define default goal):   Special Variables.   (line  10)
 * .DELETE_ON_ERROR <1>:                  Errors.              (line  64)
-* .DELETE_ON_ERROR:                      Special Targets.     (line  57)
+* .DELETE_ON_ERROR:                      Special Targets.     (line  67)
 * .EXPORT_ALL_VARIABLES <1>:             Variables/Recursion. (line  98)
-* .EXPORT_ALL_VARIABLES:                 Special Targets.     (line 119)
+* .EXPORT_ALL_VARIABLES:                 Special Targets.     (line 129)
 * .FEATURES (list of supported features): Special Variables.  (line  65)
 * .IGNORE <1>:                           Errors.              (line  30)
-* .IGNORE:                               Special Targets.     (line  64)
+* .IGNORE:                               Special Targets.     (line  74)
+* .INCLUDE_DIRS (list of include directories): Special Variables.
+                                                              (line  94)
 * .INTERMEDIATE:                         Special Targets.     (line  43)
 * .LIBPATTERNS:                          Libraries/Search.    (line   6)
-* .LOW_RESOLUTION_TIME:                  Special Targets.     (line  76)
-* .NOTPARALLEL:                          Special Targets.     (line 124)
+* .LOW_RESOLUTION_TIME:                  Special Targets.     (line  86)
+* .NOTPARALLEL:                          Special Targets.     (line 134)
 * .PHONY <1>:                            Special Targets.     (line   8)
 * .PHONY:                                Phony Targets.       (line  22)
 * .POSIX:                                Options/Recursion.   (line  60)
 * .PRECIOUS <1>:                         Interrupts.          (line  22)
 * .PRECIOUS:                             Special Targets.     (line  28)
 * .SECONDARY:                            Special Targets.     (line  48)
+* .SECONDEXPANSION <1>:                  Special Targets.     (line  57)
+* .SECONDEXPANSION:                      Secondary Expansion. (line   6)
 * .SILENT <1>:                           Echoing.             (line  24)
-* .SILENT:                               Special Targets.     (line 106)
+* .SILENT:                               Special Targets.     (line 116)
 * .SUFFIXES <1>:                         Suffix Rules.        (line  61)
 * .SUFFIXES:                             Special Targets.     (line  15)
 * .VARIABLES (list of variables):        Special Variables.   (line  56)
@@ -4127,6 +4138,7 @@ Index of Functions, Variables, & Directives
 * filter-out:                            Text Functions.      (line 132)
 * findstring:                            Text Functions.      (line 103)
 * firstword:                             Text Functions.      (line 184)
+* flavor:                                Flavor Function.     (line   6)
 * foreach:                               Foreach Function.    (line   6)
 * GET:                                   Implicit Variables.  (line  57)
 * GFLAGS:                                Implicit Variables.  (line 128)

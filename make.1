@@ -319,6 +319,17 @@ except that the modification time is changed only in the imagination of
 .TP 0.5i
 .B \-\-warn\-undefined\-variables
 Warn when an undefined variable is referenced.
+.SH "EXIT STATUS"
+GNU
+.I make
+exits with a status of zero if all makefiles were successfully parsed
+and no targets that were built failed.  A status of one will be returned
+if the
+.B \-q
+flag was used and
+.I make
+determines that a target needs to be rebuilt.  A status of two will be
+returned if any errors were encountered.
 .SH "SEE ALSO"
 .I "The GNU Make Manual"
 .SH BUGS
@@ -328,3 +339,27 @@ See the chapter `Problems and Bugs' in
 This manual page contributed by Dennis Morse of Stanford University.
 It has been reworked by Roland McGrath.  Further updates contributed by
 Mike Frysinger.
+.SH "COPYRIGHT"
+Copyright (C) 1992, 1993, 1996, 1999 Free Software Foundation, Inc.
+This file is part of GNU
+.IR make .
+.LP
+GNU
+.I make
+is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free
+Software Foundation; either version 2, or (at your option) any later
+version.
+.LP
+GNU
+.I make
+is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+for more details.
+.LP
+You should have received a copy of the GNU General Public License
+along with GNU
+.IR make ;
+see the file COPYING.  If not, write to the Free Software Foundation,
+Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.

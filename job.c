@@ -1,22 +1,20 @@
 /* Job execution and handling for GNU Make.
-Copyright (C) 1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1999,
-2000,2001,2002,2003,2004,2005 Free Software Foundation, Inc.
+Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software
+Foundation, Inc.
 This file is part of GNU Make.
 
-GNU Make is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+GNU Make is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later version.
 
-GNU Make is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GNU Make; see the file COPYING.  If not, write to
-the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-Boston, MA 02111-1307, USA.  */
+You should have received a copy of the GNU General Public License along with
+GNU Make; see the file COPYING.  If not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.  */
 
 #include "make.h"
 
@@ -242,11 +240,12 @@ w32_kill(int pid, int sig)
   return ((process_kill((HANDLE)pid, sig) == TRUE) ? 0 : -1);
 }
 
-/* This function creates a temporary file name with the given extension
- * the unixy param controls both the extension and the path separator
- * return an xmalloc'ed string of a newly created temp file or die.  */
+/* This function creates a temporary file name with an extension specified
+ * by the unixy arg.
+ * Return an xmalloc'ed string of a newly created temp file and its
+ * file descriptor, or die.  */
 static char *
-create_batch_filename(char const *base, int unixy)
+create_batch_file (char const *base, int unixy, int *fd)
 {
   const char *const ext = unixy ? "sh" : "bat";
   const char *error = NULL;
@@ -304,7 +303,7 @@ create_batch_filename(char const *base, int unixy)
           const unsigned final_size = path_size + size + 1;
           char *const path = (char *) xmalloc (final_size);
           memcpy (path, temp_path, final_size);
-          CloseHandle (h);
+          *fd = _open_osfhandle ((long)h, 0);
           if (unixy)
             {
               char *p;
@@ -317,6 +316,7 @@ create_batch_filename(char const *base, int unixy)
         }
     }
 
+  *fd = -1;
   if (error == NULL)
     error = _("Cannot create a temporary file\n");
   fatal (NILF, error);
@@ -716,7 +716,7 @@ reap_children (int block, int err)
       if (c->good_stdin)
         good_stdin_used = 0;
 
-      dontcare = c->file->dontcare;
+      dontcare = c->dontcare;
 
       if (child_failed && !c->noerror && !ignore_errors_flag)
         {
@@ -1380,11 +1380,12 @@ start_job_command (struct child *child)
         int i;
         unblock_sigs();
         fprintf(stderr,
-          _("process_easy() failed failed to launch process (e=%ld)\n"),
-          process_last_err(hPID));
-               for (i = 0; argv[i]; i++)
-                 fprintf(stderr, "%s ", argv[i]);
-               fprintf(stderr, _("\nCounted %d args in failed launch\n"), i);
+                _("process_easy() failed to launch process (e=%ld)\n"),
+                process_last_err(hPID));
+        for (i = 0; argv[i]; i++)
+          fprintf(stderr, "%s ", argv[i]);
+        fprintf(stderr, _("\nCounted %d args in failed launch\n"), i);
+        goto error;
       }
   }
 #endif /* WINDOWS32 */
@@ -1429,7 +1430,12 @@ start_waiting_job (struct child *c)
 
   /* If we are running at least one job already and the load average
      is too high, make this one wait.  */
-  if (!c->remote && job_slots_used > 0 && load_too_high ())
+  if (!c->remote
+      && ((job_slots_used > 0 && load_too_high ())
+#ifdef WINDOWS32
+	  || (process_used_slots () >= MAXIMUM_WAIT_OBJECTS)
+#endif
+	  ))
     {
       /* Put this child on the chain of children waiting for the load average
          to go down.  */
@@ -1603,6 +1609,10 @@ new_job (struct file *file)
   c->file = file;
   c->command_lines = lines;
   c->sh_batch_file = NULL;
+
+  /* Cache dontcare flag because file->dontcare can be changed once we
+     return. Check dontcare inheritance mechanism for details.  */
+  c->dontcare = file->dontcare;
 
   /* Fetch the first command line to be run.  */
   job_next_command (c);
@@ -1798,6 +1808,12 @@ load_too_high (void)
   static time_t last_now;
   double load, guess;
   time_t now;
+
+#ifdef WINDOWS32
+  /* sub_proc.c cannot wait for more than MAXIMUM_WAIT_OBJECTS children */
+  if (process_used_slots () >= MAXIMUM_WAIT_OBJECTS)
+    return 1;
+#endif
 
   if (max_load_average < 0)
     return 0;
@@ -2027,8 +2043,8 @@ exec_command (char **argv, char **envp)
           break;
       else
           fprintf(stderr,
-                  _("make reaped child pid %d, still waiting for pid %d\n"),
-                  hWaitPID, hPID);
+                  _("make reaped child pid %ld, still waiting for pid %ld\n"),
+                  (DWORD)hWaitPID, (DWORD)hPID);
     }
 
   /* return child's exit code as our exit code */
@@ -2754,20 +2770,25 @@ construct_command_argv_internal (char *line, char **restp, char *shell,
     /* Some shells do not work well when invoked as 'sh -c xxx' to run a
        command line (e.g. Cygnus GNUWIN32 sh.exe on WIN32 systems).  In these
        cases, run commands via a script file.  */
+    if (just_print_flag)
+      ; /* Do nothing here.  */
     if ((no_default_sh_exe || batch_mode_shell) && batch_filename_ptr) {
+      int temp_fd;
       FILE* batch = NULL;
       int id = GetCurrentProcessId();
       PATH_VAR(fbuf);
 
       /* create a file name */
       sprintf(fbuf, "make%d", id);
-      *batch_filename_ptr = create_batch_filename (fbuf, unixy_shell);
+      *batch_filename_ptr = create_batch_file (fbuf, unixy_shell, &temp_fd);
 
       DB (DB_JOBS, (_("Creating temporary batch file %s\n"),
                     *batch_filename_ptr));
 
-      /* create batch file to execute command */
-      batch = fopen (*batch_filename_ptr, "w");
+      /* Create a FILE object for the batch file, and write to it the
+	 commands to be executed.  Put the batch file in TEXT mode.  */
+      _setmode (temp_fd, _O_TEXT);
+      batch = _fdopen (temp_fd, "wt");
       if (!unixy_shell)
         fputs ("@echo off\n", batch);
       fputs (command_ptr, batch);

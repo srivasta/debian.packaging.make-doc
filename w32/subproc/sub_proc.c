@@ -1,3 +1,20 @@
+/* Process handling for Windows.
+Copyright (C) 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
+2006 Free Software Foundation, Inc.
+This file is part of GNU Make.
+
+GNU Make is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later version.
+
+GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+GNU Make; see the file COPYING.  If not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.  */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <process.h>  /* for msvc _beginthreadex, _endthreadex */
@@ -31,7 +48,7 @@ typedef struct sub_process_t {
 } sub_process;
 
 /* keep track of children so we can implement a waitpid-like routine */
-static sub_process *proc_array[256];
+static sub_process *proc_array[MAXIMUM_WAIT_OBJECTS];
 static int proc_index = 0;
 static int fake_exits_pending = 0;
 
@@ -66,7 +83,7 @@ process_adjust_wait_state(sub_process* pproc)
 static sub_process *
 process_wait_for_any_private(void)
 {
-	HANDLE handles[256];
+	HANDLE handles[MAXIMUM_WAIT_OBJECTS];
 	DWORD retval, which;
 	int i;
 
@@ -120,7 +137,17 @@ process_kill(HANDLE proc, int signal)
 void
 process_register(HANDLE proc)
 {
-	proc_array[proc_index++] = (sub_process *) proc;
+	if (proc_index < MAXIMUM_WAIT_OBJECTS)
+		proc_array[proc_index++] = (sub_process *) proc;
+}
+
+/*
+ * Return the number of processes that we are still waiting for.
+ */
+int
+process_used_slots(void)
+{
+	return proc_index;
 }
 
 /*
@@ -163,54 +190,58 @@ process_wait_for_any(void)
 }
 
 long
-process_errno(HANDLE proc)
+process_signal(HANDLE proc)
 {
-	return (((sub_process *)proc)->lerrno);
+        if (proc == INVALID_HANDLE_VALUE) return 0;
+        return (((sub_process *)proc)->signal);
 }
 
 long
-process_signal(HANDLE proc)
-{
-	return (((sub_process *)proc)->signal);
-}
-
-	long
 process_last_err(HANDLE proc)
 {
+        if (proc == INVALID_HANDLE_VALUE) return ERROR_INVALID_HANDLE;
 	return (((sub_process *)proc)->last_err);
 }
 
-	long
+long
 process_exit_code(HANDLE proc)
 {
+        if (proc == INVALID_HANDLE_VALUE) return EXIT_FAILURE;
 	return (((sub_process *)proc)->exit_code);
 }
 
-	char *
+/*
+2006-02:
+All the following functions are currently unused.
+All of them would crash gmake if called with argument INVALID_HANDLE_VALUE.
+Hence whoever wants to use one of this functions must invent and implement
+a reasonable error handling for this function.
+
+char *
 process_outbuf(HANDLE proc)
 {
 	return (((sub_process *)proc)->outp);
 }
 
-	char *
+char *
 process_errbuf(HANDLE proc)
 {
 	return (((sub_process *)proc)->errp);
 }
 
-	int
+int
 process_outcnt(HANDLE proc)
 {
 	return (((sub_process *)proc)->outcnt);
 }
 
-	int
+int
 process_errcnt(HANDLE proc)
 {
 	return (((sub_process *)proc)->errcnt);
 }
 
-	void
+void
 process_pipes(HANDLE proc, int pipes[3])
 {
 	pipes[0] = ((sub_process *)proc)->sv_stdin[0];
@@ -218,7 +249,7 @@ process_pipes(HANDLE proc, int pipes[3])
 	pipes[2] = ((sub_process *)proc)->sv_stderr[0];
 	return;
 }
-
+*/
 
 	HANDLE
 process_init()
@@ -369,7 +400,7 @@ find_file(char *exec_path, LPOFSTRUCT file_info)
 /*
  * Description:   Create the child process to be helped
  *
- * Returns:
+ * Returns: success <=> 0
  *
  * Notes/Dependencies:
  */
@@ -536,18 +567,12 @@ process_begin(
 	CloseHandle(procInfo.hThread);
 
 	/* Close the halves of the pipes we don't need */
-	if (pproc->sv_stdin) {
-		CloseHandle((HANDLE)pproc->sv_stdin[1]);
-		pproc->sv_stdin[1] = 0;
-	}
-	if (pproc->sv_stdout) {
-		CloseHandle((HANDLE)pproc->sv_stdout[1]);
-		pproc->sv_stdout[1] = 0;
-	}
-	if (pproc->sv_stderr) {
-		CloseHandle((HANDLE)pproc->sv_stderr[1]);
-		pproc->sv_stderr[1] = 0;
-	}
+        CloseHandle((HANDLE)pproc->sv_stdin[1]);
+        CloseHandle((HANDLE)pproc->sv_stdout[1]);
+        CloseHandle((HANDLE)pproc->sv_stderr[1]);
+        pproc->sv_stdin[1] = 0;
+        pproc->sv_stdout[1] = 0;
+        pproc->sv_stderr[1] = 0;
 
 	free( command_line );
 	if (envblk) free(envblk);
@@ -1169,6 +1194,10 @@ process_easy(
   HANDLE hErr;
   HANDLE hProcess;
 
+  if (proc_index >= MAXIMUM_WAIT_OBJECTS) {
+	DB (DB_JOBS, ("process_easy: All process slots used up\n"));
+	return INVALID_HANDLE_VALUE;
+  }
   if (DuplicateHandle(GetCurrentProcess(),
                       GetStdHandle(STD_INPUT_HANDLE),
                       GetCurrentProcess(),

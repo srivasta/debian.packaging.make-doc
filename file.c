@@ -1,22 +1,20 @@
-/* Target file hash table management for GNU Make.
+/* Target file management for GNU Make.
 Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
-2002 Free Software Foundation, Inc.
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software
+Foundation, Inc.
 This file is part of GNU Make.
 
-GNU Make is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+GNU Make is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later version.
 
-GNU Make is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GNU Make; see the file COPYING.  If not, write to
-the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-Boston, MA 02111-1307, USA.  */
+You should have received a copy of the GNU General Public License along with
+GNU Make; see the file COPYING.  If not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.  */
 
 #include "make.h"
 
@@ -90,14 +88,15 @@ lookup_file (char *name)
      on the command line.  */
 #ifdef VMS
 # ifndef WANT_CASE_SENSITIVE_TARGETS
-  {
-    register char *n;
-    lname = (char *) malloc (strlen (name) + 1);
-    for (n = name, ln = lname; *n != '\0'; ++n, ++ln)
-      *ln = isupper ((unsigned char)*n) ? tolower ((unsigned char)*n) : *n;
-    *ln = '\0';
-    name = lname;
-  }
+  if (*name != '.')
+    {
+      register char *n;
+      lname = (char *) malloc (strlen (name) + 1);
+      for (n = name, ln = lname; *n != '\0'; ++n, ++ln)
+        *ln = isupper ((unsigned char)*n) ? tolower ((unsigned char)*n) : *n;
+      *ln = '\0';
+      name = lname;
+    }
 # endif
 
   while (name[0] == '[' && name[1] == ']' && name[2] != '\0')
@@ -126,7 +125,8 @@ lookup_file (char *name)
   file_key.hname = name;
   f = (struct file *) hash_find_item (&files, &file_key);
 #if defined(VMS) && !defined(WANT_CASE_SENSITIVE_TARGETS)
-  free (lname);
+  if (*name != '.')
+    free (lname);
 #endif
   return f;
 }
@@ -145,22 +145,23 @@ enter_file (char *name)
   assert (*name != '\0');
 
 #if defined(VMS) && !defined(WANT_CASE_SENSITIVE_TARGETS)
-  {
-    register char *n;
-    lname = (char *) malloc (strlen (name) + 1);
-    for (n = name, ln = lname; *n != '\0'; ++n, ++ln)
-      {
-        if (isupper ((unsigned char)*n))
-          *ln = tolower ((unsigned char)*n);
-        else
-          *ln = *n;
-      }
+  if (*name != '.')
+    {
+      register char *n;
+      lname = (char *) malloc (strlen (name) + 1);
+      for (n = name, ln = lname; *n != '\0'; ++n, ++ln)
+        {
+          if (isupper ((unsigned char)*n))
+            *ln = tolower ((unsigned char)*n);
+          else
+            *ln = *n;
+        }
 
-    *ln = 0;
-    /* Creates a possible leak, old value of name is unreachable, but I
-       currently don't know how to fix it. */
-    name = lname;
-  }
+      *ln = 0;
+      /* Creates a possible leak, old value of name is unreachable, but I
+         currently don't know how to fix it. */
+      name = lname;
+    }
 #endif
 
   file_key.hname = name;
@@ -169,7 +170,8 @@ enter_file (char *name)
   if (! HASH_VACANT (f) && !f->double_colon)
     {
 #if defined(VMS) && !defined(WANT_CASE_SENSITIVE_TARGETS)
-      free(lname);
+      if (*name != '.')
+        free (lname);
 #endif
       return f;
     }
@@ -180,14 +182,16 @@ enter_file (char *name)
   new->update_status = -1;
 
   if (HASH_VACANT (f))
-    hash_insert_at (&files, new, file_slot);
+    {
+      new->last = new;
+      hash_insert_at (&files, new, file_slot);
+    }
   else
     {
       /* There is already a double-colon entry for this file.  */
       new->double_colon = f;
-      while (f->prev != 0)
-	f = f->prev;
-      f->prev = new;
+      f->last->prev = new;
+      f->last = new;
     }
 
   return new;
@@ -718,13 +722,17 @@ snap_deps (void)
 	    f2->command_flags |= COMMANDS_SILENT;
     }
 
-  f = lookup_file (".POSIX");
-  if (f != 0 && f->is_target)
-    posix_pedantic = 1;
-
   f = lookup_file (".NOTPARALLEL");
   if (f != 0 && f->is_target)
     not_parallel = 1;
+
+#ifndef NO_MINUS_C_MINUS_O
+  /* If .POSIX was defined, remove OUTPUT_OPTION to comply.  */
+  /* This needs more work: what if the user sets this in the makefile?
+  if (posix_pedantic)
+    define_variable (STRING_SIZE_TUPLE("OUTPUT_OPTION"), "", o_default, 1);
+  */
+#endif
 
   /* Remember that we've done this. */
   snapped_deps = 1;

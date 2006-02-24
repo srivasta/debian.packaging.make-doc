@@ -1,22 +1,20 @@
 /* Argument parsing and main program of GNU Make.
-Copyright (C) 1988, 1989, 1990, 1991, 1994, 1995, 1996, 1997, 1998, 1999,
-2002, 2003, 2005 Free Software Foundation, Inc.
+Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software
+Foundation, Inc.
 This file is part of GNU Make.
 
-GNU Make is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+GNU Make is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later version.
 
-GNU Make is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GNU Make; see the file COPYING.  If not, write to
-the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-MA 02111-1307, USA.  */
+You should have received a copy of the GNU General Public License along with
+GNU Make; see the file COPYING.  If not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.  */
 
 #include "make.h"
 #include "dep.h"
@@ -537,6 +535,7 @@ static void
 initialize_global_hash_tables (void)
 {
   init_hash_global_variable_set ();
+  strcache_init ();
   init_hash_files ();
   hash_init_directories ();
   hash_init_function_table ();
@@ -668,7 +667,7 @@ handle_runtime_exceptions( struct _EXCEPTION_POINTERS *exinfo )
     {
       sprintf(errmsg,
               _("%s: Interrupt/Exception caught (code = 0x%lx, addr = 0x%lx)\n"),
-              prg, exrec->ExceptionCode, exrec->ExceptionAddress);
+              prg, exrec->ExceptionCode, (DWORD)exrec->ExceptionAddress);
       fprintf(stderr, errmsg);
       exit(255);
     }
@@ -676,7 +675,7 @@ handle_runtime_exceptions( struct _EXCEPTION_POINTERS *exinfo )
   sprintf(errmsg,
           _("\nUnhandled exception filter called from program %s\nExceptionCode = %lx\nExceptionFlags = %lx\nExceptionAddress = %lx\n"),
           prg, exrec->ExceptionCode, exrec->ExceptionFlags,
-          exrec->ExceptionAddress);
+          (DWORD)exrec->ExceptionAddress);
 
   if (exrec->ExceptionCode == EXCEPTION_ACCESS_VIOLATION
       && exrec->NumberParameters >= 2)
@@ -1111,6 +1110,10 @@ main (int argc, char **argv, char **envp)
   define_variable (".FEATURES", 9,
                    "target-specific order-only second-expansion else-if",
                    o_default, 0);
+#ifndef NO_ARCHIVES
+  do_variable_definition (NILF, ".FEATURES", "archives",
+                          o_default, f_append, 0);
+#endif
 #ifdef MAKE_JOBSERVER
   do_variable_definition (NILF, ".FEATURES", "jobserver",
                           o_default, f_append, 0);
@@ -1595,12 +1598,6 @@ main (int argc, char **argv, char **envp)
   /* look one last time after reading all Makefiles */
   if (no_default_sh_exe)
     no_default_sh_exe = !find_and_set_default_shell(NULL);
-
-  if (no_default_sh_exe && job_slots != 1) {
-    error (NILF, _("Do not specify -j or --jobs if sh.exe is not available."));
-    error (NILF, _("Resetting make for single job mode."));
-    job_slots = 1;
-  }
 #endif /* WINDOWS32 */
 
 #if defined (__MSDOS__) || defined (__EMX__)
@@ -2944,7 +2941,7 @@ print_version (void)
      word "Copyright", so it hardly seems worth it.  */
 
   printf ("%sGNU Make %s\n\
-%sCopyright (C) 2003  Free Software Foundation, Inc.\n",
+%sCopyright (C) 2006  Free Software Foundation, Inc.\n",
           precede, version_string, precede);
 
   printf (_("%sThis is free software; see the source for copying conditions.\n\
@@ -2980,6 +2977,7 @@ print_data_base (void)
   print_rule_data_base ();
   print_file_data_base ();
   print_vpath_data_base ();
+  strcache_print_stats ("#");
 
   when = time ((time_t *) 0);
   printf (_("\n# Finished Make data base on %s\n"), ctime (&when));

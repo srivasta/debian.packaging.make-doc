@@ -1,22 +1,20 @@
 /* Miscellaneous global declarations and portability cruft for GNU Make.
-Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1999,
-2002 Free Software Foundation, Inc.
+Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software
+Foundation, Inc.
 This file is part of GNU Make.
 
-GNU Make is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+GNU Make is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later version.
 
-GNU Make is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GNU Make; see the file COPYING.  If not, write to
-the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-Boston, MA 02111-1307, USA.  */
+You should have received a copy of the GNU General Public License along with
+GNU Make; see the file COPYING.  If not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.  */
 
 /* We use <config.h> instead of "config.h" so that a compilation
    using -I. -I$srcdir will use ./config.h rather than $srcdir/config.h
@@ -382,7 +380,7 @@ extern int unixy_shell;
 
 struct floc
   {
-    char *filenm;
+    const char *filenm;
     unsigned long lineno;
   };
 #define NILF ((struct floc *)0)
@@ -465,6 +463,13 @@ extern void close_stdout PARAMS ((void));
 
 extern char *strip_whitespace PARAMS ((const char **begpp, const char **endpp));
 
+/* String caching  */
+extern void strcache_init PARAMS ((void));
+extern void strcache_print_stats PARAMS ((const char *prefix));
+extern int strcache_iscached PARAMS ((const char *str));
+extern const char *strcache_add PARAMS ((const char *str));
+extern const char *strcache_add_len PARAMS ((const char *str, int len));
+extern int strcache_setbufsize PARAMS ((int size));
 
 #ifdef  HAVE_VFORK_H
 # include <vfork.h>
@@ -492,6 +497,7 @@ extern char *getwd ();
 #endif
 
 extern const struct floc *reading_file;
+extern const struct floc **expanding_var;
 
 extern char **environ;
 

@@ -9,11 +9,12 @@ END-INFO-DIR-ENTRY
 automatically which pieces of a large program need to be recompiled,
 and issues the commands to recompile them.
 
-   This is Edition 0.70, last updated 07 May 2005, of `The GNU Make
+   This is Edition 0.70, last updated 5 Feb 2006, of `The GNU Make
 Manual', for `make', Version 3.81.
 
    Copyright 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
-1998, 1999, 2000, 2002, 2003, 2004, 2005 Free Software Foundation, Inc.
+1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006 Free Software
+Foundation, Inc.
 
    Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.1 or
@@ -21,6 +22,143 @@ any later version published by the Free Software Foundation; with no
 Invariant Sections, with no Front-Cover Texts, and with no Back-Cover
 Texts.  A copy of the license is included in the section entitled "GNU
 Free Documentation License".
+
+
+File: make.info,  Node: Pattern Rules,  Next: Last Resort,  Prev: Chained Rules,  Up: Implicit Rules
+
+10.5 Defining and Redefining Pattern Rules
+==========================================
+
+You define an implicit rule by writing a "pattern rule".  A pattern
+rule looks like an ordinary rule, except that its target contains the
+character `%' (exactly one of them).  The target is considered a
+pattern for matching file names; the `%' can match any nonempty
+substring, while other characters match only themselves.  The
+prerequisites likewise use `%' to show how their names relate to the
+target name.
+
+   Thus, a pattern rule `%.o : %.c' says how to make any file `STEM.o'
+from another file `STEM.c'.
+
+   Note that expansion using `%' in pattern rules occurs *after* any
+variable or function expansions, which take place when the makefile is
+read.  *Note How to Use Variables: Using Variables, and *Note Functions
+for Transforming Text: Functions.
+
+* Menu:
+
+* Pattern Intro::               An introduction to pattern rules.
+* Pattern Examples::            Examples of pattern rules.
+* Automatic Variables::         How to use automatic variables in the
+                                  commands of implicit rules.
+* Pattern Match::               How patterns match.
+* Match-Anything Rules::        Precautions you should take prior to
+                                  defining rules that can match any
+                                  target file whatever.
+* Canceling Rules::             How to override or cancel built-in rules.
+
+
+File: make.info,  Node: Pattern Intro,  Next: Pattern Examples,  Prev: Pattern Rules,  Up: Pattern Rules
+
+10.5.1 Introduction to Pattern Rules
+------------------------------------
+
+A pattern rule contains the character `%' (exactly one of them) in the
+target; otherwise, it looks exactly like an ordinary rule.  The target
+is a pattern for matching file names; the `%' matches any nonempty
+substring, while other characters match only themselves.  
+
+   For example, `%.c' as a pattern matches any file name that ends in
+`.c'.  `s.%.c' as a pattern matches any file name that starts with
+`s.', ends in `.c' and is at least five characters long.  (There must
+be at least one character to match the `%'.)  The substring that the
+`%' matches is called the "stem".
+
+   `%' in a prerequisite of a pattern rule stands for the same stem
+that was matched by the `%' in the target.  In order for the pattern
+rule to apply, its target pattern must match the file name under
+consideration and all of its prerequisites (after pattern substitution)
+must name files that exist or can be made.  These files become
+prerequisites of the target.  
+
+   Thus, a rule of the form
+
+     %.o : %.c ; COMMAND...
+
+specifies how to make a file `N.o', with another file `N.c' as its
+prerequisite, provided that `N.c' exists or can be made.
+
+   There may also be prerequisites that do not use `%'; such a
+prerequisite attaches to every file made by this pattern rule.  These
+unvarying prerequisites are useful occasionally.
+
+   A pattern rule need not have any prerequisites that contain `%', or
+in fact any prerequisites at all.  Such a rule is effectively a general
+wildcard.  It provides a way to make any file that matches the target
+pattern.  *Note Last Resort::.
+
+   Pattern rules may have more than one target.  Unlike normal rules,
+this does not act as many different rules with the same prerequisites
+and commands.  If a pattern rule has multiple targets, `make' knows that
+the rule's commands are responsible for making all of the targets.  The
+commands are executed only once to make all the targets.  When searching
+for a pattern rule to match a target, the target patterns of a rule
+other than the one that matches the target in need of a rule are
+incidental: `make' worries only about giving commands and prerequisites
+to the file presently in question.  However, when this file's commands
+are run, the other targets are marked as having been updated themselves.  
+
+   The order in which pattern rules appear in the makefile is important
+since this is the order in which they are considered.  Of equally
+applicable rules, only the first one found is used.  The rules you
+write take precedence over those that are built in.  Note however, that
+a rule whose prerequisites actually exist or are mentioned always takes
+priority over a rule with prerequisites that must be made by chaining
+other implicit rules.  
+
+
+File: make.info,  Node: Pattern Examples,  Next: Automatic Variables,  Prev: Pattern Intro,  Up: Pattern Rules
+
+10.5.2 Pattern Rule Examples
+----------------------------
+
+Here are some examples of pattern rules actually predefined in `make'.
+First, the rule that compiles `.c' files into `.o' files:
+
+     %.o : %.c
+             $(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $@
+
+defines a rule that can make any file `X.o' from `X.c'.  The command
+uses the automatic variables `$@' and `$<' to substitute the names of
+the target file and the source file in each case where the rule applies
+(*note Automatic Variables::).
+
+   Here is a second built-in rule:
+
+     % :: RCS/%,v
+             $(CO) $(COFLAGS) $<
+
+defines a rule that can make any file `X' whatsoever from a
+corresponding file `X,v' in the subdirectory `RCS'.  Since the target
+is `%', this rule will apply to any file whatever, provided the
+appropriate prerequisite file exists.  The double colon makes the rule
+"terminal", which means that its prerequisite may not be an intermediate
+file (*note Match-Anything Pattern Rules: Match-Anything Rules.).
+
+   This pattern rule has two targets:
+
+     %.tab.c %.tab.h: %.y
+             bison -d $<
+
+This tells `make' that the command `bison -d X.y' will make both
+`X.tab.c' and `X.tab.h'.  If the file `foo' depends on the files
+`parse.tab.o' and `scan.o' and the file `scan.o' depends on the file
+`parse.tab.h', when `parse.y' is changed, the command `bison -d parse.y'
+will be executed only once, and the prerequisites of both `parse.tab.o'
+and `scan.o' will be satisfied.  (Presumably the file `parse.tab.o'
+will be recompiled from `parse.tab.c' and the file `scan.o' from
+`scan.c', while `foo' is linked from `parse.tab.o', `scan.o', and its
+other prerequisites, and it will execute happily ever after.)
 
 
 File: make.info,  Node: Automatic Variables,  Next: Pattern Match,  Prev: Pattern Examples,  Up: Pattern Rules
@@ -211,7 +349,7 @@ before it is compared with the target prefix and suffix.  After the
 comparison of the file name to the target pattern, the directory names,
 along with the slash that ends them, are added on to the prerequisite
 file names generated from the pattern rule's prerequisite patterns and
-the file name. The directories are ignored only for the purpose of
+the file name.  The directories are ignored only for the purpose of
 finding an implicit rule to use, not in the application of that rule.
 Thus, `e%t' matches the file name `src/eat', with `src/a' as the stem.
 When prerequisites are turned into file names, the directories from the
@@ -2254,12 +2392,11 @@ Variables::, for full information.
      `/bin/sh'.  You can set `SHELL' in the makefile to change the
      shell used to run commands.  *Note Command Execution: Execution.
      The `SHELL' variable is handled specially when importing from and
-     exporting to the environment.  *Note Using Variable from the
-     Environment: Environment.
+     exporting to the environment.  *Note Choosing the Shell::.
 
 `MAKESHELL'
      On MS-DOS only, the name of the command interpreter that is to be
-     used by `make'. This value takes precedence over the value of
+     used by `make'.  This value takes precedence over the value of
      `SHELL'.  *Note MAKESHELL variable: Execution.
 
 `MAKE'
@@ -3131,12 +3268,12 @@ Index of Concepts
  [index ]
 * Menu:
 
-* # (comments), in commands:             Commands.            (line  18)
+* # (comments), in commands:             Command Syntax.      (line  27)
 * # (comments), in makefile:             Makefile Contents.   (line  41)
 * #include:                              Automatic Prerequisites.
                                                               (line  16)
 * $, in function call:                   Syntax of Functions. (line   6)
-* $, in rules:                           Rule Syntax.         (line  31)
+* $, in rules:                           Rule Syntax.         (line  32)
 * $, in variable name:                   Computed Names.      (line   6)
 * $, in variable reference:              Reference.           (line   6)
 * %, in pattern rules:                   Pattern Intro.       (line   9)
@@ -3153,7 +3290,7 @@ Index of Concepts
 * +, and define:                         Sequences.           (line  50)
 * +=:                                    Appending.           (line   6)
 * +=, expansion:                         Reading Makefiles.   (line  33)
-* ,v (RCS file extension):               Catalogue of Rules.  (line 157)
+* ,v (RCS file extension):               Catalogue of Rules.  (line 164)
 * - (in commands):                       Errors.              (line  19)
 * -, and define:                         Sequences.           (line  50)
 * --always-make:                         Options Summary.     (line  15)
@@ -3308,36 +3445,37 @@ Index of Concepts
 * -w, disabling:                         -w Option.           (line  20)
 * .a (archives):                         Archive Suffix Rules.
                                                               (line   6)
-* .C:                                    Catalogue of Rules.  (line  33)
-* .c:                                    Catalogue of Rules.  (line  29)
-* .cc:                                   Catalogue of Rules.  (line  33)
-* .ch:                                   Catalogue of Rules.  (line 144)
+* .C:                                    Catalogue of Rules.  (line  39)
+* .c:                                    Catalogue of Rules.  (line  35)
+* .cc:                                   Catalogue of Rules.  (line  39)
+* .ch:                                   Catalogue of Rules.  (line 151)
+* .cpp:                                  Catalogue of Rules.  (line  39)
 * .d:                                    Automatic Prerequisites.
                                                               (line  81)
-* .def:                                  Catalogue of Rules.  (line  67)
-* .dvi:                                  Catalogue of Rules.  (line 144)
-* .F:                                    Catalogue of Rules.  (line  42)
-* .f:                                    Catalogue of Rules.  (line  42)
-* .info:                                 Catalogue of Rules.  (line 151)
-* .l:                                    Catalogue of Rules.  (line 117)
+* .def:                                  Catalogue of Rules.  (line  74)
+* .dvi:                                  Catalogue of Rules.  (line 151)
+* .F:                                    Catalogue of Rules.  (line  49)
+* .f:                                    Catalogue of Rules.  (line  49)
+* .info:                                 Catalogue of Rules.  (line 158)
+* .l:                                    Catalogue of Rules.  (line 124)
 * .LIBPATTERNS, and link libraries:      Libraries/Search.    (line   6)
-* .ln:                                   Catalogue of Rules.  (line 139)
-* .mod:                                  Catalogue of Rules.  (line  67)
-* .o:                                    Catalogue of Rules.  (line  29)
-* .p:                                    Catalogue of Rules.  (line  38)
+* .ln:                                   Catalogue of Rules.  (line 146)
+* .mod:                                  Catalogue of Rules.  (line  74)
+* .o:                                    Catalogue of Rules.  (line  35)
+* .p:                                    Catalogue of Rules.  (line  45)
 * .PRECIOUS intermediate files:          Chained Rules.       (line  56)
-* .r:                                    Catalogue of Rules.  (line  42)
-* .S:                                    Catalogue of Rules.  (line  75)
-* .s:                                    Catalogue of Rules.  (line  72)
-* .sh:                                   Catalogue of Rules.  (line 173)
-* .sym:                                  Catalogue of Rules.  (line  67)
-* .tex:                                  Catalogue of Rules.  (line 144)
-* .texi:                                 Catalogue of Rules.  (line 151)
-* .texinfo:                              Catalogue of Rules.  (line 151)
-* .txinfo:                               Catalogue of Rules.  (line 151)
-* .w:                                    Catalogue of Rules.  (line 144)
-* .web:                                  Catalogue of Rules.  (line 144)
-* .y:                                    Catalogue of Rules.  (line 113)
+* .r:                                    Catalogue of Rules.  (line  49)
+* .S:                                    Catalogue of Rules.  (line  82)
+* .s:                                    Catalogue of Rules.  (line  79)
+* .sh:                                   Catalogue of Rules.  (line 180)
+* .sym:                                  Catalogue of Rules.  (line  74)
+* .tex:                                  Catalogue of Rules.  (line 151)
+* .texi:                                 Catalogue of Rules.  (line 158)
+* .texinfo:                              Catalogue of Rules.  (line 158)
+* .txinfo:                               Catalogue of Rules.  (line 158)
+* .w:                                    Catalogue of Rules.  (line 151)
+* .web:                                  Catalogue of Rules.  (line 151)
+* .y:                                    Catalogue of Rules.  (line 120)
 * :: rules (double-colon):               Double-Colon.        (line   6)
 * := <1>:                                Setting.             (line   6)
 * :=:                                    Flavors.             (line  56)
@@ -3346,13 +3484,13 @@ Index of Concepts
 * =, expansion:                          Reading Makefiles.   (line  33)
 * ? (wildcard character):                Wildcards.           (line   6)
 * ?= <1>:                                Setting.             (line   6)
-* ?=:                                    Flavors.             (line 130)
+* ?=:                                    Flavors.             (line 129)
 * ?=, expansion:                         Reading Makefiles.   (line  33)
 * @ (in commands):                       Echoing.             (line   6)
 * @, and define:                         Sequences.           (line  50)
 * [...] (wildcard characters):           Wildcards.           (line   6)
 * \ (backslash), for continuation lines: Simple Makefile.     (line  40)
-* \ (backslash), in commands:            Execution.           (line  20)
+* \ (backslash), in commands:            Splitting Lines.     (line   6)
 * \ (backslash), to quote % <1>:         Text Functions.      (line  26)
 * \ (backslash), to quote % <2>:         Static Usage.        (line  37)
 * \ (backslash), to quote %:             Selective Search.    (line  38)
@@ -3361,7 +3499,7 @@ Index of Concepts
 * algorithm for directory search:        Search Algorithm.    (line   6)
 * all (standard target):                 Goals.               (line  72)
 * appending to variables:                Appending.           (line   6)
-* ar:                                    Implicit Variables.  (line  34)
+* ar:                                    Implicit Variables.  (line  41)
 * archive:                               Archives.            (line   6)
 * archive member targets:                Archive Members.     (line   6)
 * archive symbol directory updating:     Archive Symbols.     (line   6)
@@ -3371,9 +3509,9 @@ Index of Concepts
                                                               (line   6)
 * Arg list too long:                     Options/Recursion.   (line  57)
 * arguments of functions:                Syntax of Functions. (line   6)
-* as <1>:                                Implicit Variables.  (line  37)
-* as:                                    Catalogue of Rules.  (line  72)
-* assembly, rule to compile:             Catalogue of Rules.  (line  72)
+* as <1>:                                Implicit Variables.  (line  44)
+* as:                                    Catalogue of Rules.  (line  79)
+* assembly, rule to compile:             Catalogue of Rules.  (line  79)
 * automatic generation of prerequisites <1>: Automatic Prerequisites.
                                                               (line   6)
 * automatic generation of prerequisites: Include.             (line  50)
@@ -3381,7 +3519,7 @@ Index of Concepts
 * automatic variables in prerequisites:  Automatic Variables. (line  17)
 * backquotes:                            Shell Function.      (line   6)
 * backslash (\), for continuation lines: Simple Makefile.     (line  40)
-* backslash (\), in commands:            Execution.           (line  20)
+* backslash (\), in commands:            Splitting Lines.     (line   6)
 * backslash (\), to quote % <1>:         Text Functions.      (line  26)
 * backslash (\), to quote % <2>:         Static Usage.        (line  37)
 * backslash (\), to quote %:             Selective Search.    (line  38)
@@ -3393,10 +3531,10 @@ Index of Concepts
 * broken pipe:                           Parallel.            (line  30)
 * bugs, reporting:                       Bugs.                (line   6)
 * built-in special targets:              Special Targets.     (line   6)
-* C++, rule to compile:                  Catalogue of Rules.  (line  33)
-* C, rule to compile:                    Catalogue of Rules.  (line  29)
-* cc <1>:                                Implicit Variables.  (line  40)
-* cc:                                    Catalogue of Rules.  (line  29)
+* C++, rule to compile:                  Catalogue of Rules.  (line  39)
+* C, rule to compile:                    Catalogue of Rules.  (line  35)
+* cc <1>:                                Implicit Variables.  (line  47)
+* cc:                                    Catalogue of Rules.  (line  35)
 * cd (shell command) <1>:                MAKE Variable.       (line  16)
 * cd (shell command):                    Execution.           (line  10)
 * chains of rules:                       Chained Rules.       (line   6)
@@ -3406,16 +3544,18 @@ Index of Concepts
 * clean target:                          Simple Makefile.     (line  83)
 * cleaning up:                           Cleanup.             (line   6)
 * clobber (standard target):             Goals.               (line  86)
-* co <1>:                                Implicit Variables.  (line  46)
-* co:                                    Catalogue of Rules.  (line 157)
+* co <1>:                                Implicit Variables.  (line  56)
+* co:                                    Catalogue of Rules.  (line 164)
 * combining rules by prerequisite:       Combine By Prerequisite.
                                                               (line   6)
 * command line variable definitions, and recursion: Options/Recursion.
                                                               (line  17)
 * command line variables:                Overriding.          (line   6)
+* command syntax:                        Command Syntax.      (line   6)
 * commands:                              Rule Syntax.         (line  26)
-* commands, backslash (\) in:            Execution.           (line  20)
-* commands, comments in:                 Commands.            (line  18)
+* commands setting shell variables:      Execution.           (line  10)
+* commands, backslash (\) in:            Splitting Lines.     (line   6)
+* commands, comments in:                 Command Syntax.      (line  27)
 * commands, echoing:                     Echoing.             (line   6)
 * commands, empty:                       Empty Commands.      (line   6)
 * commands, errors in:                   Errors.              (line   6)
@@ -3426,26 +3566,30 @@ Index of Concepts
 * commands, instead of executing:        Instead of Execution.
                                                               (line   6)
 * commands, introduction to:             Rule Introduction.   (line   8)
-* commands, quoting newlines in:         Execution.           (line  20)
+* commands, quoting newlines in:         Splitting Lines.     (line   6)
 * commands, sequences of:                Sequences.           (line   6)
-* comments, in commands:                 Commands.            (line  18)
+* commands, splitting:                   Splitting Lines.     (line   6)
+* commands, using variables in:          Variables in Commands.
+                                                              (line   6)
+* comments, in commands:                 Command Syntax.      (line  27)
 * comments, in makefile:                 Makefile Contents.   (line  41)
 * compatibility:                         Features.            (line   6)
-* compatibility in exporting:            Variables/Recursion. (line 104)
+* compatibility in exporting:            Variables/Recursion. (line 105)
 * compilation, testing:                  Testing.             (line   6)
 * computed variable name:                Computed Names.      (line   6)
-* conditional expansion:                 If Function.         (line   6)
-* conditional variable assignment:       Flavors.             (line 130)
+* conditional expansion:                 Conditional Functions.
+                                                              (line   6)
+* conditional variable assignment:       Flavors.             (line 129)
 * conditionals:                          Conditionals.        (line   6)
 * continuation lines:                    Simple Makefile.     (line  40)
 * controlling make:                      Make Control Functions.
                                                               (line   6)
 * conventions for makefiles:             Makefile Conventions.
                                                               (line   6)
-* ctangle <1>:                           Implicit Variables.  (line  95)
-* ctangle:                               Catalogue of Rules.  (line 144)
-* cweave <1>:                            Implicit Variables.  (line  89)
-* cweave:                                Catalogue of Rules.  (line 144)
+* ctangle <1>:                           Implicit Variables.  (line 107)
+* ctangle:                               Catalogue of Rules.  (line 151)
+* cweave <1>:                            Implicit Variables.  (line 101)
+* cweave:                                Catalogue of Rules.  (line 151)
 * data base of make rules:               Options Summary.     (line 155)
 * deducing commands (implicit rules):    make Deduces.        (line   6)
 * default directories for included makefiles: Include.        (line  52)
@@ -3473,9 +3617,10 @@ Index of Concepts
 * dist (standard target):                Goals.               (line 106)
 * distclean (standard target):           Goals.               (line  84)
 * dollar sign ($), in function call:     Syntax of Functions. (line   6)
-* dollar sign ($), in rules:             Rule Syntax.         (line  31)
+* dollar sign ($), in rules:             Rule Syntax.         (line  32)
 * dollar sign ($), in variable name:     Computed Names.      (line   6)
 * dollar sign ($), in variable reference: Reference.          (line   6)
+* DOS, choosing a shell in:              Choosing the Shell.  (line  36)
 * double-colon rules:                    Double-Colon.        (line   6)
 * duplicate words, removing:             Text Functions.      (line 155)
 * E2BIG:                                 Options/Recursion.   (line  57)
@@ -3486,7 +3631,7 @@ Index of Concepts
 * empty targets:                         Empty Targets.       (line   6)
 * environment:                           Environment.         (line   6)
 * environment, and recursion:            Variables/Recursion. (line   6)
-* environment, SHELL in:                 Execution.           (line 108)
+* environment, SHELL in:                 Choosing the Shell.  (line  10)
 * error, stopping on:                    Make Control Functions.
                                                               (line  11)
 * errors (in commands):                  Errors.              (line   6)
@@ -3497,14 +3642,15 @@ Index of Concepts
                                                               (line   6)
 * execution, of commands:                Execution.           (line   6)
 * exit status (errors):                  Errors.              (line   6)
+* exit status of make:                   Running.             (line  18)
 * expansion, secondary:                  Secondary Expansion. (line   6)
 * explicit rule, definition of:          Makefile Contents.   (line  10)
 * explicit rule, expansion:              Reading Makefiles.   (line  62)
 * explicit rules, secondary expansion of: Secondary Expansion.
                                                               (line 106)
 * exporting variables:                   Variables/Recursion. (line   6)
-* f77 <1>:                               Implicit Variables.  (line  54)
-* f77:                                   Catalogue of Rules.  (line  42)
+* f77 <1>:                               Implicit Variables.  (line  64)
+* f77:                                   Catalogue of Rules.  (line  49)
 * FDL, GNU Free Documentation License:   GNU Free Documentation License.
                                                               (line   6)
 * features of GNU make:                  Features.            (line   6)
@@ -3537,7 +3683,7 @@ Index of Concepts
 * flavors of variables:                  Flavors.             (line   6)
 * FORCE:                                 Force Targets.       (line   6)
 * force targets:                         Force Targets.       (line   6)
-* Fortran, rule to compile:              Catalogue of Rules.  (line  42)
+* Fortran, rule to compile:              Catalogue of Rules.  (line  49)
 * functions:                             Functions.           (line   6)
 * functions, for controlling make:       Make Control Functions.
                                                               (line   6)
@@ -3545,14 +3691,14 @@ Index of Concepts
 * functions, for text:                   Text Functions.      (line   6)
 * functions, syntax of:                  Syntax of Functions. (line   6)
 * functions, user defined:               Call Function.       (line   6)
-* g++ <1>:                               Implicit Variables.  (line  43)
-* g++:                                   Catalogue of Rules.  (line  33)
-* gcc:                                   Catalogue of Rules.  (line  29)
+* g++ <1>:                               Implicit Variables.  (line  53)
+* g++:                                   Catalogue of Rules.  (line  39)
+* gcc:                                   Catalogue of Rules.  (line  35)
 * generating prerequisites automatically <1>: Automatic Prerequisites.
                                                               (line   6)
 * generating prerequisites automatically: Include.            (line  50)
-* get <1>:                               Implicit Variables.  (line  57)
-* get:                                   Catalogue of Rules.  (line 166)
+* get <1>:                               Implicit Variables.  (line  67)
+* get:                                   Catalogue of Rules.  (line 173)
 * globbing (wildcards):                  Wildcards.           (line   6)
 * goal:                                  How Make Works.      (line  11)
 * goal, default <1>:                     Rules.               (line  11)
@@ -3582,7 +3728,7 @@ Index of Concepts
 * including (MAKEFILES variable):        MAKEFILES Variable.  (line   6)
 * including other makefiles:             Include.             (line   6)
 * incompatibilities:                     Missing.             (line   6)
-* Info, rule to format:                  Catalogue of Rules.  (line 151)
+* Info, rule to format:                  Catalogue of Rules.  (line 158)
 * install (standard target):             Goals.               (line  92)
 * intermediate files:                    Chained Rules.       (line  16)
 * intermediate files, preserving:        Chained Rules.       (line  46)
@@ -3594,26 +3740,28 @@ Index of Concepts
 * joining lists of words:                File Name Functions. (line  90)
 * killing (interruption):                Interrupts.          (line   6)
 * last-resort default rules:             Last Resort.         (line   6)
-* ld:                                    Catalogue of Rules.  (line  79)
-* lex <1>:                               Implicit Variables.  (line  61)
-* lex:                                   Catalogue of Rules.  (line 117)
-* Lex, rule to run:                      Catalogue of Rules.  (line 117)
+* ld:                                    Catalogue of Rules.  (line  86)
+* lex <1>:                               Implicit Variables.  (line  71)
+* lex:                                   Catalogue of Rules.  (line 124)
+* Lex, rule to run:                      Catalogue of Rules.  (line 124)
 * libraries for linking, directory search: Libraries/Search.  (line   6)
 * library archive, suffix rule for:      Archive Suffix Rules.
                                                               (line   6)
 * limiting jobs based on load:           Parallel.            (line  57)
 * link libraries, and directory search:  Libraries/Search.    (line   6)
 * link libraries, patterns matching:     Libraries/Search.    (line   6)
-* linking, predefined rule for:          Catalogue of Rules.  (line  79)
-* lint:                                  Catalogue of Rules.  (line 139)
-* lint, rule to run:                     Catalogue of Rules.  (line 139)
+* linking, predefined rule for:          Catalogue of Rules.  (line  86)
+* lint <1>:                              Implicit Variables.  (line  78)
+* lint:                                  Catalogue of Rules.  (line 146)
+* lint, rule to run:                     Catalogue of Rules.  (line 146)
 * list of all prerequisites:             Automatic Variables. (line  61)
 * list of changed prerequisites:         Automatic Variables. (line  51)
 * load average:                          Parallel.            (line  57)
 * loops in variable expansion:           Flavors.             (line  44)
 * lpr (shell command) <1>:               Empty Targets.       (line  25)
 * lpr (shell command):                   Wildcard Examples.   (line  21)
-* m2c:                                   Catalogue of Rules.  (line  67)
+* m2c <1>:                               Implicit Variables.  (line  81)
+* m2c:                                   Catalogue of Rules.  (line  74)
 * macro:                                 Using Variables.     (line  10)
 * make depend:                           Automatic Prerequisites.
                                                               (line  37)
@@ -3636,8 +3784,8 @@ Index of Concepts
 * makefiles, and MAKEFILE_LIST variable: MAKEFILE_LIST Variable.
                                                               (line   6)
 * makefiles, and special variables:      Special Variables.   (line   6)
-* makeinfo <1>:                          Implicit Variables.  (line  76)
-* makeinfo:                              Catalogue of Rules.  (line 151)
+* makeinfo <1>:                          Implicit Variables.  (line  88)
+* makeinfo:                              Catalogue of Rules.  (line 158)
 * match-anything rule:                   Match-Anything Rules.
                                                               (line   6)
 * match-anything rule, used to override: Overriding Makefiles.
@@ -3645,16 +3793,16 @@ Index of Concepts
 * missing features:                      Missing.             (line   6)
 * mistakes with wildcards:               Wildcard Pitfall.    (line   6)
 * modified variable reference:           Substitution Refs.   (line   6)
-* Modula-2, rule to compile:             Catalogue of Rules.  (line  67)
+* Modula-2, rule to compile:             Catalogue of Rules.  (line  74)
 * mostlyclean (standard target):         Goals.               (line  78)
 * multiple rules for one target:         Multiple Rules.      (line   6)
 * multiple rules for one target (::):    Double-Colon.        (line   6)
 * multiple targets:                      Multiple Targets.    (line   6)
-* multiple targets, in pattern rule:     Pattern Intro.       (line  48)
+* multiple targets, in pattern rule:     Pattern Intro.       (line  49)
 * name of makefile:                      Makefile Names.      (line   6)
 * name of makefile, how to specify:      Makefile Names.      (line  30)
 * nested variable reference:             Computed Names.      (line   6)
-* newline, quoting, in commands:         Execution.           (line  20)
+* newline, quoting, in commands:         Splitting Lines.     (line   6)
 * newline, quoting, in makefile:         Simple Makefile.     (line  40)
 * nondirectory part:                     File Name Functions. (line  27)
 * normal prerequisites:                  Prerequisite Types.  (line   6)
@@ -3669,7 +3817,7 @@ Index of Concepts
 * options, and recursion:                Options/Recursion.   (line   6)
 * options, setting from environment:     Options/Recursion.   (line  81)
 * options, setting in makefiles:         Options/Recursion.   (line  81)
-* order of pattern rules:                Pattern Intro.       (line  56)
+* order of pattern rules:                Pattern Intro.       (line  57)
 * order-only prerequisites:              Prerequisite Types.  (line   6)
 * origin of variable:                    Origin Function.     (line   6)
 * overriding makefiles:                  Overriding Makefiles.
@@ -3680,15 +3828,15 @@ Index of Concepts
 * parallel execution, and archive update: Archive Pitfalls.   (line   6)
 * parallel execution, overriding:        Special Targets.     (line 135)
 * parts of makefile rule:                Rule Introduction.   (line   6)
-* Pascal, rule to compile:               Catalogue of Rules.  (line  38)
+* Pascal, rule to compile:               Catalogue of Rules.  (line  45)
 * pattern rule:                          Pattern Intro.       (line   6)
 * pattern rule, expansion:               Reading Makefiles.   (line  62)
-* pattern rules, order of:               Pattern Intro.       (line  56)
+* pattern rules, order of:               Pattern Intro.       (line  57)
 * pattern rules, static (not implicit):  Static Pattern.      (line   6)
 * pattern rules, static, syntax of:      Static Usage.        (line   6)
 * pattern-specific variables:            Pattern-specific.    (line   6)
-* pc <1>:                                Implicit Variables.  (line  64)
-* pc:                                    Catalogue of Rules.  (line  38)
+* pc <1>:                                Implicit Variables.  (line  84)
+* pc:                                    Catalogue of Rules.  (line  45)
 * phony targets:                         Phony Targets.       (line   6)
 * pitfalls of wildcards:                 Wildcard Pitfall.    (line   6)
 * portability:                           Features.            (line   6)
@@ -3702,11 +3850,11 @@ Index of Concepts
 * predefined rules and variables, printing: Options Summary.  (line 155)
 * prefix, adding:                        File Name Functions. (line  79)
 * prerequisite:                          Rules.               (line   6)
-* prerequisite pattern, implicit:        Pattern Intro.       (line  21)
+* prerequisite pattern, implicit:        Pattern Intro.       (line  22)
 * prerequisite pattern, static (not implicit): Static Usage.  (line  30)
 * prerequisite types:                    Prerequisite Types.  (line   6)
 * prerequisite, expansion:               Reading Makefiles.   (line  62)
-* prerequisites:                         Rule Syntax.         (line  42)
+* prerequisites:                         Rule Syntax.         (line  46)
 * prerequisites, and automatic variables: Automatic Variables.
                                                               (line  17)
 * prerequisites, automatic generation <1>: Automatic Prerequisites.
@@ -3739,10 +3887,10 @@ Index of Concepts
 * quoting %, in patsubst:                Text Functions.      (line  26)
 * quoting %, in static pattern:          Static Usage.        (line  37)
 * quoting %, in vpath:                   Selective Search.    (line  38)
-* quoting newline, in commands:          Execution.           (line  20)
+* quoting newline, in commands:          Splitting Lines.     (line   6)
 * quoting newline, in makefile:          Simple Makefile.     (line  40)
-* Ratfor, rule to compile:               Catalogue of Rules.  (line  42)
-* RCS, rule to extract from:             Catalogue of Rules.  (line 157)
+* Ratfor, rule to compile:               Catalogue of Rules.  (line  49)
+* RCS, rule to extract from:             Catalogue of Rules.  (line 164)
 * reading makefiles:                     Reading Makefiles.   (line   6)
 * README:                                Makefile Names.      (line   9)
 * realclean (standard target):           Goals.               (line  85)
@@ -3767,7 +3915,7 @@ Index of Concepts
 * recursion, and options:                Options/Recursion.   (line   6)
 * recursion, and printing directories:   -w Option.           (line   6)
 * recursion, and variables:              Variables/Recursion. (line   6)
-* recursion, level of:                   Variables/Recursion. (line 114)
+* recursion, level of:                   Variables/Recursion. (line 115)
 * recursive variable expansion <1>:      Flavors.             (line   6)
 * recursive variable expansion:          Using Variables.     (line   6)
 * recursively expanded variables:        Flavors.             (line   6)
@@ -3781,16 +3929,15 @@ Index of Concepts
 * removing targets on failure:           Special Targets.     (line  68)
 * removing, to clean up:                 Cleanup.             (line   6)
 * reporting bugs:                        Bugs.                (line   6)
-* rm:                                    Implicit Variables.  (line  98)
+* rm:                                    Implicit Variables.  (line 110)
 * rm (shell command) <1>:                Errors.              (line  27)
 * rm (shell command) <2>:                Phony Targets.       (line  20)
 * rm (shell command) <3>:                Wildcard Examples.   (line  12)
 * rm (shell command):                    Simple Makefile.     (line  83)
 * rule commands:                         Commands.            (line   6)
-* rule prerequisites:                    Rule Syntax.         (line  42)
+* rule prerequisites:                    Rule Syntax.         (line  46)
 * rule syntax:                           Rule Syntax.         (line   6)
 * rule targets:                          Rule Syntax.         (line  18)
-* rule, and $:                           Rule Syntax.         (line  31)
 * rule, double-colon (::):               Double-Colon.        (line   6)
 * rule, explicit, definition of:         Makefile Contents.   (line  10)
 * rule, how to write:                    Rules.               (line   6)
@@ -3810,8 +3957,9 @@ Index of Concepts
 * rule, static pattern versus implicit:  Static versus Implicit.
                                                               (line   6)
 * rule, with multiple targets:           Multiple Targets.    (line   6)
-* s. (SCCS file prefix):                 Catalogue of Rules.  (line 166)
-* SCCS, rule to extract from:            Catalogue of Rules.  (line 166)
+* rules, and $:                          Rule Syntax.         (line  32)
+* s. (SCCS file prefix):                 Catalogue of Rules.  (line 173)
+* SCCS, rule to extract from:            Catalogue of Rules.  (line 173)
 * search algorithm, implicit rule:       Implicit Rule Search.
                                                               (line   6)
 * search path for prerequisites (VPATH): Directory Search.    (line   6)
@@ -3845,11 +3993,14 @@ Index of Concepts
 * shell command, execution:              Execution.           (line   6)
 * shell command, function for:           Shell Function.      (line   6)
 * shell file name pattern (in include):  Include.             (line  13)
+* shell variables, setting in commands:  Execution.           (line  10)
 * shell wildcards (in include):          Include.             (line  13)
-* SHELL, export to environment:          Environment.         (line  44)
+* shell, choosing the:                   Choosing the Shell.  (line   6)
 * SHELL, exported value:                 Variables/Recursion. (line  23)
 * SHELL, import from environment:        Environment.         (line  37)
-* SHELL, MS-DOS specifics:               Execution.           (line  63)
+* shell, in DOS and Windows:             Choosing the Shell.  (line  36)
+* SHELL, MS-DOS specifics:               Choosing the Shell.  (line  42)
+* SHELL, value of:                       Choosing the Shell.  (line   6)
 * signal:                                Interrupts.          (line   6)
 * silent operation:                      Echoing.             (line   6)
 * simple makefile:                       Simple Makefile.     (line   6)
@@ -3857,11 +4008,12 @@ Index of Concepts
 * simplifying with variables:            Variables Simplify.  (line   6)
 * simply expanded variables:             Flavors.             (line  56)
 * sorting words:                         Text Functions.      (line 146)
-* spaces, in variable values:            Flavors.             (line 104)
+* spaces, in variable values:            Flavors.             (line 103)
 * spaces, stripping:                     Text Functions.      (line  80)
 * special targets:                       Special Targets.     (line   6)
 * special variables:                     Special Variables.   (line   6)
 * specifying makefile name:              Makefile Names.      (line  30)
+* splitting commands:                    Splitting Lines.     (line   6)
 * standard input:                        Parallel.            (line  30)
 * standards conformance:                 Overview.            (line  13)
 * standards for makefiles:               Makefile Conventions.
@@ -3890,12 +4042,13 @@ Index of Concepts
 * suffix, substituting in variables:     Substitution Refs.   (line   6)
 * switches:                              Options Summary.     (line   6)
 * symbol directories, updating archive:  Archive Symbols.     (line   6)
+* syntax of commands:                    Command Syntax.      (line   6)
 * syntax of rules:                       Rule Syntax.         (line   6)
 * tab character (in commands):           Rule Syntax.         (line  26)
 * tabs in rules:                         Rule Introduction.   (line  21)
 * TAGS (standard target):                Goals.               (line 111)
-* tangle <1>:                            Implicit Variables.  (line  92)
-* tangle:                                Catalogue of Rules.  (line 144)
+* tangle <1>:                            Implicit Variables.  (line 104)
+* tangle:                                Catalogue of Rules.  (line 151)
 * tar (standard target):                 Goals.               (line 100)
 * target:                                Rules.               (line   6)
 * target pattern, implicit:              Pattern Intro.       (line   9)
@@ -3903,7 +4056,7 @@ Index of Concepts
 * target, deleting on error:             Errors.              (line  64)
 * target, deleting on interrupt:         Interrupts.          (line   6)
 * target, expansion:                     Reading Makefiles.   (line  62)
-* target, multiple in pattern rule:      Pattern Intro.       (line  48)
+* target, multiple in pattern rule:      Pattern Intro.       (line  49)
 * target, multiple rules for one:        Multiple Rules.      (line   6)
 * target, touching:                      Instead of Execution.
                                                               (line  19)
@@ -3920,12 +4073,12 @@ Index of Concepts
                                                               (line   6)
 * test (standard target):                Goals.               (line 115)
 * testing compilation:                   Testing.             (line   6)
-* tex <1>:                               Implicit Variables.  (line  79)
-* tex:                                   Catalogue of Rules.  (line 144)
-* TeX, rule to run:                      Catalogue of Rules.  (line 144)
-* texi2dvi <1>:                          Implicit Variables.  (line  83)
-* texi2dvi:                              Catalogue of Rules.  (line 151)
-* Texinfo, rule to format:               Catalogue of Rules.  (line 151)
+* tex <1>:                               Implicit Variables.  (line  91)
+* tex:                                   Catalogue of Rules.  (line 151)
+* TeX, rule to run:                      Catalogue of Rules.  (line 151)
+* texi2dvi <1>:                          Implicit Variables.  (line  95)
+* texi2dvi:                              Catalogue of Rules.  (line 158)
+* Texinfo, rule to format:               Catalogue of Rules.  (line 158)
 * tilde (~):                             Wildcards.           (line  11)
 * touch (shell command) <1>:             Empty Targets.       (line  25)
 * touch (shell command):                 Wildcard Examples.   (line  21)
@@ -3941,6 +4094,8 @@ Index of Concepts
 * value, how a variable gets it:         Values.              (line   6)
 * variable:                              Using Variables.     (line   6)
 * variable definition:                   Makefile Contents.   (line  22)
+* variable references in commands:       Variables in Commands.
+                                                              (line   6)
 * variables:                             Variables Simplify.  (line   6)
 * variables, $ in name:                  Computed Names.      (line   6)
 * variables, and implicit rule:          Automatic Variables. (line   6)
@@ -3949,7 +4104,7 @@ Index of Concepts
 * variables, command line:               Overriding.          (line   6)
 * variables, command line, and recursion: Options/Recursion.  (line  17)
 * variables, computed names:             Computed Names.      (line   6)
-* variables, conditional assignment:     Flavors.             (line 130)
+* variables, conditional assignment:     Flavors.             (line 129)
 * variables, defining verbatim:          Defining.            (line   6)
 * variables, environment <1>:            Environment.         (line   6)
 * variables, environment:                Variables/Recursion. (line   6)
@@ -3968,7 +4123,7 @@ Index of Concepts
 * variables, recursively expanded:       Flavors.             (line   6)
 * variables, setting:                    Setting.             (line   6)
 * variables, simply expanded:            Flavors.             (line  56)
-* variables, spaces in values:           Flavors.             (line 104)
+* variables, spaces in values:           Flavors.             (line 103)
 * variables, substituting suffix in:     Substitution Refs.   (line   6)
 * variables, substitution reference:     Substitution Refs.   (line   6)
 * variables, target-specific:            Target-specific.     (line   6)
@@ -3981,12 +4136,12 @@ Index of Concepts
 * VPATH, and link libraries:             Libraries/Search.    (line   6)
 * warnings, printing:                    Make Control Functions.
                                                               (line  35)
-* weave <1>:                             Implicit Variables.  (line  86)
-* weave:                                 Catalogue of Rules.  (line 144)
-* Web, rule to run:                      Catalogue of Rules.  (line 144)
+* weave <1>:                             Implicit Variables.  (line  98)
+* weave:                                 Catalogue of Rules.  (line 151)
+* Web, rule to run:                      Catalogue of Rules.  (line 151)
 * what if:                               Instead of Execution.
                                                               (line  33)
-* whitespace, in variable values:        Flavors.             (line 104)
+* whitespace, in variable values:        Flavors.             (line 103)
 * whitespace, stripping:                 Text Functions.      (line  80)
 * wildcard:                              Wildcards.           (line   6)
 * wildcard pitfalls:                     Wildcard Pitfall.    (line   6)
@@ -3995,6 +4150,7 @@ Index of Concepts
 * wildcard, in include:                  Include.             (line  13)
 * wildcards and MS-DOS/MS-Windows backslashes: Wildcard Pitfall.
                                                               (line  31)
+* Windows, choosing a shell in:          Choosing the Shell.  (line  36)
 * word, selecting a:                     Text Functions.      (line 159)
 * words, extracting first:               Text Functions.      (line 184)
 * words, extracting last:                Text Functions.      (line 197)
@@ -4007,10 +4163,10 @@ Index of Concepts
 * words, selecting lists of:             Text Functions.      (line 168)
 * writing rule commands:                 Commands.            (line   6)
 * writing rules:                         Rules.               (line   6)
-* yacc <1>:                              Implicit Variables.  (line  68)
-* yacc <2>:                              Catalogue of Rules.  (line 113)
+* yacc <1>:                              Implicit Variables.  (line  75)
+* yacc <2>:                              Catalogue of Rules.  (line 120)
 * yacc:                                  Sequences.           (line  18)
-* Yacc, rule to run:                     Catalogue of Rules.  (line 113)
+* Yacc, rule to run:                     Catalogue of Rules.  (line 120)
 * ~ (tilde):                             Wildcards.           (line  11)
 
 
@@ -4061,13 +4217,13 @@ Index of Functions, Variables, & Directives
 * .DEFAULT_GOAL (define default goal):   Special Variables.   (line  10)
 * .DELETE_ON_ERROR <1>:                  Errors.              (line  64)
 * .DELETE_ON_ERROR:                      Special Targets.     (line  67)
-* .EXPORT_ALL_VARIABLES <1>:             Variables/Recursion. (line  98)
+* .EXPORT_ALL_VARIABLES <1>:             Variables/Recursion. (line  99)
 * .EXPORT_ALL_VARIABLES:                 Special Targets.     (line 129)
 * .FEATURES (list of supported features): Special Variables.  (line  65)
 * .IGNORE <1>:                           Errors.              (line  30)
 * .IGNORE:                               Special Targets.     (line  74)
 * .INCLUDE_DIRS (list of include directories): Special Variables.
-                                                              (line  94)
+                                                              (line  98)
 * .INTERMEDIATE:                         Special Targets.     (line  43)
 * .LIBPATTERNS:                          Libraries/Search.    (line   6)
 * .LOW_RESOLUTION_TIME:                  Special Targets.     (line  86)
@@ -4103,25 +4259,27 @@ Index of Functions, Variables, & Directives
 * abspath:                               File Name Functions. (line 121)
 * addprefix:                             File Name Functions. (line  79)
 * addsuffix:                             File Name Functions. (line  68)
-* AR:                                    Implicit Variables.  (line  34)
-* ARFLAGS:                               Implicit Variables.  (line 105)
-* AS:                                    Implicit Variables.  (line  37)
-* ASFLAGS:                               Implicit Variables.  (line 108)
+* and:                                   Conditional Functions.
+                                                              (line  45)
+* AR:                                    Implicit Variables.  (line  41)
+* ARFLAGS:                               Implicit Variables.  (line 117)
+* AS:                                    Implicit Variables.  (line  44)
+* ASFLAGS:                               Implicit Variables.  (line 120)
 * basename:                              File Name Functions. (line  57)
 * bindir:                                Directory Variables. (line  53)
 * call:                                  Call Function.       (line   6)
-* CC:                                    Implicit Variables.  (line  40)
-* CFLAGS:                                Implicit Variables.  (line 112)
-* CO:                                    Implicit Variables.  (line  46)
-* COFLAGS:                               Implicit Variables.  (line 118)
-* COMSPEC:                               Execution.           (line  60)
-* CPP:                                   Implicit Variables.  (line  49)
-* CPPFLAGS:                              Implicit Variables.  (line 121)
-* CTANGLE:                               Implicit Variables.  (line  95)
+* CC:                                    Implicit Variables.  (line  47)
+* CFLAGS:                                Implicit Variables.  (line 124)
+* CO:                                    Implicit Variables.  (line  50)
+* COFLAGS:                               Implicit Variables.  (line 130)
+* COMSPEC:                               Choosing the Shell.  (line  39)
+* CPP:                                   Implicit Variables.  (line  59)
+* CPPFLAGS:                              Implicit Variables.  (line 133)
+* CTANGLE:                               Implicit Variables.  (line 107)
 * CURDIR:                                Recursion.           (line  28)
-* CWEAVE:                                Implicit Variables.  (line  89)
-* CXX:                                   Implicit Variables.  (line  43)
-* CXXFLAGS:                              Implicit Variables.  (line 115)
+* CWEAVE:                                Implicit Variables.  (line 101)
+* CXX:                                   Implicit Variables.  (line  53)
+* CXXFLAGS:                              Implicit Variables.  (line 127)
 * define:                                Defining.            (line   6)
 * dir:                                   File Name Functions. (line  17)
 * else:                                  Conditional Syntax.  (line   6)
@@ -4131,20 +4289,21 @@ Index of Functions, Variables, & Directives
                                                               (line  11)
 * eval:                                  Eval Function.       (line   6)
 * exec_prefix:                           Directory Variables. (line  35)
-* export:                                Variables/Recursion. (line  39)
-* FC:                                    Implicit Variables.  (line  53)
-* FFLAGS:                                Implicit Variables.  (line 125)
+* export:                                Variables/Recursion. (line  40)
+* FC:                                    Implicit Variables.  (line  63)
+* FFLAGS:                                Implicit Variables.  (line 137)
 * filter:                                Text Functions.      (line 114)
 * filter-out:                            Text Functions.      (line 132)
 * findstring:                            Text Functions.      (line 103)
 * firstword:                             Text Functions.      (line 184)
 * flavor:                                Flavor Function.     (line   6)
 * foreach:                               Foreach Function.    (line   6)
-* GET:                                   Implicit Variables.  (line  57)
-* GFLAGS:                                Implicit Variables.  (line 128)
+* GET:                                   Implicit Variables.  (line  67)
+* GFLAGS:                                Implicit Variables.  (line 140)
 * GNUmakefile:                           Makefile Names.      (line   7)
 * GPATH:                                 Search Algorithm.    (line  48)
-* if:                                    If Function.         (line   6)
+* if:                                    Conditional Functions.
+                                                              (line   6)
 * ifdef:                                 Conditional Syntax.  (line   6)
 * ifeq:                                  Conditional Syntax.  (line   6)
 * ifndef:                                Conditional Syntax.  (line   6)
@@ -4154,10 +4313,13 @@ Index of Functions, Variables, & Directives
                                                               (line  43)
 * join:                                  File Name Functions. (line  90)
 * lastword:                              Text Functions.      (line 197)
-* LDFLAGS:                               Implicit Variables.  (line 131)
-* LEX:                                   Implicit Variables.  (line  60)
-* LFLAGS:                                Implicit Variables.  (line 135)
+* LDFLAGS:                               Implicit Variables.  (line 143)
+* LEX:                                   Implicit Variables.  (line  70)
+* LFLAGS:                                Implicit Variables.  (line 147)
 * libexecdir:                            Directory Variables. (line  66)
+* LINT:                                  Implicit Variables.  (line  78)
+* LINTFLAGS:                             Implicit Variables.  (line 159)
+* M2C:                                   Implicit Variables.  (line  81)
 * MAKE <1>:                              Flavors.             (line  84)
 * MAKE:                                  MAKE Variable.       (line   6)
 * MAKE_RESTARTS (number of times make has restarted): Special Variables.
@@ -4168,30 +4330,33 @@ Index of Functions, Variables, & Directives
 * Makefile:                              Makefile Names.      (line   7)
 * MAKEFILE_LIST:                         MAKEFILE_LIST Variable.
                                                               (line   6)
-* MAKEFILES <1>:                         Variables/Recursion. (line 126)
+* MAKEFILES <1>:                         Variables/Recursion. (line 127)
 * MAKEFILES:                             MAKEFILES Variable.  (line   6)
 * MAKEFLAGS:                             Options/Recursion.   (line   6)
-* MAKEINFO:                              Implicit Variables.  (line  75)
+* MAKEINFO:                              Implicit Variables.  (line  87)
 * MAKELEVEL <1>:                         Flavors.             (line  84)
-* MAKELEVEL:                             Variables/Recursion. (line 114)
+* MAKELEVEL:                             Variables/Recursion. (line 115)
 * MAKEOVERRIDES:                         Options/Recursion.   (line  49)
-* MAKESHELL (MS-DOS alternative to SHELL): Execution.         (line 108)
+* MAKESHELL (MS-DOS alternative to SHELL): Choosing the Shell.
+                                                              (line  25)
 * MFLAGS:                                Options/Recursion.   (line  65)
 * notdir:                                File Name Functions. (line  27)
+* or:                                    Conditional Functions.
+                                                              (line  37)
 * origin:                                Origin Function.     (line   6)
-* OUTPUT_OPTION:                         Catalogue of Rules.  (line 195)
+* OUTPUT_OPTION:                         Catalogue of Rules.  (line 202)
 * override:                              Override Directive.  (line   6)
 * patsubst <1>:                          Text Functions.      (line  18)
 * patsubst:                              Substitution Refs.   (line  28)
-* PC:                                    Implicit Variables.  (line  64)
-* PFLAGS:                                Implicit Variables.  (line 138)
+* PC:                                    Implicit Variables.  (line  84)
+* PFLAGS:                                Implicit Variables.  (line 153)
 * prefix:                                Directory Variables. (line  25)
 * realpath:                              File Name Functions. (line 114)
-* RFLAGS:                                Implicit Variables.  (line 141)
-* RM:                                    Implicit Variables.  (line  98)
+* RFLAGS:                                Implicit Variables.  (line 156)
+* RM:                                    Implicit Variables.  (line 110)
 * sbindir:                               Directory Variables. (line  59)
 * shell:                                 Shell Function.      (line   6)
-* SHELL:                                 Execution.           (line  57)
+* SHELL:                                 Choosing the Shell.  (line   6)
 * SHELL (command execution):             Execution.           (line   6)
 * sort:                                  Text Functions.      (line 146)
 * strip:                                 Text Functions.      (line  80)
@@ -4199,10 +4364,10 @@ Index of Functions, Variables, & Directives
 * subst:                                 Multiple Targets.    (line  28)
 * suffix:                                File Name Functions. (line  43)
 * SUFFIXES:                              Suffix Rules.        (line  81)
-* TANGLE:                                Implicit Variables.  (line  92)
-* TEX:                                   Implicit Variables.  (line  79)
-* TEXI2DVI:                              Implicit Variables.  (line  82)
-* unexport:                              Variables/Recursion. (line  44)
+* TANGLE:                                Implicit Variables.  (line 104)
+* TEX:                                   Implicit Variables.  (line  91)
+* TEXI2DVI:                              Implicit Variables.  (line  94)
+* unexport:                              Variables/Recursion. (line  45)
 * value:                                 Value Function.      (line   6)
 * vpath:                                 Selective Search.    (line   6)
 * VPATH:                                 General Search.      (line   6)
@@ -4210,15 +4375,14 @@ Index of Functions, Variables, & Directives
 * VPATH:                                 Directory Search.    (line   6)
 * warning:                               Make Control Functions.
                                                               (line  35)
-* WEAVE:                                 Implicit Variables.  (line  86)
+* WEAVE:                                 Implicit Variables.  (line  98)
 * wildcard <1>:                          File Name Functions. (line 107)
 * wildcard:                              Wildcard Function.   (line   6)
 * word:                                  Text Functions.      (line 159)
 * wordlist:                              Text Functions.      (line 168)
 * words:                                 Text Functions.      (line 180)
-* YACC:                                  Implicit Variables.  (line  67)
-* YACCR:                                 Implicit Variables.  (line  71)
-* YFLAGS:                                Implicit Variables.  (line 144)
+* YACC:                                  Implicit Variables.  (line  74)
+* YFLAGS:                                Implicit Variables.  (line 150)
 * | (automatic variable):                Automatic Variables. (line  69)
 
 

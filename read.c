@@ -1,22 +1,20 @@
 /* Reading and parsing of makefiles for GNU Make.
 Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
-2002 Free Software Foundation, Inc.
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software
+Foundation, Inc.
 This file is part of GNU Make.
 
-GNU Make is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+GNU Make is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later version.
 
-GNU Make is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GNU Make; see the file COPYING.  If not, write to
-the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-Boston, MA 02111-1307, USA.  */
+You should have received a copy of the GNU General Public License along with
+GNU Make; see the file COPYING.  If not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.  */
 
 #include "make.h"
 
@@ -188,10 +186,7 @@ read_all_makefiles (char **makefiles)
       {
 	if (*p != '\0')
 	  *p++ = '\0';
-        name = xstrdup (name);
-	if (eval_makefile (name,
-                           RM_NO_DEFAULT_GOAL|RM_INCLUDED|RM_DONTCARE) < 2)
-          free (name);
+	eval_makefile (name, RM_NO_DEFAULT_GOAL|RM_INCLUDED|RM_DONTCARE);
       }
 
     free (value);
@@ -311,10 +306,12 @@ eval_makefile (char *filename, int flags)
   struct dep *deps;
   struct ebuffer ebuf;
   const struct floc *curfile;
+  char *expanded = 0;
+  char *included = 0;
   int makefile_errno;
   int r;
 
-  ebuf.floc.filenm = filename;
+  ebuf.floc.filenm = strcache_add (filename);
   ebuf.floc.lineno = 1;
 
   if (ISDB (DB_VERBOSE))
@@ -337,7 +334,7 @@ eval_makefile (char *filename, int flags)
      in which case it was already done.  */
   if (!(flags & RM_NO_TILDE) && filename[0] == '~')
     {
-      char *expanded = tilde_expand (filename);
+      expanded = tilde_expand (filename);
       if (expanded != 0)
 	filename = expanded;
     }
@@ -354,16 +351,18 @@ eval_makefile (char *filename, int flags)
       register unsigned int i;
       for (i = 0; include_directories[i] != 0; ++i)
 	{
-	  char *name = concat (include_directories[i], "/", filename);
-	  ebuf.fp = fopen (name, "r");
-	  if (ebuf.fp == 0)
-	    free (name);
-	  else
+	  included = concat (include_directories[i], "/", filename);
+	  ebuf.fp = fopen (included, "r");
+	  if (ebuf.fp)
 	    {
-	      filename = name;
+	      filename = included;
 	      break;
 	    }
+          free (included);
 	}
+      /* If we're not using it, we already freed it above.  */
+      if (filename != included)
+        included = 0;
     }
 
   /* Add FILENAME to the chain of read makefiles.  */
@@ -374,8 +373,6 @@ eval_makefile (char *filename, int flags)
   deps->file = lookup_file (filename);
   if (deps->file == 0)
     deps->file = enter_file (xstrdup (filename));
-  if (filename != ebuf.floc.filenm)
-    free (filename);
   filename = deps->file->name;
   deps->changed = flags;
   deps->ignore_mtime = 0;
@@ -383,6 +380,11 @@ eval_makefile (char *filename, int flags)
   deps->need_2nd_expansion = 0;
   if (flags & RM_DONTCARE)
     deps->file->dontcare = 1;
+
+  if (expanded)
+    free (expanded);
+  if (included)
+    free (included);
 
   /* If the makefile can't be found at all, give up entirely.  */
 
@@ -805,7 +807,10 @@ eval (struct ebuffer *ebuf, int set_default)
 
           /* If no filenames, it's a no-op.  */
 	  if (*p == '\0')
-            continue;
+            {
+              free (p);
+              continue;
+            }
 
 	  /* Parse the list of file names.  */
 	  p2 = p;
@@ -835,12 +840,9 @@ eval (struct ebuffer *ebuf, int set_default)
 
               r = eval_makefile (name, (RM_INCLUDED | RM_NO_TILDE
                                         | (noerror ? RM_DONTCARE : 0)));
-	      if (!r)
-                {
-                  if (!noerror)
-                    error (fstart, "%s: %s", name, strerror (errno));
-                  free (name);
-                }
+	      if (!r && !noerror)
+                error (fstart, "%s: %s", name, strerror (errno));
+              free (name);
 	    }
 
 	  /* Restore conditional state.  */
@@ -1177,10 +1179,12 @@ eval (struct ebuffer *ebuf, int set_default)
             /* Put all the prerequisites here; they'll be parsed later.  */
             deps = (struct dep *) xmalloc (sizeof (struct dep));
             deps->next = 0;
-            deps->name = xstrdup (beg);
+            deps->name = savestring (beg, end - beg + 1);
+            deps->file = 0;
+            deps->changed = 0;
+            deps->ignore_mtime = 0;
             deps->staticpattern = 0;
             deps->need_2nd_expansion = 0;
-            deps->file = 0;
           }
         else
           deps = 0;
@@ -1838,8 +1842,7 @@ record_target_var (struct nameseq *filenames, char *defn,
       /* Set up the variable to be *-specific.  */
       v->origin = origin;
       v->per_target = 1;
-      if (exported)
-        v->export = v_export;
+      v->export = exported ? v_export : v_default;
 
       /* If it's not an override, check to see if there was a command-line
          setting.  If so, reset the value.  */

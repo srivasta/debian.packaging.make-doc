@@ -1,21 +1,20 @@
 /* Implicit rule searching for GNU Make.
-Copyright (C) 1988,1989,1990,1991,1992,1993,1994,1997,2000,2004,2005 Free Software Foundation, Inc.
+Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997,
+1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free Software
+Foundation, Inc.
 This file is part of GNU Make.
 
-GNU Make is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2, or (at your option)
-any later version.
+GNU Make is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later version.
 
-GNU Make is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with GNU Make; see the file COPYING.  If not, write to
-the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
-Boston, MA 02111-1307, USA.  */
+You should have received a copy of the GNU General Public License along with
+GNU Make; see the file COPYING.  If not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.  */
 
 #include "make.h"
 #include "filedef.h"
@@ -78,26 +77,22 @@ struct idep
 };
 
 static void
-free_idep_chain (struct idep* p)
+free_idep_chain (struct idep *p)
 {
-  register struct idep* n;
-  register struct file *f;
+  struct idep *n;
+  struct file *f;
 
   for (; p != 0; p = n)
     {
       n = p->next;
 
       if (p->name)
-        {
-          free (p->name);
+        free (p->name);
 
-          f = p->intermediate_file;
-
-          if (f != 0
-              && (f->stem < f->name
-                  || f->stem > f->name + strlen (f->name)))
-            free (f->stem);
-        }
+      f = p->intermediate_file;
+      if (f != 0
+          && (f->stem < f->name || f->stem > f->name + strlen (f->name)))
+        free (f->stem);
 
       free (p);
     }
@@ -261,9 +256,9 @@ pattern_search (struct file *file, int archive,
      that is not just `%'.  */
   int specific_rule_matched = 0;
 
-  register unsigned int i = 0;  /* uninit checks OK */
-  register struct rule *rule;
-  register struct dep *dep, *expl_d;
+  unsigned int i = 0;  /* uninit checks OK */
+  struct rule *rule;
+  struct dep *dep, *expl_d;
 
   char *p, *vname;
 
@@ -347,17 +342,28 @@ pattern_search (struct file *file, int archive,
 	  /* Set CHECK_LASTSLASH if FILENAME contains a directory
 	     prefix and the target pattern does not contain a slash.  */
 
+          check_lastslash = 0;
+          if (lastslash)
+            {
 #ifdef VMS
-	  check_lastslash = lastslash != 0
-			    && ((strchr (target, ']') == 0)
-			        && (strchr (target, ':') == 0));
+              check_lastslash = (strchr (target, ']') == 0
+                                 && strchr (target, ':') == 0);
 #else
-	  check_lastslash = lastslash != 0 && strchr (target, '/') == 0;
+              check_lastslash = strchr (target, '/') == 0;
+#ifdef HAVE_DOS_PATHS
+              /* Didn't find it yet: check for DOS-type directories.  */
+              if (!check_lastslash)
+                {
+                  char *b = strrchr (target, '\\');
+                  check_lastslash = !(b ? b > lastslash
+                                      : (target[0] && target[1] == ':'));
+                }
 #endif
+#endif
+            }
 	  if (check_lastslash)
 	    {
-	      /* In that case, don't include the
-		 directory prefix in STEM here.  */
+	      /* If so, don't include the directory prefix in STEM here.  */
 	      unsigned int difference = lastslash - filename + 1;
 	      if (difference > stemlen)
 		continue;
@@ -666,12 +672,10 @@ pattern_search (struct file *file, int archive,
                  anyway, no matter which implicit rule we choose. */
 
               for (expl_d = file->deps; expl_d != 0; expl_d = expl_d->next)
-                if (strcmp (dep_name (expl_d), name) == 0) break;
-
+                if (streq (dep_name (expl_d), name))
+                  break;
               if (expl_d != 0)
                 continue;
-
-
 
               /* The DEP->changed flag says that this dependency resides in a
                  nonexistent directory.  So we normally can skip looking for
@@ -684,9 +688,7 @@ pattern_search (struct file *file, int archive,
               if (((f = lookup_file (name)) != 0 && f->is_target)
                   /*|| ((!dep->changed || check_lastslash) && */
                   || file_exists_p (name))
-                {
-                  continue;
-                }
+                continue;
 
               /* This code, given FILENAME = "lib/foo.o", dependency name
                  "lib/foo.c", and VPATH=src, searches for "src/lib/foo.c".  */
@@ -736,6 +738,8 @@ pattern_search (struct file *file, int archive,
                   /* If we have tried to find P as an intermediate
                      file and failed, mark that name as impossible
                      so we won't go through the search again later.  */
+                  if (intermediate_file->variables)
+                    free_variable_set (intermediate_file->variables);
                   file_impossible (name);
                 }
 
@@ -832,7 +836,7 @@ pattern_search (struct file *file, int archive,
 
 	  f->deps = imf->deps;
 	  f->cmds = imf->cmds;
-	  f->stem = imf->stem;
+	  f->stem = xstrdup (imf->stem);
           f->also_make = imf->also_make;
           f->is_target = 1;
 

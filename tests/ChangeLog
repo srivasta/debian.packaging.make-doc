@@ -1,3 +1,45 @@
+2006-02-17  Paul D. Smith  <psmith@gnu.org>
+
+	* scripts/features/targetvars: Test a complex construction which
+	guarantees that we have to merge variable lists of different
+	sizes.  Tests for Savannah bug #15757.
+
+2006-02-15  Paul D. Smith  <psmith@gnu.org>
+
+	* scripts/functions/error: Make sure filename/lineno information
+	is related to where the error is expanded, not where it's set.
+	* scripts/functions/warning: Ditto.
+	* scripts/functions/foreach: Check for different error conditions.
+	* scripts/functions/word: Ditto.
+	* scripts/variables/negative: Test some variable reference failure
+	conditions.
+	* scripts/options/warn-undefined-variables: Test the
+	--warn-undefined-variables flag.
+
+2006-02-09  Paul D. Smith  <psmith@gnu.org>
+
+	* run_make_tests.pl (set_more_defaults): Update valgrind support
+	for newer versions.
+	* test_driver.pl (toplevel): Skip all hidden files/directories (ones
+	beginning with ".").
+
+	* scripts/functions/andor: Tests for $(and ..) and $(or ...)
+	functions.
+
+2006-02-08  Boris Kolpackov  <boris@kolpackov.net>
+
+	* scripts/features/parallelism: Add a test for bug #15641.
+
+2006-02-06  Paul D. Smith  <psmith@gnu.org>
+
+	* scripts/options/dash-W: Add a test for bug #15341.
+
+2006-01-03  Paul D. Smith  <psmith@gnu.org>
+
+	* scripts/variables/automatic: Add a test for bug #8154.
+
+	* README: Update to reflect the current state of the test suite.
+
 2005-12-12  Paul D. Smith  <psmith@gnu.org>
 
 	* scripts/features/parallelism, scripts/functions/wildcard,
@@ -457,9 +499,8 @@
 
 2002-07-11  Paul D. Smith  <psmith@gnu.org>
 
-	* run_make_tests.pl (valid_option): Add support for Valgrind
-	<http://developer.kde.org/~sewardj/>.  Use -valgrind option to the
-	test suite.
+	* run_make_tests.pl (valid_option): Add support for Valgrind.  Use
+	-valgrind option to the test suite.
 	(set_more_defaults): Set up the file descriptor to capture
 	Valgrind output.  We have to unset its close-on-exec flag; we
 	hardcode the value for F_SETFD (2) rather than load it; hopefully
@@ -743,3 +784,20 @@
 1999-09-15  Paul D. Smith  <psmith@gnu.org>
 
 	ChangeLog file for the test suite created.
+
+
+Copyright (C) 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001,
+2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+This file is part of GNU Make.
+
+GNU Make is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 2, or (at your option) any later version.
+
+GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+GNU Make; see the file COPYING.  If not, write to the Free Software
+Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.

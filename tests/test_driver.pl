@@ -1,18 +1,34 @@
 #!/usr/bin/perl
 # -*-perl-*-
-
+#
 # Modification history:
 # Written 91-12-02 through 92-01-01 by Stephen McGee.
 # Modified 92-02-11 through 92-02-22 by Chris Arthur to further generalize.
-# End of modification history
+#
+# Copyright (C) 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000,
+# 2001, 2002, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# This file is part of GNU Make.
+#
+# GNU Make is free software; you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 2, or (at your option) any later version.
+#
+# GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# GNU Make; see the file COPYING.  If not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+
 
 # Test driver routines used by a number of test suites, including
 # those for SCS, make, roll_dir, and scan_deps (?).
-
+#
 # this routine controls the whole mess; each test suite sets up a few
 # variables and then calls &toplevel, which does all the real work.
 
-# $Id: test_driver.pl,v 1.15 2005/07/12 04:35:13 psmith Exp $
+# $Id: test_driver.pl,v 1.18 2006/02/11 22:16:05 psmith Exp $
 
 
 # The number of test categories we've run
@@ -148,22 +164,21 @@ sub toplevel
     print "Finding tests...\n";
     opendir (SCRIPTDIR, $scriptpath)
 	|| &error ("Couldn't opendir $scriptpath: $!\n");
-    @dirs = grep (!/^(\.\.?|CVS|RCS)$/, readdir (SCRIPTDIR) );
+    @dirs = grep (!/^(\..*|CVS|RCS)$/, readdir (SCRIPTDIR) );
     closedir (SCRIPTDIR);
     foreach $dir (@dirs)
     {
-      next if ($dir =~ /^\.\.?$/ || $dir eq 'CVS' || $dir eq 'RCS'
-               || ! -d "$scriptpath/$dir");
+      next if ($dir =~ /^(\..*|CVS|RCS)$/ || ! -d "$scriptpath/$dir");
       push (@rmdirs, $dir);
       mkdir ("$workpath/$dir", 0777)
            || &error ("Couldn't mkdir $workpath/$dir: $!\n");
       opendir (SCRIPTDIR, "$scriptpath/$dir")
 	  || &error ("Couldn't opendir $scriptpath/$dir: $!\n");
-      @files = grep (!/^(\.\.?|CVS|RCS)$/, readdir (SCRIPTDIR) );
+      @files = grep (!/^(\..*|CVS|RCS|.*~)$/, readdir (SCRIPTDIR) );
       closedir (SCRIPTDIR);
       foreach $test (@files)
       {
-        next if $test =~ /~$/ || -d $test;
+        -d $test and next;
 	push (@TESTS, "$dir/$test");
       }
     }

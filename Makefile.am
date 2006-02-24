@@ -1,4 +1,20 @@
 # This is a -*-Makefile-*-, or close enough
+#
+# Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006
+# Free Software Foundation, Inc.
+# This file is part of GNU Make.
+#
+# GNU Make is free software; you can redistribute it and/or modify it under the
+# terms of the GNU General Public License as published by the Free Software
+# Foundation; either version 2, or (at your option) any later version.
+#
+# GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+# A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along with
+# GNU Make; see the file COPYING.  If not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
 
 AUTOMAKE_OPTIONS = 1.8 dist-bzip2 check-news ansi2knr
 ACLOCAL_AMFLAGS	=  -I config
@@ -24,7 +40,7 @@ endif
 make_SOURCES =	ar.c arscan.c commands.c default.c dir.c expand.c file.c \
 		function.c getopt.c getopt1.c implicit.c job.c main.c \
 		misc.c read.c remake.c $(remote) rule.c signame.c \
-		variable.c version.c vpath.c hash.c
+		strcache.c variable.c version.c vpath.c hash.c
 
 EXTRA_make_SOURCES = vmsjobs.c remote-stub.c remote-cstms.c
 
@@ -137,7 +153,7 @@ check-loadavg: loadavg$(EXEEXT)
 	-./loadavg$(EXEEXT)
 
 # The loadavg function is invoked during "make check" to test getloadavg.
-noinst_PROGRAMS = loadavg
+check_PROGRAMS = loadavg
 nodist_loadavg_SOURCES = getloadavg.c
 loadavg_CPPFLAGS = -DTEST
 loadavg_LDADD = @GETLOADAVG_LIBS@

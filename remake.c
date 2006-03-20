@@ -264,6 +264,7 @@ update_goal_chain (struct dep *goals)
       just_print_flag = n;
       job_slots = j;
     }
+
   return status;
 }
 
@@ -305,6 +306,9 @@ update_file (struct file *file, unsigned int depth)
 
       status |= update_file_1 (f, depth);
       check_renamed (f);
+
+      /* Clean up any alloca() used during the update.  */
+      alloca (0);
 
       /* If we got an error, don't bother with double_colon etc.  */
       if (status != 0 && !keep_going_flag)
@@ -530,9 +534,11 @@ update_file_1 (struct file *file, unsigned int depth)
 
       if (!running)
         /* The prereq is considered changed if the timestamp has changed while
-           it was built, OR it doesn't exist.  */
+           it was built, OR it doesn't exist.
+	   This causes the Linux kernel build to break.  We'll defer this
+	   fix until GNU make 3.82 to give them time to update.  */
 	d->changed = ((file_mtime (d->file) != mtime)
-                      || (mtime == NONEXISTENT_MTIME));
+                      /* || (mtime == NONEXISTENT_MTIME) */);
 
       lastd = d;
       d = d->next;
@@ -992,13 +998,13 @@ check_dep (struct file *file, unsigned int depth,
 		  if (lastd == 0)
 		    {
 		      file->deps = d->next;
-		      free ((char *) d);
+                      free_dep (d);
 		      d = file->deps;
 		    }
 		  else
 		    {
 		      lastd->next = d->next;
-		      free ((char *) d);
+                      free_dep (d);
 		      d = lastd->next;
 		    }
 		  continue;

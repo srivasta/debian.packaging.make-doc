@@ -71,7 +71,7 @@ PACKAGE = make
 PERL = perl
 RANLIB = ranlib
 REMOTE = stub
-VERSION = 3.81rc1
+VERSION = 3.81rc2
 
 AUTOMAKE_OPTIONS = 1.2
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU make 3.79.1\n"
 "Report-Msgid-Bugs-To: bug-make@gnu.org\n"
-"POT-Creation-Date: 2006-02-19 22:29-0500\n"
+"POT-Creation-Date: 2006-03-19 22:07-0500\n"
 "PO-Revision-Date: 2001-06-08 01:30+0900\n"
 "Last-Translator: Changwoo Ryu <cwryu@debian.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -234,111 +234,111 @@ msgstr "*** 중간 파일 `%s'을(를) 주입니다"
 msgid "Removing intermediate files...\n"
 msgstr "*** 중간 파일 `%s'을(를) 주입니다"
 
-#: file.c:769
+#: file.c:781
 #, c-format
 msgid "%s: Timestamp out of range; substituting %s"
 msgstr "%s: 타임스탬프가 범위를 벗어납니다; %s을(를) 대체합니다"
 
-#: file.c:770
+#: file.c:782
 msgid "Current time"
 msgstr "현재 시각"
 
-#: file.c:869
+#: file.c:881
 msgid "# Not a target:"
 msgstr "# 타겟이 아님:"
 
-#: file.c:891
+#: file.c:903
 msgid "#  Precious file (prerequisite of .PRECIOUS)."
 msgstr "#  프레시어스 파일 (.PRECIOUS의 선행조건)."
 
-#: file.c:893
+#: file.c:905
 msgid "#  Phony target (prerequisite of .PHONY)."
 msgstr "#  포니 타겟 (.PHONY의 선행조건)."
 
-#: file.c:895
+#: file.c:907
 msgid "#  Command-line target."
 msgstr "#  명령행 타겟."
 
-#: file.c:897
+#: file.c:909
 #, fuzzy
 msgid "#  A default, MAKEFILES, or -include/sinclude makefile."
 msgstr "#  기본 메이크파일 혹은 MAKEFILES 메이크파일."
 
-#: file.c:899
+#: file.c:911
 msgid "#  Implicit rule search has been done."
 msgstr "#  묵시적 규칙 탐색이 완료되었습니다."
 
-#: file.c:900
+#: file.c:912
 msgid "#  Implicit rule search has not been done."
 msgstr "#  묵시적 규칙 탐색이 완료되지 않았습니다."
 
-#: file.c:902
+#: file.c:914
 #, c-format
 msgid "#  Implicit/static pattern stem: `%s'\n"
 msgstr "#  묵시적/고정 패턴 스템: `%s'\n"
 
-#: file.c:904
+#: file.c:916
 msgid "#  File is an intermediate prerequisite."
 msgstr "#  파일이 중간단계의 선행조건입니다."
 
-#: file.c:907
+#: file.c:919
 msgid "#  Also makes:"
 msgstr "#  다음도 만듭니다:"
 
-#: file.c:913
+#: file.c:925
 msgid "#  Modification time never checked."
 msgstr "#  변경 시각이 결코 검사되지 않았음."
 
-#: file.c:915
+#: file.c:927
 msgid "#  File does not exist."
 msgstr "#  파일이 존재하지 않습니다."
 
-#: file.c:917
+#: file.c:929
 msgid "#  File is very old."
 msgstr "#  파일이 매우 오래되었습니다."
 
-#: file.c:922
+#: file.c:934
 #, c-format
 msgid "#  Last modified %s\n"
 msgstr "#  마지막 변경 %s\n"
 
-#: file.c:925
+#: file.c:937
 msgid "#  File has been updated."
 msgstr "#  파일이 갱신되었습니다."
 
-#: file.c:925
+#: file.c:937
 msgid "#  File has not been updated."
 msgstr "#  파일이 갱신되지 않았습니다."
 
-#: file.c:929
+#: file.c:941
 msgid "#  Commands currently running (THIS IS A BUG)."
 msgstr "#  현재 실행중인 명령 (이것은 버그입니다)."
 
-#: file.c:932
+#: file.c:944
 msgid "#  Dependencies commands running (THIS IS A BUG)."
 msgstr "#  현재 실행중인 의존성 (이것은 버그입니다)."
 
-#: file.c:941
+#: file.c:953
 msgid "#  Successfully updated."
 msgstr "#  성공적으로 갱신됨."
 
-#: file.c:945
+#: file.c:957
 msgid "#  Needs to be updated (-q is set)."
 msgstr "#  갱신될 필요가 있음 (-q 설정됨)."
 
-#: file.c:948
+#: file.c:960
 msgid "#  Failed to be updated."
 msgstr "#  갱신에 실패함."
 
-#: file.c:951
+#: file.c:963
 msgid "#  Invalid value in `update_status' member!"
 msgstr "#  `update_status' 멤버에 값이 잘못되었습니다!"
 
-#: file.c:958
+#: file.c:970
 msgid "#  Invalid value in `command_state' member!"
 msgstr "#  `command_status' 멤버에 값이 잘못되었습니다!"
 
-#: file.c:977
+#: file.c:989
 msgid ""
 "\n"
 "# Files"
@@ -346,7 +346,7 @@ msgstr ""
 "\n"
 "# 파일"
 
-#: file.c:981
+#: file.c:993
 msgid ""
 "\n"
 "# files hash-table stats:\n"
@@ -493,43 +493,43 @@ msgstr "`%s'에 대한 묵시적 규칙을 찾고 있습니다.\n"
 msgid "Looking for archive-member implicit rule for `%s'.\n"
 msgstr "`%s'에 대한 아카이브멤버 묵시적 규칙을 찾고 있습니다.\n"
 
-#: implicit.c:317
+#: implicit.c:319
 msgid "Avoiding implicit rule recursion.\n"
 msgstr "묵시적 규칙의 재귀를 피함.\n"
 
 # 스템stem이란 패턴 룰에서 prefix/suffix를 제외한 나머지를 말한다.
 # 예를 들어 `%.c'라는 패턴에 `hello.c'가 들어 맞았을 경우 stem은 `hello'이다.
-#: implicit.c:474
+#: implicit.c:476
 #, c-format
 msgid "Trying pattern rule with stem `%.*s'.\n"
 msgstr "스템 `%.*s'에서부터 패턴 규칙 시도.\n"
 
-#: implicit.c:656
+#: implicit.c:658
 #, c-format
 msgid "Rejecting impossible implicit prerequisite `%s'.\n"
 msgstr "불가능한 묵시적 선행조건 `%s'은(는) 거부됩니다.\n"
 
-#: implicit.c:657
+#: implicit.c:659
 #, c-format
 msgid "Rejecting impossible rule prerequisite `%s'.\n"
 msgstr "불가능한 규칙 선행조건 `%s'은(는) 거부됩니다.\n"
 
-#: implicit.c:667
+#: implicit.c:669
 #, c-format
 msgid "Trying implicit prerequisite `%s'.\n"
 msgstr "묵시적 선행조건 `%s'을(를) 시도합니다\n"
 
-#: implicit.c:668
+#: implicit.c:670
 #, c-format
 msgid "Trying rule prerequisite `%s'.\n"
 msgstr "규칙 선행조건 `%s'을(를) 시도합니다.\n"
 
-#: implicit.c:699
+#: implicit.c:701
 #, c-format
 msgid "Found prerequisite `%s' as VPATH `%s'\n"
 msgstr "VPATH `%2$s'에서 선행조건 `%1$s'을(를) 찾았습니다\n"
 
-#: implicit.c:719
+#: implicit.c:721
 #, c-format
 msgid "Looking for a rule with intermediate file `%s'.\n"
 msgstr "중간 파일 `%s'에 대한 묵시적 규칙을 찾고 있습니다.\n"
@@ -688,198 +688,198 @@ msgstr ""
 msgid "$SHELL changed (was `%s', now `%s')\n"
 msgstr "$SHELL이 바뀌었습니다 (과거 `%s', 현재 `%s')"
 
-#: job.c:2785
+#: job.c:2789
 #, c-format
 msgid "Creating temporary batch file %s\n"
 msgstr "임시 배치 파일 %s을(를) 만듭니다\n"
 
 # ???  디버깅 메세지
-#: job.c:2898
+#: job.c:2902
 #, c-format
 msgid "%s (line %d) Bad shell context (!unixy && !batch_mode_shell)\n"
 msgstr "%s (%d번째 줄) 잘못된 쉘 컨텍스트 (!unixy && !batch_mode_shell)\n"
 
-#: main.c:290
+#: main.c:291
 msgid "Options:\n"
 msgstr "옵션:\n"
 
-#: main.c:291
+#: main.c:292
 #, fuzzy
 msgid "  -b, -m                      Ignored for compatibility.\n"
 msgstr "호환성을 위해 무시됨"
 
-#: main.c:293
+#: main.c:294
 msgid "  -B, --always-make           Unconditionally make all targets.\n"
 msgstr ""
 
-#: main.c:295
+#: main.c:296
 msgid ""
 "  -C DIRECTORY, --directory=DIRECTORY\n"
 "                              Change to DIRECTORY before doing anything.\n"
 msgstr ""
 
-#: main.c:298
+#: main.c:299
 #, fuzzy
 msgid "  -d                          Print lots of debugging information.\n"
 msgstr "여러 가지 디버깅 정보를 출력합니다"
 
-#: main.c:300
+#: main.c:301
 #, fuzzy
 msgid ""
 "  --debug[=FLAGS]             Print various types of debugging information.\n"
 msgstr "여러 가지 종류의 디버깅 정보를 출력합니다"
 
-#: main.c:302
+#: main.c:303
 msgid ""
 "  -e, --environment-overrides\n"
 "                              Environment variables override makefiles.\n"
 msgstr ""
 
-#: main.c:305
+#: main.c:306
 msgid ""
 "  -f FILE, --file=FILE, --makefile=FILE\n"
 "                              Read FILE as a makefile.\n"
 msgstr ""
 
-#: main.c:308
+#: main.c:309
 #, fuzzy
 msgid "  -h, --help                  Print this message and exit.\n"
 msgstr "이 메시지를 출력하고 끝냅니다"
 
-#: main.c:310
+#: main.c:311
 #, fuzzy
 msgid "  -i, --ignore-errors         Ignore errors from commands.\n"
 msgstr "명령에 있는 오류를 무시합니다"
 
-#: main.c:312
+#: main.c:313
 msgid ""
 "  -I DIRECTORY, --include-dir=DIRECTORY\n"
 "                              Search DIRECTORY for included makefiles.\n"
 msgstr ""
 
-#: main.c:315
+#: main.c:316
 #, fuzzy
 msgid ""
 "  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no "
 "arg.\n"
 msgstr "동시에 N개의 작업을 허용합니다; 인자가 없으면 무한대로 허용합니다"
 
-#: main.c:317
+#: main.c:318
 #, fuzzy
 msgid ""
 "  -k, --keep-going            Keep going when some targets can't be made.\n"
 msgstr "몇몇 타겟을 만들 수 없더라도 계속 진행합니다"
 
-#: main.c:319
+#: main.c:320
 msgid ""
 "  -l [N], --load-average[=N], --max-load[=N]\n"
 "                              Don't start multiple jobs unless load is below "
 "N.\n"
 msgstr ""
 
-#: main.c:322
+#: main.c:323
 msgid ""
 "  -L, --check-symlink-times   Use the latest mtime between symlinks and "
 "target.\n"
 msgstr ""
 
-#: main.c:324
+#: main.c:325
 msgid ""
 "  -n, --just-print, --dry-run, --recon\n"
 "                              Don't actually run any commands; just print "
 "them.\n"
 msgstr ""
 
-#: main.c:327
+#: main.c:328
 msgid ""
 "  -o FILE, --old-file=FILE, --assume-old=FILE\n"
 "                              Consider FILE to be very old and don't remake "
 "it.\n"
 msgstr ""
 
-#: main.c:330
+#: main.c:331
 #, fuzzy
 msgid "  -p, --print-data-base       Print make's internal database.\n"
 msgstr "make의 내부 데이타베이스를 출력합니다"
 
-#: main.c:332
+#: main.c:333
 #, fuzzy
 msgid ""
 "  -q, --question              Run no commands; exit status says if up to "
 "date.\n"
 msgstr "명령을 실행하지 않습니다; 종료 상황이 갱신 여부를 말해 줍니다"
 
-#: main.c:334
+#: main.c:335
 #, fuzzy
 msgid "  -r, --no-builtin-rules      Disable the built-in implicit rules.\n"
 msgstr "내장 묵시적 규칙을 사용 불가능하게 합니다"
 
-#: main.c:336
+#: main.c:337
 #, fuzzy
 msgid "  -R, --no-builtin-variables  Disable the built-in variable settings.\n"
 msgstr "내장 변수를 지정하지 못하게 합니다"
 
-#: main.c:338
+#: main.c:339
 msgid "  -s, --silent, --quiet       Don't echo commands.\n"
 msgstr ""
 
-#: main.c:340
+#: main.c:341
 msgid ""
 "  -S, --no-keep-going, --stop\n"
 "                              Turns off -k.\n"
 msgstr ""
 
-#: main.c:343
+#: main.c:344
 #, fuzzy
 msgid "  -t, --touch                 Touch targets instead of remaking them.\n"
 msgstr "타겟을 다시 만들지 않고 touch만 합니다"
 
-#: main.c:345
+#: main.c:346
 #, fuzzy
 msgid ""
 "  -v, --version               Print the version number of make and exit.\n"
 msgstr "make의 버전 번호를 출력하고 끝냅니다"
 
-#: main.c:347
+#: main.c:348
 #, fuzzy
 msgid "  -w, --print-directory       Print the current directory.\n"
 msgstr "현재 디렉토리를 출력합니다"
 
-#: main.c:349
+#: main.c:350
 #, fuzzy
 msgid ""
 "  --no-print-directory        Turn off -w, even if it was turned on "
 "implicitly.\n"
 msgstr "묵시적으로 켜져 있더라도 -w를 끕니다"
 
-#: main.c:351
+#: main.c:352
 msgid ""
 "  -W FILE, --what-if=FILE, --new-file=FILE, --assume-new=FILE\n"
 "                              Consider FILE to be infinitely new.\n"
 msgstr ""
 
-#: main.c:354
+#: main.c:355
 #, fuzzy
 msgid ""
 "  --warn-undefined-variables  Warn when an undefined variable is "
 "referenced.\n"
 msgstr "정의되지 않은 변수를 참조할 때 경고를 냅니다"
 
-#: main.c:548
+#: main.c:549
 msgid "empty string invalid as file name"
 msgstr "빈 문자열은 파일 이름으로 부적절합니다"
 
-#: main.c:629
+#: main.c:630
 #, c-format
 msgid "unknown debug level specification `%s'"
 msgstr "디버깅 단계 지정 `%s'이(가) 잘못되었습니다"
 
-#: main.c:669
+#: main.c:670
 #, fuzzy, c-format
 msgid "%s: Interrupt/Exception caught (code = 0x%lx, addr = 0x%lx)\n"
 msgstr "%s: 인터럽트/예외가 발견되었습니다 (코ㄷ = 0x%x, 주소 = 0x%x)\n"
 
-#: main.c:676
+#: main.c:677
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -894,189 +894,189 @@ msgstr ""
 "예외플래그 = %x\n"
 "예외주소 = %x\n"
 
-#: main.c:684
+#: main.c:685
 #, fuzzy, c-format
 msgid "Access violation: write operation at address %lx\n"
 msgstr "접근권한 위반: 주소 %x에 쓰기\n"
 
-#: main.c:685
+#: main.c:686
 #, fuzzy, c-format
 msgid "Access violation: read operation at address %lx\n"
 msgstr "접근권한 위반: 주소 %x에서 읽기\n"
 
-#: main.c:761 main.c:772
+#: main.c:762 main.c:773
 #, c-format
 msgid "find_and_set_shell setting default_shell = %s\n"
 msgstr "find_and_set_shell이 default_shell = %s 으로(로) 세팅합니다.\n"
 
-#: main.c:813
+#: main.c:814
 #, c-format
 msgid "find_and_set_shell path search set default_shell = %s\n"
 msgstr ""
 "find_and_set_shell 경로 탐색이 default_shell = %s 으로(로) 세팅합니다.\n"
 
-#: main.c:1235
+#: main.c:1236
 #, c-format
 msgid "%s is suspending for 30 seconds..."
 msgstr "%s이(가) 30초동안 일시 중지됩니다..."
 
-#: main.c:1237
+#: main.c:1238
 #, c-format
 msgid "done sleep(30). Continuing.\n"
 msgstr "완료 sleep(30). 계속.\n"
 
-#: main.c:1465
+#: main.c:1466
 msgid "Makefile from standard input specified twice."
 msgstr "표준입력에서 받아들이는 메이크파일이 두 번 이상 지정되었습니다."
 
-#: main.c:1504 vmsjobs.c:486
+#: main.c:1505 vmsjobs.c:486
 msgid "fopen (temporary file)"
 msgstr "fopen (임시 파일)"
 
-#: main.c:1510
+#: main.c:1511
 msgid "fwrite (temporary file)"
 msgstr "fwrite (임시 파일)"
 
-#: main.c:1639
+#: main.c:1640
 msgid "Parallel jobs (-j) are not supported on this platform."
 msgstr "이 플랫폼에서는 병렬 작업(-j)이 지원되지 않습니다."
 
-#: main.c:1640
+#: main.c:1641
 msgid "Resetting to single job (-j1) mode."
 msgstr "단일 작업 (-j1) 모드로 돌아갑니다."
 
-#: main.c:1655
+#: main.c:1656
 msgid "internal error: multiple --jobserver-fds options"
 msgstr "내부 오류: 여러 개의 -jobserver-fds 옵션"
 
-#: main.c:1663
+#: main.c:1664
 #, c-format
 msgid "internal error: invalid --jobserver-fds string `%s'"
 msgstr "내부 오류: 잘못된 -jobserver-fds 문자열 `%s'"
 
-#: main.c:1673
+#: main.c:1674
 msgid "warning: -jN forced in submake: disabling jobserver mode."
 msgstr "경고: 파생된 메이크에서 -jN이 강제되었습니다: 작업서버 모드를 끕니다."
 
 # ???  디버깅 메세지
-#: main.c:1683
+#: main.c:1684
 msgid "dup jobserver"
 msgstr "dup 작업서버"
 
-#: main.c:1686
+#: main.c:1687
 msgid ""
 "warning: jobserver unavailable: using -j1.  Add `+' to parent make rule."
 msgstr ""
 "경고: 작업서버를 사용할 수 없습니다: -j1을 사용합니다.  부모 메이크 규칙에 `"
 "+'를 추가합니다."
 
-#: main.c:1709
+#: main.c:1710
 msgid "creating jobs pipe"
 msgstr "작업 파이프 생성"
 
-#: main.c:1724
+#: main.c:1725
 msgid "init jobserver pipe"
 msgstr "작업서버 파이프 초기화"
 
-#: main.c:1743
+#: main.c:1744
 msgid "Symbolic links not supported: disabling -L."
 msgstr ""
 
-#: main.c:1819
+#: main.c:1820
 msgid "Updating makefiles....\n"
 msgstr "메이크파일을 업데이트하고 있습니다....\n"
 
-#: main.c:1844
+#: main.c:1845
 #, c-format
 msgid "Makefile `%s' might loop; not remaking it.\n"
 msgstr "메이크파일 `%s'은(는) 반복할 수 있습니다; 다시 만들지 않습니다.\n"
 
-#: main.c:1923
+#: main.c:1924
 #, c-format
 msgid "Failed to remake makefile `%s'."
 msgstr "메이크파일 `%s'을 다시 만드는데 실패함."
 
-#: main.c:1940
+#: main.c:1941
 #, c-format
 msgid "Included makefile `%s' was not found."
 msgstr "포함된 메이크파일 `%s'를 찾지 못했습니다."
 
-#: main.c:1945
+#: main.c:1946
 #, c-format
 msgid "Makefile `%s' was not found"
 msgstr "메이크파일 `%s'을 찾지 못했습니다"
 
-#: main.c:2013
+#: main.c:2016
 msgid "Couldn't change back to original directory."
 msgstr "원래 디렉토리로 돌아갈 수 없습니다."
 
-#: main.c:2021
+#: main.c:2024
 #, fuzzy, c-format
 msgid "Re-executing[%u]:"
 msgstr "재실행:"
 
-#: main.c:2137
+#: main.c:2140
 msgid "unlink (temporary file): "
 msgstr "unlink (임시 파일): "
 
-#: main.c:2166
+#: main.c:2169
 msgid ".DEFAULT_GOAL contains more than one target"
 msgstr ""
 
-#: main.c:2191
+#: main.c:2189
 msgid "No targets specified and no makefile found"
 msgstr "타겟이 지정되지 않았고 메이크파일이 없습니다"
 
-#: main.c:2193
+#: main.c:2191
 msgid "No targets"
 msgstr "타겟 없음"
 
-#: main.c:2198
+#: main.c:2196
 msgid "Updating goal targets....\n"
 msgstr "최종 타겟을 갱신합니다....\n"
 
-#: main.c:2224
+#: main.c:2222
 msgid "warning:  Clock skew detected.  Your build may be incomplete."
 msgstr ""
 "경고:  시계가 잘못되었음이 발견되었습니다.  빌드가 불완전할 수 있습니다."
 
-#: main.c:2388
+#: main.c:2383
 #, c-format
 msgid "Usage: %s [options] [target] ...\n"
 msgstr "사용법: %s [옵션] [타겟] ...\n"
 
-#: main.c:2394
+#: main.c:2389
 #, c-format
 msgid ""
 "\n"
 "This program built for %s\n"
 msgstr ""
 
-#: main.c:2396
+#: main.c:2391
 #, c-format
 msgid ""
 "\n"
 "This program built for %s (%s)\n"
 msgstr ""
 
-#: main.c:2399
+#: main.c:2394
 #, fuzzy, c-format
 msgid "Report bugs to <bug-make@gnu.org>\n"
 msgstr ""
 "\n"
 "문제점을 <bug-make@gnu.org>로 알려 주십시오.\n"
 
-#: main.c:2471
+#: main.c:2466
 #, fuzzy, c-format
 msgid "the `-%c' option requires a non-empty string argument"
 msgstr "`-%c' 옵션은 양의 적분 인수가 필요합니다"
 
-#: main.c:2523
+#: main.c:2518
 #, c-format
 msgid "the `-%c' option requires a positive integral argument"
 msgstr "`-%c' 옵션은 양의 적분 인수가 필요합니다"
 
-#: main.c:2947
+#: main.c:2942
 #, fuzzy, c-format
 msgid ""
 "%sThis is free software; see the source for copying conditions.\n"
@@ -1094,21 +1094,21 @@ msgstr ""
 "%s문제점은 <bug-make@gnu.org>로 알려주십시오.\n"
 "\n"
 
-#: main.c:2953
+#: main.c:2948
 #, c-format
 msgid ""
 "\n"
 "%sThis program built for %s\n"
 msgstr ""
 
-#: main.c:2955
+#: main.c:2950
 #, c-format
 msgid ""
 "\n"
 "%sThis program built for %s (%s)\n"
 msgstr ""
 
-#: main.c:2973
+#: main.c:2968
 #, c-format
 msgid ""
 "\n"
@@ -1117,7 +1117,7 @@ msgstr ""
 "\n"
 "# 메이크 데이타베이스, %s에 표시"
 
-#: main.c:2983
+#: main.c:2978
 #, c-format
 msgid ""
 "\n"
@@ -1126,42 +1126,42 @@ msgstr ""
 "\n"
 "# 메이크 데이타 베이스 마침, %s에서\n"
 
-#: main.c:3097
+#: main.c:3101
 #, fuzzy, c-format
 msgid "%s: Entering an unknown directory\n"
 msgstr "알 수 없는 디렉토리"
 
-#: main.c:3099
+#: main.c:3103
 #, fuzzy, c-format
 msgid "%s: Leaving an unknown directory\n"
 msgstr "알 수 없는 디렉토리"
 
-#: main.c:3102
+#: main.c:3106
 #, fuzzy, c-format
 msgid "%s: Entering directory `%s'\n"
 msgstr "`%s' 디렉토리\n"
 
-#: main.c:3105
+#: main.c:3109
 #, fuzzy, c-format
 msgid "%s: Leaving directory `%s'\n"
 msgstr "`%s' 디렉토리\n"
 
-#: main.c:3110
+#: main.c:3114
 #, fuzzy, c-format
 msgid "%s[%u]: Entering an unknown directory\n"
 msgstr "알 수 없는 디렉토리"
 
-#: main.c:3113
+#: main.c:3117
 #, fuzzy, c-format
 msgid "%s[%u]: Leaving an unknown directory\n"
 msgstr "알 수 없는 디렉토리"
 
-#: main.c:3117
+#: main.c:3121
 #, fuzzy, c-format
 msgid "%s[%u]: Entering directory `%s'\n"
 msgstr "`%s' 디렉토리\n"
 
-#: main.c:3120
+#: main.c:3124
 #, fuzzy, c-format
 msgid "%s[%u]: Leaving directory `%s'\n"
 msgstr "`%s' 디렉토리\n"
@@ -1185,39 +1185,39 @@ msgstr ""
 msgid "%s: %s"
 msgstr ""
 
-#: misc.c:344 misc.c:359 misc.c:376 read.c:3138
+#: misc.c:344 misc.c:359 misc.c:376 read.c:3127
 msgid "virtual memory exhausted"
 msgstr "가상 메모리가 고갈됨"
 
-#: misc.c:618
+#: misc.c:646
 #, fuzzy, c-format
 msgid "%s: user %lu (real %lu), group %lu (real %lu)\n"
 msgstr "%s 접근: 사용자 %lu (실제 %lu), 그룹 %lu (실제 %lu)\n"
 
-#: misc.c:639
+#: misc.c:667
 #, fuzzy
 msgid "Initialized access"
 msgstr "초기화됨"
 
-#: misc.c:718
+#: misc.c:746
 msgid "User access"
 msgstr ""
 
-#: misc.c:766
+#: misc.c:794
 msgid "Make access"
 msgstr ""
 
-#: misc.c:800
+#: misc.c:828
 msgid "Child access"
 msgstr ""
 
-#: misc.c:864
+#: misc.c:892
 #, fuzzy, c-format
 msgid "write error: %s"
 msgstr "오류를 %s으로(로) 리다이렉트합니다\n"
 
 # ??? 디버깅 메세지
-#: misc.c:866
+#: misc.c:894
 #, fuzzy
 msgid "write error"
 msgstr "작업서버 쓰기"
@@ -1226,150 +1226,150 @@ msgstr "작업서버 쓰기"
 msgid "Reading makefiles...\n"
 msgstr "메이크파일을 읽고 있습니다\n"
 
-#: read.c:319
+#: read.c:315
 #, c-format
 msgid "Reading makefile `%s'"
 msgstr "메이크파일 `%s'를 읽고 있습니다"
 
-#: read.c:321
+#: read.c:317
 #, c-format
 msgid " (no default goal)"
 msgstr " (최종 타겟이 없음)"
 
-#: read.c:323
+#: read.c:319
 #, c-format
 msgid " (search path)"
 msgstr " (탐색 경로)"
 
-#: read.c:325
+#: read.c:321
 #, c-format
 msgid " (don't care)"
 msgstr " (상관 안함)"
 
-#: read.c:327
+#: read.c:323
 #, c-format
 msgid " (no ~ expansion)"
 msgstr " (~ 확장 없음)"
 
-#: read.c:631
+#: read.c:623
 msgid "invalid syntax in conditional"
 msgstr "조건문에 부적절한 문법이 쓰임"
 
-#: read.c:641
+#: read.c:633
 msgid "extraneous `endef'"
 msgstr "여분의 `endef'"
 
-#: read.c:653 read.c:681 variable.c:1314
+#: read.c:645 read.c:673 variable.c:1316
 msgid "empty variable name"
 msgstr "빈 변수 이름"
 
-#: read.c:670
+#: read.c:662
 msgid "empty `override' directive"
 msgstr "빈 `override' 지시자"
 
-#: read.c:695
+#: read.c:687
 msgid "invalid `override' directive"
 msgstr "잘못된 `override' 지시자"
 
-#: read.c:862
+#: read.c:854
 msgid "commands commence before first target"
 msgstr "첫번째 타겟보다 앞에서 명령어가 시작되었습니다"
 
-#: read.c:913
+#: read.c:905
 msgid "missing rule before commands"
 msgstr "명령 앞에 규칙이 빠졌음"
 
-#: read.c:1000
+#: read.c:992
 #, c-format
 msgid "missing separator%s"
 msgstr "분리기호 %s이(가) 빠졌음"
 
-#: read.c:1002
+#: read.c:994
 msgid " (did you mean TAB instead of 8 spaces?)"
 msgstr " (8개의 공백 말고 탭을 쓰려고 한 것 아니었습니까?)"
 
-#: read.c:1160
+#: read.c:1152
 msgid "missing target pattern"
 msgstr "타겟 패턴이 빠졌음"
 
-#: read.c:1162
+#: read.c:1154
 msgid "multiple target patterns"
 msgstr "다중 타겟 패턴"
 
-#: read.c:1166
+#: read.c:1158
 #, c-format
 msgid "target pattern contains no `%%'"
 msgstr "타겟 패턴에 `%%'가 없습니다."
 
-#: read.c:1300
+#: read.c:1286
 msgid "missing `endif'"
 msgstr "`endif'가 빠졌음"
 
-#: read.c:1391
+#: read.c:1377
 msgid "Extraneous text after `endef' directive"
 msgstr "`endef' 지시자 뒤에 여분의 글이 있음"
 
-#: read.c:1425
+#: read.c:1411
 msgid "missing `endef', unterminated `define'"
 msgstr "`endef'가 빠졌음. 종료되지 않은 `define'"
 
-#: read.c:1468
+#: read.c:1454
 #, c-format
 msgid "Extraneous text after `%s' directive"
 msgstr "`%s' 지시자 뒤에 여분의 문장이 있음"
 
-#: read.c:1477 read.c:1491
+#: read.c:1463 read.c:1477
 #, c-format
 msgid "extraneous `%s'"
 msgstr "여분의 `%s'"
 
-#: read.c:1496
+#: read.c:1482
 msgid "only one `else' per conditional"
 msgstr "한 개의 조건에는 한 개의 `else'만 있어야 합니다"
 
-#: read.c:1838
+#: read.c:1824
 #, fuzzy
 msgid "Malformed target-specific variable definition"
 msgstr "타겟별 변수 정의 형식이 틀렸습니다"
 
-#: read.c:1900
+#: read.c:1886
 msgid "prerequisites cannot be defined in command scripts"
 msgstr ""
 
-#: read.c:1935
+#: read.c:1921
 msgid "mixed implicit and static pattern rules"
 msgstr "묵시적 패턴 룰과 고정된 패턴룰이 섞였습니다"
 
-#: read.c:1938
+#: read.c:1924
 msgid "mixed implicit and normal rules"
 msgstr "혼합된 묵시적 규칙과 일반적 규칙"
 
-#: read.c:1968
+#: read.c:1954
 #, c-format
 msgid "target `%s' doesn't match the target pattern"
 msgstr "타겟 `%s'은(는) 타겟 패턴에 맞지 않습니다"
 
-#: read.c:1987 read.c:2088
+#: read.c:1973 read.c:2074
 #, c-format
 msgid "target file `%s' has both : and :: entries"
 msgstr "타겟 파일 `%s'은(는) :와 :: 항목을 동시에 갖고 있습니다"
 
-#: read.c:1993
+#: read.c:1979
 #, c-format
 msgid "target `%s' given more than once in the same rule."
 msgstr "타겟 `%s'이(가) 같은 규칙에서 여러 번 주어졌습니다"
 
-#: read.c:2002
+#: read.c:1988
 #, c-format
 msgid "warning: overriding commands for target `%s'"
 msgstr "경고: 타겟 `%s'에 대한 명령어보다 다른 것이 우선합니다"
 
-#: read.c:2005
+#: read.c:1991
 #, c-format
 msgid "warning: ignoring old commands for target `%s'"
 msgstr "경고: 타겟 `%s'에 대한 과거 명령어들을 무시합니다"
 
-#: read.c:2586
+#: read.c:2575
 msgid "warning: NUL character seen; rest of line ignored"
 msgstr "경고: NUL 문자가 발견되었습니다; 줄의 나머지는 무시됩니다"
 
@@ -1384,183 +1384,183 @@ msgid "`%s' is up to date."
 msgstr "`%s'는 이미 갱신되었습니다."
 
 # prune이 truncate의 의미인가 지운다는 의미인가??
-#: remake.c:296
+#: remake.c:297
 #, c-format
 msgid "Pruning file `%s'.\n"
 msgstr "`%s' 파일을 잘라내고 있습니다.\n"
 
-#: remake.c:345
+#: remake.c:349
 #, c-format
 msgid "%sNo rule to make target `%s'%s"
 msgstr "%s타겟 `%s'를 만들 규칙이 없음%s"
 
-#: remake.c:347
+#: remake.c:351
 #, c-format
 msgid "%sNo rule to make target `%s', needed by `%s'%s"
 msgstr "%1$s`%3$s'에서 필요로 하는  타겟 `%2$s'를 만들 규칙이 없습니다%4$s"
 
-#: remake.c:374
+#: remake.c:378
 #, c-format
 msgid "Considering target file `%s'.\n"
 msgstr "타겟 파일 `%s'을(를) 고려합니다.\n"
 
-#: remake.c:381
+#: remake.c:385
 #, c-format
 msgid "Recently tried and failed to update file `%s'.\n"
 msgstr "최근에 `%s' 파일을 갱신하려고 시도하였고 실패하였습니다.\n"
 
-#: remake.c:396
+#: remake.c:400
 #, c-format
 msgid "File `%s' was considered already.\n"
 msgstr "파일 `%s'는 이미 검토되었습니다.\n"
 
-#: remake.c:406
+#: remake.c:410
 #, c-format
 msgid "Still updating file `%s'.\n"
 msgstr "아직 `%s' 파일을 갱신하고 있습니다.\n"
 
-#: remake.c:409
+#: remake.c:413
 #, c-format
 msgid "Finished updating file `%s'.\n"
 msgstr "`%s' 파일의 갱신을 마쳤습니다.\n"
 
-#: remake.c:430
+#: remake.c:434
 #, c-format
 msgid "File `%s' does not exist.\n"
 msgstr "`%s' 파일은 존재하지 않습니다.\n"
 
-#: remake.c:437
+#: remake.c:441
 #, c-format
 msgid ""
 "*** Warning: .LOW_RESOLUTION_TIME file `%s' has a high resolution time stamp"
 msgstr ""
 
-#: remake.c:450 remake.c:956
+#: remake.c:454 remake.c:962
 #, c-format
 msgid "Found an implicit rule for `%s'.\n"
 msgstr "`%s'에 대한 묵시적 규칙을 찾았습니다.\n"
 
-#: remake.c:452 remake.c:958
+#: remake.c:456 remake.c:964
 #, c-format
 msgid "No implicit rule found for `%s'.\n"
 msgstr "`%s'에 대한 묵시적 규칙을 찾지 못했습니다.\n"
 
-#: remake.c:458 remake.c:964
+#: remake.c:462 remake.c:970
 #, c-format
 msgid "Using default commands for `%s'.\n"
 msgstr "`%s'에 대해 내정된 명령을 사용함.\n"
 
-#: remake.c:480 remake.c:990
+#: remake.c:484 remake.c:996
 #, c-format
 msgid "Circular %s <- %s dependency dropped."
 msgstr "%s <- %s 상호 의존성은 무시됩니다."
 
-#: remake.c:595
+#: remake.c:601
 #, c-format
 msgid "Finished prerequisites of target file `%s'.\n"
 msgstr "타겟 파일 `%s'의 선행조건을 마쳤습니다.\n"
 
-#: remake.c:601
+#: remake.c:607
 #, c-format
 msgid "The prerequisites of `%s' are being made.\n"
 msgstr "`%s'의 선행조건이 만들어지고 있습니다.\n"
 
-#: remake.c:614
+#: remake.c:620
 #, c-format
 msgid "Giving up on target file `%s'.\n"
 msgstr "타겟 파일 `%s'을(를) 포기합니다.\n"
 
-#: remake.c:619
+#: remake.c:625
 #, c-format
 msgid "Target `%s' not remade because of errors."
 msgstr "오류로 인해 타겟 `%s'를 다시 만들지 못했습니다."
 
-#: remake.c:671
+#: remake.c:677
 #, fuzzy, c-format
 msgid "Prerequisite `%s' is order-only for target `%s'.\n"
 msgstr "선행조건 `%s'이(가) 타겟 `%s'보다 먼저 만들어졌습니다.\n"
 
-#: remake.c:676
+#: remake.c:682
 #, c-format
 msgid "Prerequisite `%s' of target `%s' does not exist.\n"
 msgstr "타겟 `%2$s'의 선행조건 %1$s은(는) 존재하지 않습니다.\n"
 
-#: remake.c:681
+#: remake.c:687
 #, c-format
 msgid "Prerequisite `%s' is newer than target `%s'.\n"
 msgstr "선행조건 `%s'이(가) 타겟 `%s'보다 최근에 만들어졌습니다.\n"
 
-#: remake.c:684
+#: remake.c:690
 #, c-format
 msgid "Prerequisite `%s' is older than target `%s'.\n"
 msgstr "선행조건 `%s'이(가) 타겟 `%s'보다 먼저 만들어졌습니다.\n"
 
-#: remake.c:702
+#: remake.c:708
 #, c-format
 msgid "Target `%s' is double-colon and has no prerequisites.\n"
 msgstr "타겟 `%s'이(가) 두 개의 콜론이 붙여졌지만 선행조건이 없습니다.\n"
 
-#: remake.c:709
+#: remake.c:715
 #, c-format
 msgid "No commands for `%s' and no prerequisites actually changed.\n"
 msgstr "`%s'에 대한 명령어가 없고 어떤 선행조건도 변경되지 않았습니다.\n"
 
-#: remake.c:714
+#: remake.c:720
 #, c-format
 msgid "Making `%s' due to always-make flag.\n"
 msgstr ""
 
-#: remake.c:722
+#: remake.c:728
 #, c-format
 msgid "No need to remake target `%s'"
 msgstr "타겟 `%s'을(를) 다시 만들 필요가 없습니다."
 
-#: remake.c:724
+#: remake.c:730
 #, c-format
 msgid "; using VPATH name `%s'"
 msgstr "; VPATH 이름 `%s'을(를) 사용합니다"
 
-#: remake.c:744
+#: remake.c:750
 #, c-format
 msgid "Must remake target `%s'.\n"
 msgstr "타겟 `%s'를 다시 만들어야 합니다.\n"
 
-#: remake.c:750
+#: remake.c:756
 #, c-format
 msgid "  Ignoring VPATH name `%s'.\n"
 msgstr "  VPATH 이름 `%s'을(를) 무시합니다.\n"
 
-#: remake.c:759
+#: remake.c:765
 #, c-format
 msgid "Commands of `%s' are being run.\n"
 msgstr "`%s'라는 명령이 실행 중입니다.\n"
 
-#: remake.c:766
+#: remake.c:772
 #, c-format
 msgid "Failed to remake target file `%s'.\n"
 msgstr "타겟 파일 `%s'를 다시 만드는 데 실패했습니다.\n"
 
-#: remake.c:769
+#: remake.c:775
 #, c-format
 msgid "Successfully remade target file `%s'.\n"
 msgstr "타겟 파일 `%s'를 성공적으로 다시 만들었습니다.\n"
 
-#: remake.c:772
+#: remake.c:778
 #, c-format
 msgid "Target file `%s' needs remade under -q.\n"
 msgstr "타겟 파일 `%s'이(가) -q 하에 다시 만들어져야 합니다.\n"
 
-#: remake.c:1300
+#: remake.c:1306
 #, fuzzy, c-format
 msgid "Warning: File `%s' has modification time in the future"
 msgstr "*** 파일 `%s'가 미래의 변경 시각을 가지고 있습니다 (%s > %s)"
 
-#: remake.c:1307
+#: remake.c:1313
 #, fuzzy, c-format
 msgid "Warning: File `%s' has modification time %.2g s in the future"
 msgstr "*** 파일 `%s'가 미래의 변경 시각을 가지고 있습니다 (%s > %s)"
 
-#: remake.c:1505
+#: remake.c:1511
 #, c-format
 msgid ".LIBPATTERNS element `%s' is not a pattern"
 msgstr ".LIBPATTERNS의 원소 `%s'이(가) 패턴이 아닙니다"
@@ -1571,7 +1571,7 @@ msgstr ".LIBPATTERNS의 원소 `%s'이(가) 패턴이 아닙니다"
 msgid "Customs won't export: %s\n"
 msgstr "Customs은 export되지 않을 것입니다: %s\n"
 
-#: rule.c:551
+#: rule.c:548
 #, fuzzy
 msgid ""
 "\n"
@@ -1580,7 +1580,7 @@ msgstr ""
 "\n"
 "# 묵시적 규칙 없음."
 
-#: rule.c:566
+#: rule.c:563
 msgid ""
 "\n"
 "# No implicit rules."
@@ -1588,7 +1588,7 @@ msgstr ""
 "\n"
 "# 묵시적 규칙 없음."
 
-#: rule.c:569
+#: rule.c:566
 #, c-format
 msgid ""
 "\n"
@@ -1597,11 +1597,11 @@ msgstr ""
 "\n"
 "# %u개의 묵시적 규칙, %u"
 
-#: rule.c:578
+#: rule.c:575
 msgid " terminal."
 msgstr " 터미널."
 
-#: rule.c:586
+#: rule.c:583
 #, c-format
 msgid "BUG: num_pattern_rules wrong!  %u != %u"
 msgstr "버그: num_pattern_rules 오류!  %u != %u"
@@ -1784,45 +1784,45 @@ msgstr ""
 msgid "%s strcache free: total = %d / max = %d / min = %d / avg = %d\n"
 msgstr ""
 
-#: variable.c:1367
+#: variable.c:1369
 msgid "default"
 msgstr "기본값"
 
-#: variable.c:1370
+#: variable.c:1372
 msgid "environment"
 msgstr "환경"
 
-#: variable.c:1373
+#: variable.c:1375
 msgid "makefile"
 msgstr "메이크파일"
 
-#: variable.c:1376
+#: variable.c:1378
 msgid "environment under -e"
 msgstr "-e 하의 환경"
 
-#: variable.c:1379
+#: variable.c:1381
 msgid "command line"
 msgstr "명령행"
 
-#: variable.c:1382
+#: variable.c:1384
 msgid "`override' directive"
 msgstr "`override' 지시자"
 
-#: variable.c:1385
+#: variable.c:1387
 msgid "automatic"
 msgstr "자동"
 
-#: variable.c:1394
+#: variable.c:1396
 #, fuzzy, c-format
 msgid " (from `%s', line %lu)"
 msgstr " (`%s'에서, %lu번째 줄):\n"
 
-#: variable.c:1436
+#: variable.c:1438
 #, fuzzy
 msgid "# variable set hash-table stats:\n"
 msgstr "# %2$u개의 해쉬 버킷에 %1$u개의 변수.\n"
 
-#: variable.c:1447
+#: variable.c:1449
 msgid ""
 "\n"
 "# Variables\n"
@@ -1830,7 +1830,7 @@ msgstr ""
 "\n"
 "# 변수\n"
 
-#: variable.c:1451
+#: variable.c:1453
 #, fuzzy
 msgid ""
 "\n"
@@ -1839,7 +1839,7 @@ msgstr ""
 "\n"
 "# 패턴을 위한 변수 값들"
 
-#: variable.c:1465
+#: variable.c:1467
 msgid ""
 "\n"
 "# No pattern-specific variable values."
@@ -1847,7 +1847,7 @@ msgstr ""
 "\n"
 "# 패턴을 위한 변수 값들이 없습니다."
 
-#: variable.c:1467
+#: variable.c:1469
 #, c-format
 msgid ""
 "\n"

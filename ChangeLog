@@ -1,3 +1,72 @@
+2006-03-19  Paul D. Smith  <psmith@gnu.org>
+
+	* remake.c (update_file): Add alloca(0) to clean up alloca'd
+	memory on hosts that don't support it directly.
+
+	* README.cvs: Add information on steps for making a release (to
+	make sure I don't forget any).
+
+	* main.c (clean_jobserver): Move jobserver cleanup code into a new
+	function.
+	(die): Cleanup code was removed from here; call the new function.
+	(main): If we are re-execing, clean up the jobserver first so we
+	don't leak file descriptors.
+	Fix bug reported by Craig Fithian <craig.fithian@citigroup.com>.
+
+2006-03-17  Paul D. Smith  <psmith@gnu.org>
+
+	* maintMakefile (do-po-update): Rewrite this rule to clean up and
+	allow multiple concurrent runs.
+	Patch from Joseph Myers <joseph@codesourcery.com>
+
+2006-03-17  Boris Kolpackov  <boris@kolpackov.net>
+
+	* dep.h (struct dep): Add the stem field.
+	* misc.c (alloc_dep, free_dep): New functions.
+	(copy_dep_chain): Copy stem.
+	(free_dep_chain): Use free_dep.
+	* read.c (record_files): Store stem in the dependency line.
+	* file.c (expand_deps): Use stem stored in the dependency line. Use
+	free_dep_chain instead of free_ns_chain.
+	* implicit.c (pattern_search): Use alloc_dep and free_dep.
+	* read.c (read_all_makefiles, eval_makefile, eval): Ditto.
+	* main.c (main, handle_non_switch_argument): Ditto.
+	* remake.c (check_dep): Ditto.
+	* rule.c (convert_suffix_rule, freerule): Ditto.
+
+2006-03-14  Paul D. Smith  <psmith@gnu.org>
+
+	* expand.c (variable_append): Instead of appending everything then
+	expanding the result, we expand (or not, if it's simple) each part
+	as we add it.
+	(allocated_variable_append): Don't expand the final result.
+	Fixes Savannah bug #15913.
+
+2006-03-09  Paul Smith  <psmith@gnu.org>
+
+	* remake.c (update_file_1): Revert the change of 3 Jan 2006 which
+	listed non-existent files as changed.  Turns out there's a bug in
+	the Linux kernel builds which means that this change causes
+	everything to rebuild every time.  We will re-introduce this fix
+	in the next release, to give them time to fix their build system.
+	Fixes Savannah bug #16002.
+	Introduces Savannah bug #16051.
+
+	* implicit.c (pattern_search) [DOS_PATHS]: Look for DOS paths if
+	we *don't* find UNIX "/".
+	Reported by David Ergo <david.ergo@alterface.com>
+
+2006-03-04  Eli Zaretskii  <eliz@gnu.org>
+
+	* variable.c (do_variable_definition) [WINDOWS32]: Call the shell
+	locator function find_and_set_default_shell if SHELL came from the
+	command line.
+
+2006-02-20  Paul D. Smith  <psmith@gnu.org>
+
+	* variable.c (merge_variable_set_lists): It's legal for *setlist0
+	to be null; don't core in that case.
+
 2006-02-19  Paul D. Smith  <psmith@gnu.org>
 
 	* commands.c (set_file_variables): Realloc, not malloc, the static
@@ -13,6 +82,17 @@
 	begin with ".".
 	(enter_file) [VMS]: Ditto.
 	Patch provided by Hartmut Becker <Hartmut.Becker@hp.com>.
+
+2006-02-24  Eli Zaretskii  <eliz@gnu.org>
+
+	* job.c (construct_command_argv_internal): Fix last change.
+
+	* w32/subproc/sub_proc.c (process_pipe_io): Make dwStdin,
+        dwStdout, and dwStderr unsigned int: avoids compiler warnings in
+        the calls to _beginthreadex.
+
+	* expand.c (recursively_expand_for_file): Initialize `save' to
+        prevent compiler warnings.
 
 2006-02-18  Eli Zaretskii  <eliz@gnu.org>
 
@@ -111,7 +191,7 @@
 
 2006-02-08  Boris Kolpackov  <boris@kolpackov.net>
 
-	* job.h (struct child): Add dontcare bitfield.
+	* job.h (struct child): Add the dontcare bitfield.
 	* job.c (new_job): Cache dontcare flag.
 	* job.c (reap_children): Use cached dontcare flag instead of the
 	one in struct file. Fixes Savannah bug #15641.

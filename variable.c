@@ -675,16 +675,17 @@ merge_variable_set_lists (struct variable_set_list **setlist0,
 
   /* This loop relies on the fact that all setlists terminate with the global
      setlist (before NULL).  If that's not true, arguably we SHOULD die.  */
-  while (setlist1 != &global_setlist && to != &global_setlist)
-    {
-      struct variable_set_list *from = setlist1;
-      setlist1 = setlist1->next;
+  if (to)
+    while (setlist1 != &global_setlist && to != &global_setlist)
+      {
+        struct variable_set_list *from = setlist1;
+        setlist1 = setlist1->next;
 
-      merge_variable_sets (to->set, from->set);
+        merge_variable_sets (to->set, from->set);
 
-      last0 = to;
-      to = to->next;
-    }
+        last0 = to;
+        to = to->next;
+      }
 
   if (setlist1 != &global_setlist)
     {
@@ -1168,7 +1169,8 @@ do_variable_definition (const struct floc *flocp, const char *varname,
   else
 #endif /* __MSDOS__ */
 #ifdef WINDOWS32
-  if ((origin == o_file || origin == o_override) && streq (varname, "SHELL"))
+  if ((origin == o_file || origin == o_override || origin == o_command)
+      && streq (varname, "SHELL"))
     {
       extern char *default_shell;
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: make-3.81-b3\n"
 "Report-Msgid-Bugs-To: bug-make@gnu.org\n"
-"POT-Creation-Date: 2006-02-19 22:29-0500\n"
+"POT-Creation-Date: 2006-03-19 22:07-0500\n"
 "PO-Revision-Date: 2006-02-05 19:19+1030\n"
 "Last-Translator: Clytie Siddall <clytie@riverland.net.au>\n"
 "Language-Team: Vietnamese <gnomevi-list@lists.sourceforge.net>\n"
@@ -235,115 +235,115 @@ msgstr "*** Đang xóa bỏ tập tin trung cấp « %s »..."
 msgid "Removing intermediate files...\n"
 msgstr "Đang gỡ bỏ các tập tin trung cấp...\n"
 
-#: file.c:769
+#: file.c:781
 #, c-format
 msgid "%s: Timestamp out of range; substituting %s"
 msgstr "%s: Nhãn thời gian ở ngoại phạm vị nên thay thế %s"
 
-#: file.c:770
+#: file.c:782
 msgid "Current time"
 msgstr "Giờ hiện thời"
 
-#: file.c:869
+#: file.c:881
 msgid "# Not a target:"
 msgstr "# Không phải là đĩch:"
 
-#: file.c:891
+#: file.c:903
 msgid "#  Precious file (prerequisite of .PRECIOUS)."
 msgstr "# Tập tin qúy (điều kiện tiên quyết của .PRECIOUS)."
 
-#: file.c:893
+#: file.c:905
 msgid "#  Phony target (prerequisite of .PHONY)."
 msgstr "# Đích giả (điều kiện tiên quyết của .PHONY)."
 
-#: file.c:895
+#: file.c:907
 msgid "#  Command-line target."
 msgstr "# Đích dòng lệnh."
 
-#: file.c:897
+#: file.c:909
 msgid "#  A default, MAKEFILES, or -include/sinclude makefile."
 msgstr ""
 "#  Tập tin tạo (makefile) mặc định, kiểu MAKEFILES, hay kiểu « -include/"
 "sinclude »."
 
-#: file.c:899
+#: file.c:911
 msgid "#  Implicit rule search has been done."
 msgstr "# Mới tìm kiếm kiểu quy tắc ngầm."
 
-#: file.c:900
+#: file.c:912
 msgid "#  Implicit rule search has not been done."
 msgstr "# Chưa tìm kiếm kiểu quy tắc ngầm."
 
-#: file.c:902
+#: file.c:914
 #, c-format
 msgid "#  Implicit/static pattern stem: `%s'\n"
 msgstr "# Cuống mẫu ngầm/tĩnh: « %s »\n"
 
-#: file.c:904
+#: file.c:916
 msgid "#  File is an intermediate prerequisite."
 msgstr "# Tập tin là điều kiện tiên quyết trung cấp."
 
-#: file.c:907
+#: file.c:919
 msgid "#  Also makes:"
 msgstr "# Cũng tạo :"
 
-#: file.c:913
+#: file.c:925
 msgid "#  Modification time never checked."
 msgstr "# Chưa bao giờ kiểm tra giờ sửa đổi."
 
-#: file.c:915
+#: file.c:927
 msgid "#  File does not exist."
 msgstr "# Tập tin không tồn tại."
 
-#: file.c:917
+#: file.c:929
 msgid "#  File is very old."
 msgstr "# Tập tin rất cũ."
 
-#: file.c:922
+#: file.c:934
 #, c-format
 msgid "#  Last modified %s\n"
 msgstr "# Sửa đổi cuối cùng %s\n"
 
-#: file.c:925
+#: file.c:937
 msgid "#  File has been updated."
 msgstr "# Tập tin đã được cập nhật."
 
-#: file.c:925
+#: file.c:937
 msgid "#  File has not been updated."
 msgstr "# Tập tin chưa được cập nhật."
 
-#: file.c:929
+#: file.c:941
 msgid "#  Commands currently running (THIS IS A BUG)."
 msgstr "# Các lệnh đang chạy (ĐÂY LÀ LỖI)."
 
-#: file.c:932
+#: file.c:944
 msgid "#  Dependencies commands running (THIS IS A BUG)."
 msgstr "# Các lệnh phụ thuộc đang chạy (ĐÂY LÀ LỖI)."
 
-#: file.c:941
+#: file.c:953
 msgid "#  Successfully updated."
 msgstr "# Đã được cập nhật."
 
-#: file.c:945
+#: file.c:957
 msgid "#  Needs to be updated (-q is set)."
 msgstr "# Cần thiết cập nhật (« -q » đã lập)."
 
-#: file.c:948
+#: file.c:960
 msgid "#  Failed to be updated."
 msgstr "# Việc cập nhật bị lỗi."
 
-#: file.c:951
+#: file.c:963
 msgid "#  Invalid value in `update_status' member!"
 msgstr ""
 "#  Giá trị không hợp lệ trong bộ phạn « update_status » (trạng thái cập "
 "nhật)!"
 
-#: file.c:958
+#: file.c:970
 msgid "#  Invalid value in `command_state' member!"
 msgstr ""
 "#  Giá trị không hợp lệ trong bộ phạn « command_state » (tính trạng lệnh)!"
 
-#: file.c:977
+#: file.c:989
 msgid ""
 "\n"
 "# Files"
@@ -351,7 +351,7 @@ msgstr ""
 "\n"
 "# Tập tin"
 
-#: file.c:981
+#: file.c:993
 msgid ""
 "\n"
 "# files hash-table stats:\n"
@@ -507,41 +507,41 @@ msgstr "Đang tìm quy tắc nguầm cho « %s ».\n"
 msgid "Looking for archive-member implicit rule for `%s'.\n"
 msgstr "Đang tìm quy tắc ngầm về bộ phạn kho cho « %s ».\n"
 
-#: implicit.c:317
+#: implicit.c:319
 msgid "Avoiding implicit rule recursion.\n"
 msgstr "Đang tránh sự đệ qui quy tắc ngầm.\n"
 
-#: implicit.c:474
+#: implicit.c:476
 #, c-format
 msgid "Trying pattern rule with stem `%.*s'.\n"
 msgstr "Đang thử quy tắc mẫu với cuống « %.*s ».\n"
 
-#: implicit.c:656
+#: implicit.c:658
 #, c-format
 msgid "Rejecting impossible implicit prerequisite `%s'.\n"
 msgstr "Đang từ chối điều kiện tiên quyết ngầm không thể « %s ».\n"
 
-#: implicit.c:657
+#: implicit.c:659
 #, c-format
 msgid "Rejecting impossible rule prerequisite `%s'.\n"
 msgstr "Đang từ chối điều kiện tiên quyết không thể « %s ».\n"
 
-#: implicit.c:667
+#: implicit.c:669
 #, c-format
 msgid "Trying implicit prerequisite `%s'.\n"
 msgstr "Đang thử điều kiện tiên quyết ngầm « %s ».\n"
 
-#: implicit.c:668
+#: implicit.c:670
 #, c-format
 msgid "Trying rule prerequisite `%s'.\n"
 msgstr "Đang thử điều kiện tiên quyết quy tắc « %s ».\n"
 
-#: implicit.c:699
+#: implicit.c:701
 #, c-format
 msgid "Found prerequisite `%s' as VPATH `%s'\n"
 msgstr "Mới tìm điều kiện tiên quyết « %s » dạng VPATH « %s »\n"
 
-#: implicit.c:719
+#: implicit.c:721
 #, c-format
 msgid "Looking for a rule with intermediate file `%s'.\n"
 msgstr "Đang tìm quy tắc với tập tin trung cấp « %s ».\n"
@@ -703,30 +703,30 @@ msgstr "spawnvpe: có lẽ hết sức chứa môi trường hoàn toàn"
 msgid "$SHELL changed (was `%s', now `%s')\n"
 msgstr "$SHELL đã thay đổi (đã « %s », là « %s »)\n"
 
-#: job.c:2785
+#: job.c:2789
 #, c-format
 msgid "Creating temporary batch file %s\n"
 msgstr "Đang tạo tập tin bó tạm thời: %s\n"
 
-#: job.c:2898
+#: job.c:2902
 #, c-format
 msgid "%s (line %d) Bad shell context (!unixy && !batch_mode_shell)\n"
 msgstr "%s (dòng %d) Ngữ cảnh hệ vỏ sai (!unixy && !batch_mode_shell)\n"
 
-#: main.c:290
+#: main.c:291
 msgid "Options:\n"
 msgstr "Tùy chọn:\n"
 
-#: main.c:291
+#: main.c:292
 msgid "  -b, -m                      Ignored for compatibility.\n"
 msgstr "  -b, -m                      Bị bỏ qua để tương thích.\n"
 
-#: main.c:293
+#: main.c:294
 msgid "  -B, --always-make           Unconditionally make all targets.\n"
 msgstr ""
 "  -B, --always-make           _Luôn luôn tạo_ mọi đích (không điều kiện).\n"
 
-#: main.c:295
+#: main.c:296
 msgid ""
 "  -C DIRECTORY, --directory=DIRECTORY\n"
 "                              Change to DIRECTORY before doing anything.\n"
@@ -734,17 +734,17 @@ msgstr ""
 "  -C THƯ_MỤC, --directory=THƯ_MỤC\n"
 "                              Chuyển đổi sang thư mục này, trước hết.\n"
 
-#: main.c:298
+#: main.c:299
 msgid "  -d                          Print lots of debugging information.\n"
 msgstr "  -d                          In ra rất nhiều thông tin _gỡ lỗi_.\n"
 
-#: main.c:300
+#: main.c:301
 msgid ""
 "  --debug[=FLAGS]             Print various types of debugging information.\n"
 msgstr ""
 "  --debug[=CỜ...]             In ra các kiểu thông tin _gỡ lỗi_ khác nhau.\n"
 
-#: main.c:302
+#: main.c:303
 msgid ""
 "  -e, --environment-overrides\n"
 "                              Environment variables override makefiles.\n"
@@ -753,7 +753,7 @@ msgstr ""
 "                              Các biến _môi trường có quyền cao hơn_\n"
 "\t\t\t\t\tcác tập tin tạo (makefile).\n"
 
-#: main.c:305
+#: main.c:306
 msgid ""
 "  -f FILE, --file=FILE, --makefile=FILE\n"
 "                              Read FILE as a makefile.\n"
@@ -761,15 +761,15 @@ msgstr ""
 "  -f TẬP_TIN, --file=TẬP_TIN, --makefile=TẬP_TIN\n"
 "                              Đọc tập tin này dạng tập tin tạo (makefile).\n"
 
-#: main.c:308
+#: main.c:309
 msgid "  -h, --help                  Print this message and exit.\n"
 msgstr "  -h, --help                  Hiển thị _trợ giúp_ này rồi thoát.\n"
 
-#: main.c:310
+#: main.c:311
 msgid "  -i, --ignore-errors         Ignore errors from commands.\n"
 msgstr "  -i, --ignore-errors         _Bỏ qua các lỗi_ từ các lệnh.\n"
 
-#: main.c:312
+#: main.c:313
 msgid ""
 "  -I DIRECTORY, --include-dir=DIRECTORY\n"
 "                              Search DIRECTORY for included makefiles.\n"
@@ -778,7 +778,7 @@ msgstr ""
 "                              Tìm kiếm tập tin tạo (makefile) đã _bao gồm_\n"
 "\t\t\t\t\ttrong _thư mục_ này.\n"
 
-#: main.c:315
+#: main.c:316
 msgid ""
 "  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no "
 "arg.\n"
@@ -786,13 +786,13 @@ msgstr ""
 "  -j [N], --jobs[=N]          Cho phép N (số) _công việc_ đồng thời;\n"
 "\t\t\t\t\t\tvô hạn khi không có đối số\n"
 
-#: main.c:317
+#: main.c:318
 msgid ""
 "  -k, --keep-going            Keep going when some targets can't be made.\n"
 msgstr ""
 "  -k, --keep-going            _Cứ làm_ khi không thể tạo một số đích.\n"
 
-#: main.c:319
+#: main.c:320
 msgid ""
 "  -l [N], --load-average[=N], --max-load[=N]\n"
 "                              Don't start multiple jobs unless load is below "
@@ -802,7 +802,7 @@ msgstr ""
 "                       Đừng khởi chạy nhiều công việc, trừ trọng tải dưới N "
 "(số).\n"
 
-#: main.c:322
+#: main.c:323
 msgid ""
 "  -L, --check-symlink-times   Use the latest mtime between symlinks and "
 "target.\n"
@@ -811,7 +811,7 @@ msgstr ""
 "\t\t\tDùng giờ_m cuối cùng giữa liên kết tượng trưng và đích.\n"
 "\t(_kiểm tra giờ liên kết tượng trưng_)\n"
 
-#: main.c:324
+#: main.c:325
 msgid ""
 "  -n, --just-print, --dry-run, --recon\n"
 "                              Don't actually run any commands; just print "
@@ -821,7 +821,7 @@ msgstr ""
 "                             Đừng thật chạy lệnh nào, chỉ in ra hết.\n"
 "\t(_chỉ in, chạy thực hành, sự thăm dò_)\n"
 
-#: main.c:327
+#: main.c:328
 msgid ""
 "  -o FILE, --old-file=FILE, --assume-old=FILE\n"
 "                              Consider FILE to be very old and don't remake "
@@ -831,12 +831,12 @@ msgstr ""
 "                             Xem tập tin này là rất cũ nên đừng tạo lại nó.\n"
 "\t(_cũ, tập tin cũ, giả sử cũ_)\n"
 
-#: main.c:330
+#: main.c:331
 msgid "  -p, --print-data-base       Print make's internal database.\n"
 msgstr ""
 "  -p, --print-data-base      _In ra cơ sở dữ liệu_ nội bộ của trình make.\n"
 
-#: main.c:332
+#: main.c:333
 msgid ""
 "  -q, --question              Run no commands; exit status says if up to "
 "date.\n"
@@ -845,25 +845,25 @@ msgstr ""
 "\tĐừng chạy lệnh nào; trạng thái thoát nói nếu hiện thời hay không.\n"
 "\t(_câu hỏi_)\n"
 
-#: main.c:334
+#: main.c:335
 msgid "  -r, --no-builtin-rules      Disable the built-in implicit rules.\n"
 msgstr ""
 "  -r, --no-builtin-rules      \t\tTắt các quy tắc ngầm có sẵn.\n"
 "\t(_không có quy tắc có sẵn_)\n"
 
-#: main.c:336
+#: main.c:337
 msgid "  -R, --no-builtin-variables  Disable the built-in variable settings.\n"
 msgstr ""
 "  -R, --no-builtin-variables  \tTắt các thiết lập biến có sẵn.\n"
 "\t(_không có biến có sẵn_)\n"
 
-#: main.c:338
+#: main.c:339
 msgid "  -s, --silent, --quiet       Don't echo commands.\n"
 msgstr ""
 "  -s, --silent, --quiet       Đừng vọng (hiển thị) lệnh.\n"
 "\t(_câm, im_)\n"
 
-#: main.c:340
+#: main.c:341
 msgid ""
 "  -S, --no-keep-going, --stop\n"
 "                              Turns off -k.\n"
@@ -871,24 +871,24 @@ msgstr ""
 "  -S, --no-keep-going, --stop\t\tTắt « -k ».\n"
 "\t(không cứ làm, dừng)\n"
 
-#: main.c:343
+#: main.c:344
 msgid "  -t, --touch                 Touch targets instead of remaking them.\n"
 msgstr ""
 "  -t, --touch                 Touch các đích thay vào tạo lại chúng.\n"
 "\t(_sờ_)\n"
 
-#: main.c:345
+#: main.c:346
 msgid ""
 "  -v, --version               Print the version number of make and exit.\n"
 msgstr ""
 "  -v, --version               In ra số thứ tự _phiên bản_ của trình make, "
 "rồi thoát.\n"
 
-#: main.c:347
+#: main.c:348
 msgid "  -w, --print-directory       Print the current directory.\n"
 msgstr "  -w, --print-directory       _In ra thư mục_ hiện thời.\n"
 
-#: main.c:349
+#: main.c:350
 msgid ""
 "  --no-print-directory        Turn off -w, even if it was turned on "
 "implicitly.\n"
@@ -896,7 +896,7 @@ msgstr ""
 "  --no-print-directory        Tắt « -w », dù khi nó được bật ngầm\n"
 "\t(_không in ra thư mục_)\n"
 
-#: main.c:351
+#: main.c:352
 msgid ""
 "  -W FILE, --what-if=FILE, --new-file=FILE, --assume-new=FILE\n"
 "                              Consider FILE to be infinitely new.\n"
@@ -908,7 +908,7 @@ msgstr ""
 "                              \t\t\tXem là tập tin này là mới vô hạn.\n"
 "\t(_gì nếu, tập tin mới, giả sử mới_)\n"
 
-#: main.c:354
+#: main.c:355
 msgid ""
 "  --warn-undefined-variables  Warn when an undefined variable is "
 "referenced.\n"
@@ -916,22 +916,22 @@ msgstr ""
 "  --warn-undefined-variables\n"
 "\t\t_Cảnh báo_ khi tham chiếu một _biến chưa được định nghĩa_.\n"
 
-#: main.c:548
+#: main.c:549
 msgid "empty string invalid as file name"
 msgstr "chuỗi rỗng không hợp lệ dạng tên tập tin"
 
-#: main.c:629
+#: main.c:630
 #, c-format
 msgid "unknown debug level specification `%s'"
 msgstr "không biết đặc tả cấp gỡ lỗi « %s »"
 
-#: main.c:669
+#: main.c:670
 #, fuzzy, c-format
 msgid "%s: Interrupt/Exception caught (code = 0x%lx, addr = 0x%lx)\n"
 msgstr ""
 "%s: Mới bắt Interrupt/Exception (ngắt/ngoài lệ) (mã = 0x%x, địa chỉ = 0x%x)\n"
 
-#: main.c:676
+#: main.c:677
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -946,172 +946,172 @@ msgstr ""
 "ExceptionFlags \t\tcác cờ ngoài lệ      %x\n"
 "ExceptionAddress \t\tđịa chỉ ngoài lệ     %x\n"
 
-#: main.c:684
+#: main.c:685
 #, fuzzy, c-format
 msgid "Access violation: write operation at address %lx\n"
 msgstr "Vi phạm truy cập: thao tác ghi tại địa chỉ %x\n"
 
-#: main.c:685
+#: main.c:686
 #, fuzzy, c-format
 msgid "Access violation: read operation at address %lx\n"
 msgstr "Vi phạm truy cập: thao tác đọc tại địa chỉ %x\n"
 
-#: main.c:761 main.c:772
+#: main.c:762 main.c:773
 #, c-format
 msgid "find_and_set_shell setting default_shell = %s\n"
 msgstr ""
 "« find_and_set_shell » (tìm và lập hệ vỏ) đang lập « default_shell » (hệ vỏ "
 "mặc định) = %s\n"
 
-#: main.c:813
+#: main.c:814
 #, c-format
 msgid "find_and_set_shell path search set default_shell = %s\n"
 msgstr ""
 "Việc tìm kiếm đường dẫn « find_and_set_shell » (tìm và lập hệ vỏ) đang lập « "
 "default_shell » (hệ vỏ mặc định) = %s\n"
 
-#: main.c:1235
+#: main.c:1236
 #, c-format
 msgid "%s is suspending for 30 seconds..."
 msgstr "%s đang ngưng được 30 giây..."
 
-#: main.c:1237
+#: main.c:1238
 #, c-format
 msgid "done sleep(30). Continuing.\n"
 msgstr "đã ngủ(30). Đang tiếp tục.\n"
 
-#: main.c:1465
+#: main.c:1466
 msgid "Makefile from standard input specified twice."
 msgstr "Tập tin tạo (makefile) từ thiết bị nhập chuẩn đã được ghi rõ hai lần."
 
-#: main.c:1504 vmsjobs.c:486
+#: main.c:1505 vmsjobs.c:486
 msgid "fopen (temporary file)"
 msgstr ""
 "fopen (tập tin tạm thời)\n"
 "  (_mở tập tin_)"
 
-#: main.c:1510
+#: main.c:1511
 msgid "fwrite (temporary file)"
 msgstr ""
 "fwrite (tập tin tạm thời)\n"
 "  (_ghi tập tin_)"
 
-#: main.c:1639
+#: main.c:1640
 msgid "Parallel jobs (-j) are not supported on this platform."
 msgstr "Công việc song song (-j) không được hỗ trợ trên nền tảng này."
 
-#: main.c:1640
+#: main.c:1641
 msgid "Resetting to single job (-j1) mode."
 msgstr "Đang lập lại thành chế độ công việc đơn (-j1)."
 
-#: main.c:1655
+#: main.c:1656
 msgid "internal error: multiple --jobserver-fds options"
 msgstr ""
 "lỗi nội bộ: có nhiều tùy chọn « --jobserver-fds » (trình phục vụ công việc -"
 "fds)."
 
-#: main.c:1663
+#: main.c:1664
 #, c-format
 msgid "internal error: invalid --jobserver-fds string `%s'"
 msgstr ""
 "lỗi nội bộ: gặp chuỗi « --jobserver-fds » (trình phục vụ công việc -fds) "
 "không hợp lệ « %s »."
 
-#: main.c:1673
+#: main.c:1674
 msgid "warning: -jN forced in submake: disabling jobserver mode."
 msgstr ""
 "cảnh báo : « -jN » bị buộc trong tiến trình submake: nên tắt chế độ trình "
 "phục vụ công việc (jobserver)."
 
-#: main.c:1683
+#: main.c:1684
 msgid "dup jobserver"
 msgstr "dup jobserver (sao lục trình phục vụ công việc)"
 
-#: main.c:1686
+#: main.c:1687
 msgid ""
 "warning: jobserver unavailable: using -j1.  Add `+' to parent make rule."
 msgstr ""
 "cảnh báo : trình phục vụ công việc không sẵn sàng: nên dùng « -j1 ». Hãy "
 "thêm « + » vào quy tắc make mẹ."
 
-#: main.c:1709
+#: main.c:1710
 msgid "creating jobs pipe"
 msgstr "đang tạo ống dẫn công việc"
 
-#: main.c:1724
+#: main.c:1725
 msgid "init jobserver pipe"
 msgstr "init jobserver pipe (sở khởi ống dẫn trình phục vụ công việc)"
 
-#: main.c:1743
+#: main.c:1744
 msgid "Symbolic links not supported: disabling -L."
 msgstr "Không hỗ trợ liên kết tượng trưng: nên tắt « -L »."
 
-#: main.c:1819
+#: main.c:1820
 msgid "Updating makefiles....\n"
 msgstr "Đạng cập nhật các tập tin tạo (makefile)...\n"
 
-#: main.c:1844
+#: main.c:1845
 #, c-format
 msgid "Makefile `%s' might loop; not remaking it.\n"
 msgstr ""
 "Tập tin tạo (makefile) « %s » có lẽ sẽ vòng lặp; sẽ không tạo lại nó.\n"
 
-#: main.c:1923
+#: main.c:1924
 #, c-format
 msgid "Failed to remake makefile `%s'."
 msgstr "Việc tạo lại tập tin tạo (makefile) « %s » bị lỗi."
 
-#: main.c:1940
+#: main.c:1941
 #, c-format
 msgid "Included makefile `%s' was not found."
 msgstr "Không tìm thấy tập tin tạo (makefile) đã bao gồm « %s »."
 
-#: main.c:1945
+#: main.c:1946
 #, c-format
 msgid "Makefile `%s' was not found"
 msgstr "Không tìm thấy tập tin tạo (makefile) « %s »."
 
-#: main.c:2013
+#: main.c:2016
 msgid "Couldn't change back to original directory."
 msgstr "Không thể chuyển đổi về thư mục gốc."
 
-#: main.c:2021
+#: main.c:2024
 #, c-format
 msgid "Re-executing[%u]:"
 msgstr "Đang thực hiện lại[%u]:"
 
-#: main.c:2137
+#: main.c:2140
 msgid "unlink (temporary file): "
 msgstr "unlink (bỏ liên kết) (tập tin tạm thời): "
 
-#: main.c:2166
+#: main.c:2169
 msgid ".DEFAULT_GOAL contains more than one target"
 msgstr "« .DEFAULT_GOAL » (đích mặc định) chứa nhiều đích."
 
-#: main.c:2191
+#: main.c:2189
 msgid "No targets specified and no makefile found"
 msgstr "Chưa ghi rõ đích nào, và không tìm thấy tập tin tạo (makefile) nào"
 
-#: main.c:2193
+#: main.c:2191
 msgid "No targets"
 msgstr "Không có đích"
 
-#: main.c:2198
+#: main.c:2196
 msgid "Updating goal targets....\n"
 msgstr "Đạng cập nhật các đích mục tiêu...\n"
 
-#: main.c:2224
+#: main.c:2222
 msgid "warning:  Clock skew detected.  Your build may be incomplete."
 msgstr ""
 "cảnh báo : mới phát hiện đối xứng lệch đồng hồ. Như thế thì bản xây dụng có "
 "lẽ không hoàn toàn."
 
-#: main.c:2388
+#: main.c:2383
 #, c-format
 msgid "Usage: %s [options] [target] ...\n"
 msgstr "Cách sử dụng: %s [tùy_chọn...] [đích] ...\n"
 
-#: main.c:2394
+#: main.c:2389
 #, c-format
 msgid ""
 "\n"
@@ -1120,7 +1120,7 @@ msgstr ""
 "\n"
 "Chương trình này đã được xây dụng cho %s\n"
 
-#: main.c:2396
+#: main.c:2391
 #, c-format
 msgid ""
 "\n"
@@ -1129,22 +1129,22 @@ msgstr ""
 "\n"
 "Chương trình này đã được xây dụng cho %s (%s)\n"
 
-#: main.c:2399
+#: main.c:2394
 #, c-format
 msgid "Report bugs to <bug-make@gnu.org>\n"
 msgstr "Hãy thông báo lỗi cho <bug-make@gnu.org>.\n"
 
-#: main.c:2471
+#: main.c:2466
 #, c-format
 msgid "the `-%c' option requires a non-empty string argument"
 msgstr "tùy chọn « -%c » cần đến một đối số dạng chuỗi không rỗng"
 
-#: main.c:2523
+#: main.c:2518
 #, c-format
 msgid "the `-%c' option requires a positive integral argument"
 msgstr "tùy chọn « -%c » cần đến một đối số dạng số nguyên dương"
 
-#: main.c:2947
+#: main.c:2942
 #, c-format
 msgid ""
 "%sThis is free software; see the source for copying conditions.\n"
@@ -1155,7 +1155,7 @@ msgstr ""
 "%sKhông bảo đảm gì cả, dù khả năng bán hay khả năng làm việc dứt khoát.\n"
 "%s\n"
 
-#: main.c:2953
+#: main.c:2948
 #, c-format
 msgid ""
 "\n"
@@ -1164,7 +1164,7 @@ msgstr ""
 "\n"
 "%sChương trình này đã được xây dụng cho %s\n"
 
-#: main.c:2955
+#: main.c:2950
 #, c-format
 msgid ""
 "\n"
@@ -1173,7 +1173,7 @@ msgstr ""
 "\n"
 "%sChương trình này đã được xây dụng cho %s (%s)\n"
 
-#: main.c:2973
+#: main.c:2968
 #, c-format
 msgid ""
 "\n"
@@ -1182,7 +1182,7 @@ msgstr ""
 "\n"
 "# Cơ sở dữ liệu Make, được in ra vào %s"
 
-#: main.c:2983
+#: main.c:2978
 #, c-format
 msgid ""
 "\n"
@@ -1191,42 +1191,42 @@ msgstr ""
 "\n"
 "# Mới xong cơ sở dữ liệu Make vào %s\n"
 
-#: main.c:3097
+#: main.c:3101
 #, c-format
 msgid "%s: Entering an unknown directory\n"
 msgstr "%s: Đang vào một thư mục lạ\n"
 
-#: main.c:3099
+#: main.c:3103
 #, c-format
 msgid "%s: Leaving an unknown directory\n"
 msgstr "%s: Đang rời khỏi một thư mục lạ\n"
 
-#: main.c:3102
+#: main.c:3106
 #, c-format
 msgid "%s: Entering directory `%s'\n"
 msgstr "%s: Đang vào thư mục « %s »\n"
 
-#: main.c:3105
+#: main.c:3109
 #, c-format
 msgid "%s: Leaving directory `%s'\n"
 msgstr "%s: Đang rời khỏi thư mục « %s »\n"
 
-#: main.c:3110
+#: main.c:3114
 #, c-format
 msgid "%s[%u]: Entering an unknown directory\n"
 msgstr "%s[%u]: Đang vào một thư mục lạ\n"
 
-#: main.c:3113
+#: main.c:3117
 #, c-format
 msgid "%s[%u]: Leaving an unknown directory\n"
 msgstr "%s[%u]: Đang rời khỏi một thư mục lạ\n"
 
-#: main.c:3117
+#: main.c:3121
 #, c-format
 msgid "%s[%u]: Entering directory `%s'\n"
 msgstr "%s[%u]: Đang vào thư mục « %s »\n"
 
-#: main.c:3120
+#: main.c:3124
 #, c-format
 msgid "%s[%u]: Leaving directory `%s'\n"
 msgstr "%s[%u]: Đang rời khỏi thư mục « %s »\n"
@@ -1252,37 +1252,37 @@ msgstr "%s%s: %s"
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: misc.c:344 misc.c:359 misc.c:376 read.c:3138
+#: misc.c:344 misc.c:359 misc.c:376 read.c:3127
 msgid "virtual memory exhausted"
 msgstr "hết bộ nhớ ảo hoàn toàn"
 
-#: misc.c:618
+#: misc.c:646
 #, c-format
 msgid "%s: user %lu (real %lu), group %lu (real %lu)\n"
 msgstr "%s: người dùng %lu (thật %lu), nhóm %lu (thật %lu)\n"
 
-#: misc.c:639
+#: misc.c:667
 msgid "Initialized access"
 msgstr "Truy cấp đã sở khởi"
 
-#: misc.c:718
+#: misc.c:746
 msgid "User access"
 msgstr "Truy cập người dùng"
 
-#: misc.c:766
+#: misc.c:794
 msgid "Make access"
 msgstr "Truy cập Make"
 
-#: misc.c:800
+#: misc.c:828
 msgid "Child access"
 msgstr "Truy cập điều con"
 
-#: misc.c:864
+#: misc.c:892
 #, c-format
 msgid "write error: %s"
 msgstr "lỗi ghi: %s"
 
-#: misc.c:866
+#: misc.c:894
 msgid "write error"
 msgstr "lỗi ghi"
 
@@ -1290,149 +1290,149 @@ msgstr "lỗi ghi"
 msgid "Reading makefiles...\n"
 msgstr "Đạng đọc các tập tin tạo (makefile)...\n"
 
-#: read.c:319
+#: read.c:315
 #, c-format
 msgid "Reading makefile `%s'"
 msgstr "Đạng đọc tập tin tạo (makefile) « %s »..."
 
-#: read.c:321
+#: read.c:317
 #, c-format
 msgid " (no default goal)"
 msgstr " (không có mục tiêu mặc định)"
 
-#: read.c:323
+#: read.c:319
 #, c-format
 msgid " (search path)"
 msgstr " (đường dẫn tìm kiếm)"
 
-#: read.c:325
+#: read.c:321
 #, c-format
 msgid " (don't care)"
 msgstr " (cũng được)"
 
-#: read.c:327
+#: read.c:323
 #, c-format
 msgid " (no ~ expansion)"
 msgstr " (không mở rộng ~)"
 
-#: read.c:631
+#: read.c:623
 msgid "invalid syntax in conditional"
 msgstr "gặp cú pháp không hợp lệ trong đồ điều kiện "
 
-#: read.c:641
+#: read.c:633
 msgid "extraneous `endef'"
 msgstr "gặp « endef » bắt nguồn ở ngoài"
 
-#: read.c:653 read.c:681 variable.c:1314
+#: read.c:645 read.c:673 variable.c:1316
 msgid "empty variable name"
 msgstr "tên biến rỗng"
 
-#: read.c:670
+#: read.c:662
 msgid "empty `override' directive"
 msgstr "chỉ thị « override » (đè) rỗng"
 
-#: read.c:695
+#: read.c:687
 msgid "invalid `override' directive"
 msgstr "chỉ thị « override » (đè) không hợp lệ"
 
-#: read.c:862
+#: read.c:854
 msgid "commands commence before first target"
 msgstr "lệnh bắt đầu trước đích thứ nhất"
 
-#: read.c:913
+#: read.c:905
 msgid "missing rule before commands"
 msgstr "thiếu quy tắc trước các lệnh"
 
-#: read.c:1000
+#: read.c:992
 #, c-format
 msgid "missing separator%s"
 msgstr "thiếu bộ phân cách%s"
 
-#: read.c:1002
+#: read.c:994
 msgid " (did you mean TAB instead of 8 spaces?)"
 msgstr " (bạn có muốn dùng TAB thay vào 8 dấu cách chứ?)"
 
-#: read.c:1160
+#: read.c:1152
 msgid "missing target pattern"
 msgstr "thiếu mẫu đích"
 
-#: read.c:1162
+#: read.c:1154
 msgid "multiple target patterns"
 msgstr "nhiều mẫu đích"
 
-#: read.c:1166
+#: read.c:1158
 #, c-format
 msgid "target pattern contains no `%%'"
 msgstr "mẫu đích không chứa « %% »"
 
-#: read.c:1300
+#: read.c:1286
 msgid "missing `endif'"
 msgstr "thiếu « endif »"
 
-#: read.c:1391
+#: read.c:1377
 msgid "Extraneous text after `endef' directive"
 msgstr "Gặp chuỗi chữ bắt nguồn ở ngoài sau chi thị « endef »"
 
-#: read.c:1425
+#: read.c:1411
 msgid "missing `endef', unterminated `define'"
 msgstr "thiếu « endef », « define » (định nghĩa) chưa kết thúc"
 
-#: read.c:1468
+#: read.c:1454
 #, c-format
 msgid "Extraneous text after `%s' directive"
 msgstr "Gặp chuỗi chữ bắt nguồn ở ngoài sau chi thị « %s »"
 
-#: read.c:1477 read.c:1491
+#: read.c:1463 read.c:1477
 #, c-format
 msgid "extraneous `%s'"
 msgstr "gặp « %s » bắt nguồn ở ngoài"
 
-#: read.c:1496
+#: read.c:1482
 msgid "only one `else' per conditional"
 msgstr "chỉ cho phép một « else » (nếu không thì) cho mỗi đồ điều kiện thôi"
 
-#: read.c:1838
+#: read.c:1824
 msgid "Malformed target-specific variable definition"
 msgstr "Lời định nghĩa biến đặc trưng cho đích dạng sai"
 
-#: read.c:1900
+#: read.c:1886
 msgid "prerequisites cannot be defined in command scripts"
 msgstr "không thể định nghĩa điều kiện tiên quyết trong tập lệnh kiểu lệnh"
 
-#: read.c:1935
+#: read.c:1921
 msgid "mixed implicit and static pattern rules"
 msgstr "gặp quy tắc mẫu kiểu ngầm và tĩnh được trộn với nhau"
 
-#: read.c:1938
+#: read.c:1924
 msgid "mixed implicit and normal rules"
 msgstr "gặp quy tắc mẫu kiểu ngầm và chuẩn được trộn với nhau"
 
-#: read.c:1968
+#: read.c:1954
 #, c-format
 msgid "target `%s' doesn't match the target pattern"
 msgstr "đích « %s » không khớp với mẫu đích"
 
-#: read.c:1987 read.c:2088
+#: read.c:1973 read.c:2074
 #, c-format
 msgid "target file `%s' has both : and :: entries"
 msgstr "tập tin đích « %s » có mục nhập kiểu cả « : » lẫn « :: » đều"
 
-#: read.c:1993
+#: read.c:1979
 #, c-format
 msgid "target `%s' given more than once in the same rule."
 msgstr "đích « %s » được đưa ra nhiều lần trong cùng một quy tắc"
 
-#: read.c:2002
+#: read.c:1988
 #, c-format
 msgid "warning: overriding commands for target `%s'"
 msgstr "cảnh báo : đang đè lên các lệnh cho đích « %s »"
 
-#: read.c:2005
+#: read.c:1991
 #, c-format
 msgid "warning: ignoring old commands for target `%s'"
 msgstr "cảnh báo : đang bỏ qua các lệnh cũ cho đích « %s »"
 
-#: read.c:2586
+#: read.c:2575
 msgid "warning: NUL character seen; rest of line ignored"
 msgstr "cảnh báo : đã xem ký tự NUL (rỗng) nên bỏ qua phần còn lại của dòng đó"
 
@@ -1446,52 +1446,52 @@ msgstr "Không có gì cần làm cho « %s »."
 msgid "`%s' is up to date."
 msgstr "« %s » là hiện thời."
 
-#: remake.c:296
+#: remake.c:297
 #, c-format
 msgid "Pruning file `%s'.\n"
 msgstr "Đang xén bớt tập tin « %s ».\n"
 
-#: remake.c:345
+#: remake.c:349
 #, c-format
 msgid "%sNo rule to make target `%s'%s"
 msgstr "%sKhông có quy tắc tới đích make « %s »%s"
 
-#: remake.c:347
+#: remake.c:351
 #, c-format
 msgid "%sNo rule to make target `%s', needed by `%s'%s"
 msgstr "%sKhông có quy tắc tới đích make « %s », cần thiết bởi « %s »%s"
 
-#: remake.c:374
+#: remake.c:378
 #, c-format
 msgid "Considering target file `%s'.\n"
 msgstr "Đang suy nghĩ tập tin đích « %s ».\n"
 
-#: remake.c:381
+#: remake.c:385
 #, c-format
 msgid "Recently tried and failed to update file `%s'.\n"
 msgstr "Vừa cố cập nhật tập tin « %s » nhưng bị lỗi.\n"
 
-#: remake.c:396
+#: remake.c:400
 #, c-format
 msgid "File `%s' was considered already.\n"
 msgstr "Tập tin « %s » đã được suy nghĩ.\n"
 
-#: remake.c:406
+#: remake.c:410
 #, c-format
 msgid "Still updating file `%s'.\n"
 msgstr "Vẫn còn đang cập nhật tập tin « %s »...\n"
 
-#: remake.c:409
+#: remake.c:413
 #, c-format
 msgid "Finished updating file `%s'.\n"
 msgstr "Mới cập nhật xong tập tin « %s ».\n"
 
-#: remake.c:430
+#: remake.c:434
 #, c-format
 msgid "File `%s' does not exist.\n"
 msgstr "Tập tin « %s » không tồn tại.\n"
 
-#: remake.c:437
+#: remake.c:441
 #, c-format
 msgid ""
 "*** Warning: .LOW_RESOLUTION_TIME file `%s' has a high resolution time stamp"
@@ -1499,136 +1499,136 @@ msgstr ""
 "*** Cảnh báo : tập tin « .LOW_RESOLUTION_TIME » (thời gian giải pháp thấp) « "
 "%s » có nhãn thời gian cao"
 
-#: remake.c:450 remake.c:956
+#: remake.c:454 remake.c:962
 #, c-format
 msgid "Found an implicit rule for `%s'.\n"
 msgstr "Tìm thấy một quy tắc ngầm cho « %s ».\n"
 
-#: remake.c:452 remake.c:958
+#: remake.c:456 remake.c:964
 #, c-format
 msgid "No implicit rule found for `%s'.\n"
 msgstr "Không tìm thấy quy tắc ngầm cho « %s »\n"
 
-#: remake.c:458 remake.c:964
+#: remake.c:462 remake.c:970
 #, c-format
 msgid "Using default commands for `%s'.\n"
 msgstr "Đang dùng các lệnh mặc định cho « %s ».\n"
 
-#: remake.c:480 remake.c:990
+#: remake.c:484 remake.c:996
 #, c-format
 msgid "Circular %s <- %s dependency dropped."
 msgstr "Cách phụ thuộc vòng tròn « %s ← %s » bị gỡ bỏ."
 
-#: remake.c:595
+#: remake.c:601
 #, c-format
 msgid "Finished prerequisites of target file `%s'.\n"
 msgstr "Mới xong các điều kiện tiên quyết của tập tin đích « %s ».\n"
 
-#: remake.c:601
+#: remake.c:607
 #, c-format
 msgid "The prerequisites of `%s' are being made.\n"
 msgstr "Đang tạo các điều kiện tiên quyết của « %s ».\n"
 
-#: remake.c:614
+#: remake.c:620
 #, c-format
 msgid "Giving up on target file `%s'.\n"
 msgstr "Đang chịu thua về tập tin đích « %s ».\n"
 
-#: remake.c:619
+#: remake.c:625
 #, c-format
 msgid "Target `%s' not remade because of errors."
 msgstr "Đích « %s » không được tạo lại vì gặp lỗi."
 
-#: remake.c:671
+#: remake.c:677
 #, c-format
 msgid "Prerequisite `%s' is order-only for target `%s'.\n"
 msgstr ""
 "Điều kiện tiên quyết « %s » là order-only (chỉ thứ tự) cho đích « %s ».\n"
 
-#: remake.c:676
+#: remake.c:682
 #, c-format
 msgid "Prerequisite `%s' of target `%s' does not exist.\n"
 msgstr "Điều kiện tiên quyết « %s » của đích « %s » không tồn tại.\n"
 
-#: remake.c:681
+#: remake.c:687
 #, c-format
 msgid "Prerequisite `%s' is newer than target `%s'.\n"
 msgstr "Điều kiện tiên quyết « %s » là mới hơn đích « %s » .\n"
 
-#: remake.c:684
+#: remake.c:690
 #, c-format
 msgid "Prerequisite `%s' is older than target `%s'.\n"
 msgstr "Điều kiện tiên quyết « %s » là cũ hơn đích « %s » .\n"
 
-#: remake.c:702
+#: remake.c:708
 #, c-format
 msgid "Target `%s' is double-colon and has no prerequisites.\n"
 msgstr ""
 "Đích « %s » là kiểu dấu hai chấm đôi và không có điều kiện tiên quyết nào.\n"
 
-#: remake.c:709
+#: remake.c:715
 #, c-format
 msgid "No commands for `%s' and no prerequisites actually changed.\n"
 msgstr ""
 "Không có lệnh cho « %s », và chưa thật sự thay đổi điều kiện tiên quyết "
 "nào.\n"
 
-#: remake.c:714
+#: remake.c:720
 #, c-format
 msgid "Making `%s' due to always-make flag.\n"
 msgstr "Đang tạo « %s » vì gặp cờ always-make (luôn luôn tạo).\n"
 
-#: remake.c:722
+#: remake.c:728
 #, c-format
 msgid "No need to remake target `%s'"
 msgstr "Không cần tạo lại đích « %s »."
 
-#: remake.c:724
+#: remake.c:730
 #, c-format
 msgid "; using VPATH name `%s'"
 msgstr "; đang dùng tên VPATH (đường dẫn V) « %s »"
 
-#: remake.c:744
+#: remake.c:750
 #, c-format
 msgid "Must remake target `%s'.\n"
 msgstr "Phải tạo lại đích « %s ».\n"
 
-#: remake.c:750
+#: remake.c:756
 #, c-format
 msgid "  Ignoring VPATH name `%s'.\n"
 msgstr "  Đang bỏ qua tên đường dẫn VPATH « %s ».\n"
 
-#: remake.c:759
+#: remake.c:765
 #, c-format
 msgid "Commands of `%s' are being run.\n"
 msgstr "Đang chạy các lệnh của « %s ».\n"
 
-#: remake.c:766
+#: remake.c:772
 #, c-format
 msgid "Failed to remake target file `%s'.\n"
 msgstr "Việc tạo lại tập tin đích « %s » bị lỗi.\n"
 
-#: remake.c:769
+#: remake.c:775
 #, c-format
 msgid "Successfully remade target file `%s'.\n"
 msgstr "Mới  tạo lại tập tin đích « %s ».\n"
 
-#: remake.c:772
+#: remake.c:778
 #, c-format
 msgid "Target file `%s' needs remade under -q.\n"
 msgstr "Tập tin đích « %s » cần được tạo lại dưới « -q ».\n"
 
-#: remake.c:1300
+#: remake.c:1306
 #, c-format
 msgid "Warning: File `%s' has modification time in the future"
 msgstr "Cảnh báo : tập tin « %s » có giờ sửa đổi trong tương lai."
 
-#: remake.c:1307
+#: remake.c:1313
 #, c-format
 msgid "Warning: File `%s' has modification time %.2g s in the future"
 msgstr "Cảnh báo : tập tin « %s » có giờ sửa đổi « %.2g s » trong tương lai."
 
-#: remake.c:1505
+#: remake.c:1511
 #, c-format
 msgid ".LIBPATTERNS element `%s' is not a pattern"
 msgstr "Yếu tố « .LIBPATTERNS » (các mẫu thư viên) « %s » không phải là mẫu"
@@ -1638,7 +1638,7 @@ msgstr "Yếu tố « .LIBPATTERNS » (các mẫu thư viên) « %s » không ph
 msgid "Customs won't export: %s\n"
 msgstr "Thuế quan không xuất được: %s\n"
 
-#: rule.c:551
+#: rule.c:548
 msgid ""
 "\n"
 "# Implicit Rules"
@@ -1646,7 +1646,7 @@ msgstr ""
 "\n"
 "# Quy tắc ngầm"
 
-#: rule.c:566
+#: rule.c:563
 msgid ""
 "\n"
 "# No implicit rules."
@@ -1654,7 +1654,7 @@ msgstr ""
 "\n"
 "# Không có quy tắc ngầm."
 
-#: rule.c:569
+#: rule.c:566
 #, c-format
 msgid ""
 "\n"
@@ -1663,11 +1663,11 @@ msgstr ""
 "\n"
 "# %u quy tắc ngầm, %u"
 
-#: rule.c:578
+#: rule.c:575
 msgid " terminal."
 msgstr " thiết bị cuối"
 
-#: rule.c:586
+#: rule.c:583
 #, c-format
 msgid "BUG: num_pattern_rules wrong!  %u != %u"
 msgstr "LỖI: « num_pattern_rules » (số quy tắc mẫu) không đúng!  %u != %u"
@@ -1852,44 +1852,44 @@ msgstr ""
 msgid "%s strcache free: total = %d / max = %d / min = %d / avg = %d\n"
 msgstr ""
 
-#: variable.c:1367
+#: variable.c:1369
 msgid "default"
 msgstr "mặc định"
 
-#: variable.c:1370
+#: variable.c:1372
 msgid "environment"
 msgstr "môi trường"
 
-#: variable.c:1373
+#: variable.c:1375
 msgid "makefile"
 msgstr "tập tin tạo"
 
-#: variable.c:1376
+#: variable.c:1378
 msgid "environment under -e"
 msgstr "môi trường dưới « -e »"
 
-#: variable.c:1379
+#: variable.c:1381
 msgid "command line"
 msgstr "dòng lệnh"
 
-#: variable.c:1382
+#: variable.c:1384
 msgid "`override' directive"
 msgstr "chỉ thị « override » (đè)"
 
-#: variable.c:1385
+#: variable.c:1387
 msgid "automatic"
 msgstr "tự động"
 
-#: variable.c:1394
+#: variable.c:1396
 #, c-format
 msgid " (from `%s', line %lu)"
 msgstr " (từ « %s », dòng %lu)"
 
-#: variable.c:1436
+#: variable.c:1438
 msgid "# variable set hash-table stats:\n"
 msgstr "# thống kê bảng băm lập biến:\n"
 
-#: variable.c:1447
+#: variable.c:1449
 msgid ""
 "\n"
 "# Variables\n"
@@ -1897,7 +1897,7 @@ msgstr ""
 "\n"
 "# Biến\n"
 
-#: variable.c:1451
+#: variable.c:1453
 msgid ""
 "\n"
 "# Pattern-specific Variable Values"
@@ -1905,7 +1905,7 @@ msgstr ""
 "\n"
 "# Giá trị biến đặc trưng cho mẫu"
 
-#: variable.c:1465
+#: variable.c:1467
 msgid ""
 "\n"
 "# No pattern-specific variable values."
@@ -1913,7 +1913,7 @@ msgstr ""
 "\n"
 "# Không có giá trị biến đặc trưng cho mẫu"
 
-#: variable.c:1467
+#: variable.c:1469
 #, c-format
 msgid ""
 "\n"

@@ -1,3 +1,33 @@
+2006-03-19  Paul D. Smith  <psmith@gnu.org>
+
+	* scripts/features/parallelism: Test that the jobserver is
+	properly managed when we have to re-exec the master instance of
+	make.
+
+2006-03-17  Boris Kolpackov  <boris@kolpackov.net>
+
+	* scripts/features/statipattrules: Add tests for bug #16053.
+
+2006-03-09  Paul Smith  <psmith@gnu.org>
+
+	* scripts/features/escape: Use "pre:" not "p:" to avoid conflicts
+	with DOS drive letters.  Fixes Savannah bug #15947.
+
+	* test_driver.pl (run_each_test): Set the status properly even
+	when a test fails to execute.  Fixes Savannah bug #15942.
+
+	* scripts/functions/foreach: Use a different environment variable
+	other than PATH to avoid differences with Windows platforms.
+	Fixes Savannah bug #15938.
+
+2006-03-05  Paul D. Smith  <psmith@gnu.org>
+
+	* run_make_tests.pl (set_more_defaults): Add CYGWIN_NT as a port
+	type W32.  Fixed Savannah bug #15937.
+
+	* scripts/features/default_names: Don't call error() when the test
+	fails.  Fixes Savannah bug #15941.
+
 2006-02-17  Paul D. Smith  <psmith@gnu.org>
 
 	* scripts/features/targetvars: Test a complex construction which

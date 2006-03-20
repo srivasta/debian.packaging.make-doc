@@ -1,6 +1,6 @@
 GNU make NEWS                                               -*-indented-text-*-
   History of user-visible changes.
-  19 February 2006
+  19 March 2006
 
 See the end of this file for copyrights and conditions.
 
@@ -9,7 +9,7 @@ manual, which is contained in this distribution as the file doc/make.texi.
 See the README file and the GNU make manual for instructions for
 reporting bugs.
 
-Version 3.81rc1
+Version 3.81rc2
 
 * GNU make is ported to OS/2.
 
@@ -17,8 +17,15 @@ Version 3.81rc1
   the build_w32.bat batch file; see the file README.W32 for more
   details.
 
-* WARNING: Backward-incompatibility!
+* WARNING: Future backward-incompatibility!
+  Up to and including this release, the '$?' variable does not contain
+  any prerequisite that does not exist, even though that prerequisite
+  might have caused the target to rebuild.  Starting with the _next_
+  release of GNU make, '$?' will contain all prerequisites that caused
+  the target to be considered out of date.  See this Savannah bug:
+  http://savannah.gnu.org/bugs/index.php?func=detailitem&item_id=16051
 
+* WARNING: Backward-incompatibility!
   GNU make now implements a generic "second expansion" feature on the
   prerequisites of both explicit and implicit (pattern) rules.  In order
   to enable this feature, the special target '.SECONDEXPANSION' must be
@@ -41,8 +48,16 @@ Version 3.81rc1
   backslash-newline sequences in command strings has changed.  If your
   makefiles use backslash-newline sequences inside of single-quoted
   strings in command scripts you will be impacted by this change.  See
-  the GNU make manual section "Command Execution" (node "Execution") for
-  details.
+  the GNU make manual subsection "Splitting Command Lines" (node
+  "Splitting Lines"), in section "Command Syntax", chapter "Writing the
+  Commands in Rules", for details.
+
+* WARNING: Backward-incompatibility!
+  Some previous versions of GNU make had a bug where "#" in a function
+  invocation such as $(shell ...) was treated as a make comment.  A
+  workaround was to escape these with backslashes.  This bug has been
+  fixed: if your makefile uses "\#" in a function invocation the
+  backslash is now preserved, so you'll need to remove it.
 
 * New command-line option: -L (--check-symlink-times).  On systems that
   support symbolic links, if this option is given then GNU make will

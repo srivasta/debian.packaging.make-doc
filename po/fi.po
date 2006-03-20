@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: make 3.81-b3\n"
 "Report-Msgid-Bugs-To: bug-make@gnu.org\n"
-"POT-Creation-Date: 2006-02-19 22:29-0500\n"
+"POT-Creation-Date: 2006-03-19 22:07-0500\n"
 "PO-Revision-Date: 2005-07-06 21:36+0300\n"
 "Last-Translator: Lauri Nurmi <lanurmi@iki.fi>\n"
 "Language-Team: Finnish <translation-team-fi@lists.sourceforge.net>\n"
@@ -234,110 +234,110 @@ msgstr "*** Poistetaan aputiedosto \"%s\""
 msgid "Removing intermediate files...\n"
 msgstr "Poistetaan aputiedostot...\n"
 
-#: file.c:769
+#: file.c:781
 #, c-format
 msgid "%s: Timestamp out of range; substituting %s"
 msgstr "%s: Aikaleima ei ole sallitulla välillä, korvataan %s"
 
-#: file.c:770
+#: file.c:782
 msgid "Current time"
 msgstr "Tämänhetkinen aika"
 
-#: file.c:869
+#: file.c:881
 msgid "# Not a target:"
 msgstr "# Ei kohde:"
 
-#: file.c:891
+#: file.c:903
 msgid "#  Precious file (prerequisite of .PRECIOUS)."
 msgstr "#  Arvokas tiedosto (ennakkoehto .PRECIOUS:ille)."
 
-#: file.c:893
+#: file.c:905
 msgid "#  Phony target (prerequisite of .PHONY)."
 msgstr "#  Valekohde (ennakkoehto .PHONY:lle)."
 
-#: file.c:895
+#: file.c:907
 msgid "#  Command-line target."
 msgstr "#  Komentorivikohde."
 
-#: file.c:897
+#: file.c:909
 msgid "#  A default, MAKEFILES, or -include/sinclude makefile."
 msgstr "#  Oletus-, MAKEFILES- tai -include/sinclude -makefile-tiedosto."
 
-#: file.c:899
+#: file.c:911
 msgid "#  Implicit rule search has been done."
 msgstr "#  Oletussääntöhaku on suoritettu."
 
-#: file.c:900
+#: file.c:912
 msgid "#  Implicit rule search has not been done."
 msgstr "#  Oletussääntöhakua ei ole suoritettu."
 
-#: file.c:902
+#: file.c:914
 #, c-format
 msgid "#  Implicit/static pattern stem: `%s'\n"
 msgstr ""
 
-#: file.c:904
+#: file.c:916
 msgid "#  File is an intermediate prerequisite."
 msgstr "#  Tiedosto on välitason ennakkoehto."
 
-#: file.c:907
+#: file.c:919
 msgid "#  Also makes:"
 msgstr "#  Tuotetaan myös:"
 
-#: file.c:913
+#: file.c:925
 msgid "#  Modification time never checked."
 msgstr "#  Muutosaikaa ei koskaan tarkastettu."
 
-#: file.c:915
+#: file.c:927
 msgid "#  File does not exist."
 msgstr "#  Tiedosto ei ole olemassa."
 
-#: file.c:917
+#: file.c:929
 msgid "#  File is very old."
 msgstr "#  Tiedosto on hyvin vanha."
 
-#: file.c:922
+#: file.c:934
 #, c-format
 msgid "#  Last modified %s\n"
 msgstr "#  Viimeksi muutettu %s\n"
 
-#: file.c:925
+#: file.c:937
 msgid "#  File has been updated."
 msgstr "#  Tiedosto on päivitetty."
 
-#: file.c:925
+#: file.c:937
 msgid "#  File has not been updated."
 msgstr "#  Tiedostoa ei ole päivitetty."
 
-#: file.c:929
+#: file.c:941
 msgid "#  Commands currently running (THIS IS A BUG)."
 msgstr "#  Ajossa olevat komennot (TÄMÄ ON OHJELMISTOVIKA)."
 
-#: file.c:932
+#: file.c:944
 msgid "#  Dependencies commands running (THIS IS A BUG)."
 msgstr "#  Ajossa olevat riippuvuuskomennot (TÄMÄ ON OHJELMISTOVIKA)."
 
-#: file.c:941
+#: file.c:953
 msgid "#  Successfully updated."
 msgstr "#  Päivitetty onnistuneesti."
 
-#: file.c:945
+#: file.c:957
 msgid "#  Needs to be updated (-q is set)."
 msgstr "#  Vaatii päivitystä (-q on asetettu)."
 
-#: file.c:948
+#: file.c:960
 msgid "#  Failed to be updated."
 msgstr "#  Päivitys epäonnistui."
 
-#: file.c:951
+#: file.c:963
 msgid "#  Invalid value in `update_status' member!"
 msgstr "#  Virheellinen arvo \"update_status\"-jäsenessä!"
 
-#: file.c:958
+#: file.c:970
 msgid "#  Invalid value in `command_state' member!"
 msgstr "#  Virheellinen arvo \"command_state\"-jäsenessä!"
 
-#: file.c:977
+#: file.c:989
 msgid ""
 "\n"
 "# Files"
@@ -345,7 +345,7 @@ msgstr ""
 "\n"
 "# Tiedostot"
 
-#: file.c:981
+#: file.c:993
 msgid ""
 "\n"
 "# files hash-table stats:\n"
@@ -495,41 +495,41 @@ msgstr "Etsitään oletussääntöä kohteelle \"%s\".\n"
 msgid "Looking for archive-member implicit rule for `%s'.\n"
 msgstr "Etsitään arkistojäsenen oletussääntöä kohteelle \"%s\".\n"
 
-#: implicit.c:317
+#: implicit.c:319
 msgid "Avoiding implicit rule recursion.\n"
 msgstr "Vältetään oletussääntörekursio.\n"
 
-#: implicit.c:474
+#: implicit.c:476
 #, c-format
 msgid "Trying pattern rule with stem `%.*s'.\n"
 msgstr "Kokeillaan hahmosääntöä rungolla \"%.*s\".\n"
 
-#: implicit.c:656
+#: implicit.c:658
 #, c-format
 msgid "Rejecting impossible implicit prerequisite `%s'.\n"
 msgstr "Hylätään mahdoton oletusennakkoehto \"%s\".\n"
 
-#: implicit.c:657
+#: implicit.c:659
 #, c-format
 msgid "Rejecting impossible rule prerequisite `%s'.\n"
 msgstr "Hylätään mahdoton säännön ennakkoehto \"%s\".\n"
 
-#: implicit.c:667
+#: implicit.c:669
 #, c-format
 msgid "Trying implicit prerequisite `%s'.\n"
 msgstr "Yritetään käyttää oletusennakkoehtoa \"%s\".\n"
 
-#: implicit.c:668
+#: implicit.c:670
 #, c-format
 msgid "Trying rule prerequisite `%s'.\n"
 msgstr "Yritetään käyttää säännön ennakkoehtoa \"%s\".\n"
 
-#: implicit.c:699
+#: implicit.c:701
 #, c-format
 msgid "Found prerequisite `%s' as VPATH `%s'\n"
 msgstr "Löydettiin ennakkoehto \"%s\", joka on VPATH \"%s\"\n"
 
-#: implicit.c:719
+#: implicit.c:721
 #, c-format
 msgid "Looking for a rule with intermediate file `%s'.\n"
 msgstr "Etsitään sääntöä aputiedostolla \"%s\".\n"
@@ -687,30 +687,30 @@ msgstr "spawnvpe: ympäristötila saattaa olla lopussa"
 msgid "$SHELL changed (was `%s', now `%s')\n"
 msgstr "$SHELL muuttunut (oli \"%s\", nyt \"%s\")\n"
 
-#: job.c:2785
+#: job.c:2789
 #, c-format
 msgid "Creating temporary batch file %s\n"
 msgstr "Luodaan väliaikainen komentotiedosto %s\n"
 
-#: job.c:2898
+#: job.c:2902
 #, c-format
 msgid "%s (line %d) Bad shell context (!unixy && !batch_mode_shell)\n"
 msgstr "%s (rivi %d) Väärä kuoriympäristö (!unixy && !batch_mode_shell)\n"
 
-#: main.c:290
+#: main.c:291
 msgid "Options:\n"
 msgstr "Valitsimet:\n"
 
-#: main.c:291
+#: main.c:292
 msgid "  -b, -m                      Ignored for compatibility.\n"
 msgstr ""
 "  -b, -m                      Yhteensopivuuden vuoksi jätetään huomiotta.\n"
 
-#: main.c:293
+#: main.c:294
 msgid "  -B, --always-make           Unconditionally make all targets.\n"
 msgstr "  -B, --always-make           Tuota kaikki kohteet ehdoitta.\n"
 
-#: main.c:295
+#: main.c:296
 msgid ""
 "  -C DIRECTORY, --directory=DIRECTORY\n"
 "                              Change to DIRECTORY before doing anything.\n"
@@ -718,16 +718,16 @@ msgstr ""
 "  -C HAKEMISTO, --directory=HAKEMISTO\n"
 "                              Siirry HAKEMISTOon ennen jatkamista.\n"
 
-#: main.c:298
+#: main.c:299
 msgid "  -d                          Print lots of debugging information.\n"
 msgstr "  -d                          Näytä runsaasti vianetsintätietoja.\n"
 
-#: main.c:300
+#: main.c:301
 msgid ""
 "  --debug[=FLAGS]             Print various types of debugging information.\n"
 msgstr "  --debug[=LIPUT]             Näytä monenlaisia vianetsintätietoja.\n"
 
-#: main.c:302
+#: main.c:303
 msgid ""
 "  -e, --environment-overrides\n"
 "                              Environment variables override makefiles.\n"
@@ -736,7 +736,7 @@ msgstr ""
 "                              Ympäristömuuttujat kumoavat makefile-"
 "tiedostot.\n"
 
-#: main.c:305
+#: main.c:306
 msgid ""
 "  -f FILE, --file=FILE, --makefile=FILE\n"
 "                              Read FILE as a makefile.\n"
@@ -744,17 +744,17 @@ msgstr ""
 "  -f TIEDOSTO, --file=TIEDOSTO, --makefile=TIEDOSTO\n"
 "                              Käytä TIEDOSTOa makefile-tiedostona.\n"
 
-#: main.c:308
+#: main.c:309
 msgid "  -h, --help                  Print this message and exit.\n"
 msgstr "  -h, --help                  Näytä tämä viesti ja poistu.\n"
 
-#: main.c:310
+#: main.c:311
 msgid "  -i, --ignore-errors         Ignore errors from commands.\n"
 msgstr ""
 "  -i, --ignore-errors         Älä huomioi suoritettujen komentojen "
 "virheitä.\n"
 
-#: main.c:312
+#: main.c:313
 msgid ""
 "  -I DIRECTORY, --include-dir=DIRECTORY\n"
 "                              Search DIRECTORY for included makefiles.\n"
@@ -763,7 +763,7 @@ msgstr ""
 "                              Etsi sisällytettäviä makefile:ja "
 "HAKEMISTOsta.\n"
 
-#: main.c:315
+#: main.c:316
 msgid ""
 "  -j [N], --jobs[=N]          Allow N jobs at once; infinite jobs with no "
 "arg.\n"
@@ -771,14 +771,14 @@ msgstr ""
 "  -j [N], --jobs[=N]          Salli N yhtäaikaista työtä; ilman N:ää "
 "ääretön.\n"
 
-#: main.c:317
+#: main.c:318
 msgid ""
 "  -k, --keep-going            Keep going when some targets can't be made.\n"
 msgstr ""
 "  -k, --keep-going            Jatka vaikka joidenkin kohteiden tuottaminen\n"
 "                                epäonnistuisi.\n"
 
-#: main.c:319
+#: main.c:320
 msgid ""
 "  -l [N], --load-average[=N], --max-load[=N]\n"
 "                              Don't start multiple jobs unless load is below "
@@ -788,7 +788,7 @@ msgstr ""
 "                              Älä aloita useita töitä ellei kuormitus alle "
 "N.\n"
 
-#: main.c:322
+#: main.c:323
 msgid ""
 "  -L, --check-symlink-times   Use the latest mtime between symlinks and "
 "target.\n"
@@ -796,7 +796,7 @@ msgstr ""
 "  -L, --check-symlink-times   Käytä uusinta mtime-aikaa symlinkkien ja\n"
 "                                kohteen välillä.\n"
 
-#: main.c:324
+#: main.c:325
 msgid ""
 "  -n, --just-print, --dry-run, --recon\n"
 "                              Don't actually run any commands; just print "
@@ -806,7 +806,7 @@ msgstr ""
 "                              Näytä ajettavat komennot, älä käynnistä "
 "niitä.\n"
 
-#: main.c:327
+#: main.c:328
 msgid ""
 "  -o FILE, --old-file=FILE, --assume-old=FILE\n"
 "                              Consider FILE to be very old and don't remake "
@@ -815,11 +815,11 @@ msgstr ""
 "  -o TIEDOSTO, --old-file=TIEDOSTO, --assume-old=TIEDOSTO\n"
 "                              Käsittele TIEDOSTO vanhana, älä tuota sitä.\n"
 
-#: main.c:330
+#: main.c:331
 msgid "  -p, --print-data-base       Print make's internal database.\n"
 msgstr "  -p, --print-data-base       Näytä make:in sisäinen tietokanta.\n"
 
-#: main.c:332
+#: main.c:333
 msgid ""
 "  -q, --question              Run no commands; exit status says if up to "
 "date.\n"
@@ -827,21 +827,21 @@ msgstr ""
 "  -q, --question              Älä aja komentoja; paluuarvo kertoo ajan-\n"
 "                                tasaisuuden.\n"
 
-#: main.c:334
+#: main.c:335
 msgid "  -r, --no-builtin-rules      Disable the built-in implicit rules.\n"
 msgstr ""
 "  -r, --no-builtin-rules      Poista käytöstä sisäiset oletussäännöt.\n"
 
-#: main.c:336
+#: main.c:337
 msgid "  -R, --no-builtin-variables  Disable the built-in variable settings.\n"
 msgstr ""
 "  -R, --no-builtin-variables  Poista käytöstä sisäiset muuttuja-asetukset.\n"
 
-#: main.c:338
+#: main.c:339
 msgid "  -s, --silent, --quiet       Don't echo commands.\n"
 msgstr "  -s, --silent, --quiet       Älä kaiuta komentoja.\n"
 
-#: main.c:340
+#: main.c:341
 msgid ""
 "  -S, --no-keep-going, --stop\n"
 "                              Turns off -k.\n"
@@ -849,20 +849,20 @@ msgstr ""
 "  -S, --no-keep-going, --stop\n"
 "                              Kumoaa valitsimen -k.\n"
 
-#: main.c:343
+#: main.c:344
 msgid "  -t, --touch                 Touch targets instead of remaking them.\n"
 msgstr "  -t, --touch                 Kosketa kohteita tuottamisen sijaan.\n"
 
-#: main.c:345
+#: main.c:346
 msgid ""
 "  -v, --version               Print the version number of make and exit.\n"
 msgstr "  -v, --version               Näytä make:in versionumero ja poistu.\n"
 
-#: main.c:347
+#: main.c:348
 msgid "  -w, --print-directory       Print the current directory.\n"
 msgstr "  -w, --print-directory       Näytä nykyinen hakemisto.\n"
 
-#: main.c:349
+#: main.c:350
 msgid ""
 "  --no-print-directory        Turn off -w, even if it was turned on "
 "implicitly.\n"
@@ -870,7 +870,7 @@ msgstr ""
 "  --no-print-directory        Kumoa -w, vaikka se olisi käytössä "
 "oletuksena.\n"
 
-#: main.c:351
+#: main.c:352
 msgid ""
 "  -W FILE, --what-if=FILE, --new-file=FILE, --assume-new=FILE\n"
 "                              Consider FILE to be infinitely new.\n"
@@ -879,7 +879,7 @@ msgstr ""
 "new=TIEDOSTO\n"
 "                              Käsittele TIEDOSTO aina uutena.\n"
 
-#: main.c:354
+#: main.c:355
 msgid ""
 "  --warn-undefined-variables  Warn when an undefined variable is "
 "referenced.\n"
@@ -887,21 +887,21 @@ msgstr ""
 "  --warn-undefined-variables  Varoita viittauksista määrittelemättömiin\n"
 "                                muuttujiin.\n"
 
-#: main.c:548
+#: main.c:549
 msgid "empty string invalid as file name"
 msgstr "tyhjä merkkijono ei kelpaa tiedostonimeksi"
 
-#: main.c:629
+#: main.c:630
 #, c-format
 msgid "unknown debug level specification `%s'"
 msgstr "tuntematon vianetsintätason määritys \"%s\""
 
-#: main.c:669
+#: main.c:670
 #, fuzzy, c-format
 msgid "%s: Interrupt/Exception caught (code = 0x%lx, addr = 0x%lx)\n"
 msgstr "%s: Keskeytys/poikkeus siepattu (koodi = 0x%x, osoite = 0x%x)\n"
 
-#: main.c:676
+#: main.c:677
 #, fuzzy, c-format
 msgid ""
 "\n"
@@ -916,159 +916,159 @@ msgstr ""
 "Poikkeusliput = %x\n"
 "Poikkeusosoite = %x\n"
 
-#: main.c:684
+#: main.c:685
 #, fuzzy, c-format
 msgid "Access violation: write operation at address %lx\n"
 msgstr "Suojausvirhe: kirjoitusoperaatio osoitteeseen %x\n"
 
-#: main.c:685
+#: main.c:686
 #, fuzzy, c-format
 msgid "Access violation: read operation at address %lx\n"
 msgstr "Suojausvirhe: lukuoperaatio osoitteeseen %x\n"
 
-#: main.c:761 main.c:772
+#: main.c:762 main.c:773
 #, c-format
 msgid "find_and_set_shell setting default_shell = %s\n"
 msgstr "find_and_set_shell asettaa default_shell = %s\n"
 
-#: main.c:813
+#: main.c:814
 #, c-format
 msgid "find_and_set_shell path search set default_shell = %s\n"
 msgstr "find_and_set_shell: polkuhaku asetti default_shell = %s\n"
 
-#: main.c:1235
+#: main.c:1236
 #, c-format
 msgid "%s is suspending for 30 seconds..."
 msgstr "%s keskeytyy 30 sekunniksi..."
 
-#: main.c:1237
+#: main.c:1238
 #, c-format
 msgid "done sleep(30). Continuing.\n"
 msgstr "sleep(30) valmis. Jatketaan.\n"
 
-#: main.c:1465
+#: main.c:1466
 msgid "Makefile from standard input specified twice."
 msgstr "Makefile-tiedosto vakiosyötteestä määritelty kahdesti."
 
-#: main.c:1504 vmsjobs.c:486
+#: main.c:1505 vmsjobs.c:486
 msgid "fopen (temporary file)"
 msgstr "fopen (väliaikaistiedosto)"
 
-#: main.c:1510
+#: main.c:1511
 msgid "fwrite (temporary file)"
 msgstr "fwrite (väliaikaistiedosto)"
 
-#: main.c:1639
+#: main.c:1640
 msgid "Parallel jobs (-j) are not supported on this platform."
 msgstr "Rinnakkaiset työt (-j) eivät ole tuettuja tällä alustalla."
 
-#: main.c:1640
+#: main.c:1641
 msgid "Resetting to single job (-j1) mode."
 msgstr "Palataan yhden työn (-j1) tilaan."
 
-#: main.c:1655
+#: main.c:1656
 msgid "internal error: multiple --jobserver-fds options"
 msgstr "sisäinen virhe: useitan --jobserver-fds -valitsimia"
 
-#: main.c:1663
+#: main.c:1664
 #, c-format
 msgid "internal error: invalid --jobserver-fds string `%s'"
 msgstr "sisäinen virhe: virheellinen --jobserver-fds -merkkijono \"%s\""
 
-#: main.c:1673
+#: main.c:1674
 msgid "warning: -jN forced in submake: disabling jobserver mode."
 msgstr "varoitus: -jN pakotettu ali-make:ssa: poistetaan työpalvelin käytöstä."
 
-#: main.c:1683
+#: main.c:1684
 msgid "dup jobserver"
 msgstr "kaksinkertainen työpalvelin"
 
-#: main.c:1686
+#: main.c:1687
 msgid ""
 "warning: jobserver unavailable: using -j1.  Add `+' to parent make rule."
 msgstr ""
 "varoitus: työpalvelin ei käytettävissä: käytetään -j1. Lisää \"+\" ylemmän "
 "tason make-sääntöön."
 
-#: main.c:1709
+#: main.c:1710
 msgid "creating jobs pipe"
 msgstr "luodaan työputki"
 
-#: main.c:1724
+#: main.c:1725
 msgid "init jobserver pipe"
 msgstr "alustetaan työpalvelimen putki"
 
-#: main.c:1743
+#: main.c:1744
 msgid "Symbolic links not supported: disabling -L."
 msgstr "Ei tukea symbolisille linkeille: poistetaan -L käytöstä."
 
-#: main.c:1819
+#: main.c:1820
 msgid "Updating makefiles....\n"
 msgstr "Päivitetään makefile-tiedostoja....\n"
 
-#: main.c:1844
+#: main.c:1845
 #, c-format
 msgid "Makefile `%s' might loop; not remaking it.\n"
 msgstr ""
 "Ei uudelleentuoteta makefile-tiedostoa \"%s\" - vältetään mahdollinen "
 "ikuinen silmukka.\n"
 
-#: main.c:1923
+#: main.c:1924
 #, c-format
 msgid "Failed to remake makefile `%s'."
 msgstr "Makefile-tiedoston \"%s\" uudelleentuottaminen epäonnistui."
 
-#: main.c:1940
+#: main.c:1941
 #, c-format
 msgid "Included makefile `%s' was not found."
 msgstr "Sisällytettyä makefile-tiedostoa \"%s\" ei löytynyt."
 
-#: main.c:1945
+#: main.c:1946
 #, c-format
 msgid "Makefile `%s' was not found"
 msgstr "Makefile-tiedostoa \"%s\" ei löytynyt"
 
-#: main.c:2013
+#: main.c:2016
 msgid "Couldn't change back to original directory."
 msgstr "Ei voitu siirtyä takaisin alkuperäiseen hakemistoon."
 
-#: main.c:2021
+#: main.c:2024
 #, c-format
 msgid "Re-executing[%u]:"
 msgstr "Uudelleenkäynnistetään[%u]:"
 
-#: main.c:2137
+#: main.c:2140
 msgid "unlink (temporary file): "
 msgstr "unlink (väliaikaistiedosto): "
 
-#: main.c:2166
+#: main.c:2169
 msgid ".DEFAULT_GOAL contains more than one target"
 msgstr ".DEFAULT_GOAL sisältää yli yhden kohteen"
 
-#: main.c:2191
+#: main.c:2189
 msgid "No targets specified and no makefile found"
 msgstr "Kohteita ei ole annettu, eikä makefileä löytynyt"
 
-#: main.c:2193
+#: main.c:2191
 msgid "No targets"
 msgstr "Ei kohteita"
 
-#: main.c:2198
+#: main.c:2196
 msgid "Updating goal targets....\n"
 msgstr ""
 
-#: main.c:2224
+#: main.c:2222
 msgid "warning:  Clock skew detected.  Your build may be incomplete."
 msgstr ""
 "varoitus: Havaittu väärä kellonaika. Käännösversio saattaa olla "
 "epätäydellinen."
 
-#: main.c:2388
+#: main.c:2383
 #, c-format
 msgid "Usage: %s [options] [target] ...\n"
 msgstr "Käyttö: %s [valitsimet] [kohde] ...\n"
 
-#: main.c:2394
+#: main.c:2389
 #, c-format
 msgid ""
 "\n"
@@ -1077,7 +1077,7 @@ msgstr ""
 "\n"
 "Tämä ohjelma on käännetty järjestelmälle %s.\n"
 
-#: main.c:2396
+#: main.c:2391
 #, c-format
 msgid ""
 "\n"
@@ -1086,23 +1086,23 @@ msgstr ""
 "\n"
 "Tämä ohjelma on käännetty järjestelmälle %s (%s).\n"
 
-#: main.c:2399
+#: main.c:2394
 #, c-format
 msgid "Report bugs to <bug-make@gnu.org>\n"
 msgstr ""
 "Ilmoita ohjelmistovioista (englanniksi) osoitteeseen <bug-make@gnu.org>.\n"
 
-#: main.c:2471
+#: main.c:2466
 #, c-format
 msgid "the `-%c' option requires a non-empty string argument"
 msgstr "valitsin \"-%c\" vaatii ei-tyhjän merkkijonoargumentin"
 
-#: main.c:2523
+#: main.c:2518
 #, c-format
 msgid "the `-%c' option requires a positive integral argument"
 msgstr "valitsin \"-%c\" vaatii positiivisen kokonaislukuargumentin"
 
-#: main.c:2947
+#: main.c:2942
 #, c-format
 msgid ""
 "%sThis is free software; see the source for copying conditions.\n"
@@ -1113,7 +1113,7 @@ msgstr ""
 "%sTakuuta EI ole, ei edes KAUPALLISESTI HYVÄKSYTTÄVÄSTÄ LAADUSTA tai\n"
 "%sSOPIVUUDESTA TIETTYYN TARKOITUKSEEN.\n"
 
-#: main.c:2953
+#: main.c:2948
 #, c-format
 msgid ""
 "\n"
@@ -1122,7 +1122,7 @@ msgstr ""
 "\n"
 "%sTämä ohjelma on käännetty järjestelmälle %s.\n"
 
-#: main.c:2955
+#: main.c:2950
 #, c-format
 msgid ""
 "\n"
@@ -1131,7 +1131,7 @@ msgstr ""
 "\n"
 "%sTämä ohjelma on käännetty järjestelmälle %s (%s).\n"
 
-#: main.c:2973
+#: main.c:2968
 #, c-format
 msgid ""
 "\n"
@@ -1140,7 +1140,7 @@ msgstr ""
 "\n"
 "# Make-tietokanta, tulostettu %s"
 
-#: main.c:2983
+#: main.c:2978
 #, c-format
 msgid ""
 "\n"
@@ -1149,42 +1149,42 @@ msgstr ""
 "\n"
 "# Make-tietokanta saatu valmiiksi %s\n"
 
-#: main.c:3097
+#: main.c:3101
 #, c-format
 msgid "%s: Entering an unknown directory\n"
 msgstr "%s: Siirrytään tuntemattomaan hakemistoon\n"
 
-#: main.c:3099
+#: main.c:3103
 #, c-format
 msgid "%s: Leaving an unknown directory\n"
 msgstr "%s: Poistutaan tuntemattomasta hakemistosta\n"
 
-#: main.c:3102
+#: main.c:3106
 #, c-format
 msgid "%s: Entering directory `%s'\n"
 msgstr "%s: Siirrytään hakemistoon \"%s\"\n"
 
-#: main.c:3105
+#: main.c:3109
 #, c-format
 msgid "%s: Leaving directory `%s'\n"
 msgstr "%s: Poistutaan hakemistosta \"%s\"\n"
 
-#: main.c:3110
+#: main.c:3114
 #, c-format
 msgid "%s[%u]: Entering an unknown directory\n"
 msgstr "%s[%u]: Siirrytään tuntemattomaan hakemistoon\n"
 
-#: main.c:3113
+#: main.c:3117
 #, c-format
 msgid "%s[%u]: Leaving an unknown directory\n"
 msgstr "%s[%u]: Poistutaan tuntemattomasta hakemistosta\n"
 
-#: main.c:3117
+#: main.c:3121
 #, c-format
 msgid "%s[%u]: Entering directory `%s'\n"
 msgstr "%s[%u]: Siirrytään hakemistoon \"%s\"\n"
 
-#: main.c:3120
+#: main.c:3124
 #, c-format
 msgid "%s[%u]: Leaving directory `%s'\n"
 msgstr "%s[%u]: Poistutaan hakemistosta \"%s\"\n"
@@ -1208,37 +1208,37 @@ msgstr "%s%s: %s"
 msgid "%s: %s"
 msgstr "%s: %s"
 
-#: misc.c:344 misc.c:359 misc.c:376 read.c:3138
+#: misc.c:344 misc.c:359 misc.c:376 read.c:3127
 msgid "virtual memory exhausted"
 msgstr "virtuaalimuisti lopussa"
 
-#: misc.c:618
+#: misc.c:646
 #, c-format
 msgid "%s: user %lu (real %lu), group %lu (real %lu)\n"
 msgstr "%s: käyttäjä %lu (todellinen %lu), ryhmä %lu (todellinen %lu)\n"
 
-#: misc.c:639
+#: misc.c:667
 msgid "Initialized access"
 msgstr "Alkuperäiset käyttöoikeudet"
 
-#: misc.c:718
+#: misc.c:746
 msgid "User access"
 msgstr "Käyttäjän käyttöoikeudet"
 
-#: misc.c:766
+#: misc.c:794
 msgid "Make access"
 msgstr "Make-prosessin käyttöoikeudet"
 
-#: misc.c:800
+#: misc.c:828
 msgid "Child access"
 msgstr "Lapsiprosessin käyttöoikeudet"
 
-#: misc.c:864
+#: misc.c:892
 #, c-format
 msgid "write error: %s"
 msgstr "kirjoitusvirhe: %s"
 
-#: misc.c:866
+#: misc.c:894
 msgid "write error"
 msgstr "kirjoitusvirhe"
 
@@ -1246,150 +1246,150 @@ msgstr "kirjoitusvirhe"
 msgid "Reading makefiles...\n"
 msgstr "Luetaan makefile-tiedostoja...\n"
 
-#: read.c:319
+#: read.c:315
 #, c-format
 msgid "Reading makefile `%s'"
 msgstr "Luetaan makefile-tiedosto \"%s\""
 
-#: read.c:321
+#: read.c:317
 #, c-format
 msgid " (no default goal)"
 msgstr ""
 
-#: read.c:323
+#: read.c:319
 #, c-format
 msgid " (search path)"
 msgstr " (hakupolku)"
 
-#: read.c:325
+#: read.c:321
 #, c-format
 msgid " (don't care)"
 msgstr " (ei välitetä)"
 
-#: read.c:327
+#: read.c:323
 #, c-format
 msgid " (no ~ expansion)"
 msgstr " (ei ~-laajennusta)"
 
-#: read.c:631
+#: read.c:623
 msgid "invalid syntax in conditional"
 msgstr "virheellinen syntaksi ehtolauseessa"
 
-#: read.c:641
+#: read.c:633
 msgid "extraneous `endef'"
 msgstr "ylimääräinen \"endef\""
 
-#: read.c:653 read.c:681 variable.c:1314
+#: read.c:645 read.c:673 variable.c:1316
 msgid "empty variable name"
 msgstr "tyhjä muuttujan nimi"
 
-#: read.c:670
+#: read.c:662
 msgid "empty `override' directive"
 msgstr "tyhjä \"override\"-toimintaohje"
 
-#: read.c:695
+#: read.c:687
 msgid "invalid `override' directive"
 msgstr "virheellinen \"override\"-toimintaohje"
 
-#: read.c:862
+#: read.c:854
 msgid "commands commence before first target"
 msgstr "komennot alkavat ennen ensimmäistä kohdetta"
 
-#: read.c:913
+#: read.c:905
 msgid "missing rule before commands"
 msgstr "puuttuva sääntö ennen komentoja"
 
-#: read.c:1000
+#: read.c:992
 #, c-format
 msgid "missing separator%s"
 msgstr "puuttuva erotin%s"
 
-#: read.c:1002
+#: read.c:994
 msgid " (did you mean TAB instead of 8 spaces?)"
 msgstr " (ehkä tarkoitit sarkainta eikä kahdeksaa välilyöntiä?)"
 
-#: read.c:1160
+#: read.c:1152
 msgid "missing target pattern"
 msgstr "puuttuva kohdehahmo"
 
-#: read.c:1162
+#: read.c:1154
 msgid "multiple target patterns"
 msgstr "useita kohdehahmoja"
 
-#: read.c:1166
+#: read.c:1158
 #, c-format
 msgid "target pattern contains no `%%'"
 msgstr "kohdehahmo ei sisällä %%-merkkiä"
 
-#: read.c:1300
+#: read.c:1286
 msgid "missing `endif'"
 msgstr "puuttuva \"endif\""
 
-#: read.c:1391
+#: read.c:1377
 msgid "Extraneous text after `endef' directive"
 msgstr "Ylimääräistä tekstiä \"endef\"-toimintaohjeen jälkeen"
 
-#: read.c:1425
+#: read.c:1411
 msgid "missing `endef', unterminated `define'"
 msgstr "puuttuva \"endef\", päättämätön \"define\""
 
-#: read.c:1468
+#: read.c:1454
 #, c-format
 msgid "Extraneous text after `%s' directive"
 msgstr "Ylimääräistä tekstiä \"%s\"-toimintaohjeen jälkeen"
 
-#: read.c:1477 read.c:1491
+#: read.c:1463 read.c:1477
 #, c-format
 msgid "extraneous `%s'"
 msgstr "ylimääräinen \"%s\""
 
-#: read.c:1496
+#: read.c:1482
 msgid "only one `else' per conditional"
 msgstr "vain yksi \"else\" ehtolausetta kohden"
 
-#: read.c:1838
+#: read.c:1824
 msgid "Malformed target-specific variable definition"
 msgstr "Väärin muotoiltu kohdekohtainen muuttujamäärittely"
 
 # skripti?
-#: read.c:1900
+#: read.c:1886
 msgid "prerequisites cannot be defined in command scripts"
 msgstr "ennakkoehtoja ei voi määritellä komentoskripteissä"
 
-#: read.c:1935
+#: read.c:1921
 msgid "mixed implicit and static pattern rules"
 msgstr ""
 
-#: read.c:1938
+#: read.c:1924
 msgid "mixed implicit and normal rules"
 msgstr ""
 
-#: read.c:1968
+#: read.c:1954
 #, c-format
 msgid "target `%s' doesn't match the target pattern"
 msgstr "kohde \"%s\" ei täsmää kohdehahmon kanssa"
 
-#: read.c:1987 read.c:2088
+#: read.c:1973 read.c:2074
 #, c-format
 msgid "target file `%s' has both : and :: entries"
 msgstr "kohdetiedostolla \"%s\" on sekä :- että ::-merkinnät"
 
-#: read.c:1993
+#: read.c:1979
 #, c-format
 msgid "target `%s' given more than once in the same rule."
 msgstr "kohde \"%s\" annettu yli yhden kerran samassa säännössä."
 
-#: read.c:2002
+#: read.c:1988
 #, c-format
 msgid "warning: overriding commands for target `%s'"
 msgstr "varoitus: syrjäytetään kohteen \"%s\" komennot"
 
-#: read.c:2005
+#: read.c:1991
 #, c-format
 msgid "warning: ignoring old commands for target `%s'"
 msgstr "varoitus: ei huomioida vanhoja komentoja kohteelle \"%s\""
 
-#: read.c:2586
+#: read.c:2575
 msgid "warning: NUL character seen; rest of line ignored"
 msgstr "varoitus: havaittu NUL-merkki, rivin loppuosaa ei huomioida"
 
@@ -1403,54 +1403,54 @@ msgstr "Kohteelle \"%s\" ei tarvitse tehdä mitään."
 msgid "`%s' is up to date."
 msgstr "\"%s\" on ajan tasalla."
 
-#: remake.c:296
+#: remake.c:297
 #, c-format
 msgid "Pruning file `%s'.\n"
 msgstr "Karsitaan tiedosto \"%s\".\n"
 
-#: remake.c:345
+#: remake.c:349
 #, c-format
 msgid "%sNo rule to make target `%s'%s"
 msgstr "%sKohteen \"%s\" tuottamiseen ei ole sääntöä%s"
 
-#: remake.c:347
+#: remake.c:351
 #, c-format
 msgid "%sNo rule to make target `%s', needed by `%s'%s"
 msgstr ""
 "%1$s\"%3$s\"-kohteen tarvitseman kohteen \"%2$s\" tuottamiseen ei ole sääntöä"
 "%4$s"
 
-#: remake.c:374
+#: remake.c:378
 #, c-format
 msgid "Considering target file `%s'.\n"
 msgstr "Tarkastellaan tiedostoa \"%s\".\n"
 
-#: remake.c:381
+#: remake.c:385
 #, c-format
 msgid "Recently tried and failed to update file `%s'.\n"
 msgstr "Tiedoston \"%s\" päivitysyritys epäonnistui äskettäin.\n"
 
-#: remake.c:396
+#: remake.c:400
 #, c-format
 msgid "File `%s' was considered already.\n"
 msgstr "Tiedostoa \"%s\" on jo tarkasteltu.\n"
 
-#: remake.c:406
+#: remake.c:410
 #, c-format
 msgid "Still updating file `%s'.\n"
 msgstr "Päivitetään edelleen tiedostoa \"%s\".\n"
 
-#: remake.c:409
+#: remake.c:413
 #, c-format
 msgid "Finished updating file `%s'.\n"
 msgstr "Tiedosto \"%s\" päivitetty.\n"
 
-#: remake.c:430
+#: remake.c:434
 #, c-format
 msgid "File `%s' does not exist.\n"
 msgstr "Tiedosto \"%s\" ei ole olemassa.\n"
 
-#: remake.c:437
+#: remake.c:441
 #, c-format
 msgid ""
 "*** Warning: .LOW_RESOLUTION_TIME file `%s' has a high resolution time stamp"
@@ -1458,132 +1458,132 @@ msgstr ""
 "*** Varoitus: .LOW_RESOLUTION_TIME-tiedostolla \"%s\" on "
 "korkearesoluutioinen aikaleima"
 
-#: remake.c:450 remake.c:956
+#: remake.c:454 remake.c:962
 #, c-format
 msgid "Found an implicit rule for `%s'.\n"
 msgstr "Kohteelle \"%s\" löytyi oletussääntö.\n"
 
-#: remake.c:452 remake.c:958
+#: remake.c:456 remake.c:964
 #, c-format
 msgid "No implicit rule found for `%s'.\n"
 msgstr "Kohteelle \"%s\" ei löytynyt oletussääntöä.\n"
 
-#: remake.c:458 remake.c:964
+#: remake.c:462 remake.c:970
 #, c-format
 msgid "Using default commands for `%s'.\n"
 msgstr "Käytetään oletuskomentoja kohteelle \"%s\".\n"
 
-#: remake.c:480 remake.c:990
+#: remake.c:484 remake.c:996
 #, c-format
 msgid "Circular %s <- %s dependency dropped."
 msgstr "Kehäriippuvuus %s <- %s hylätty."
 
-#: remake.c:595
+#: remake.c:601
 #, c-format
 msgid "Finished prerequisites of target file `%s'.\n"
 msgstr "Kohdetiedoston \"%s\" ennakkoehdot täytetty.\n"
 
-#: remake.c:601
+#: remake.c:607
 #, c-format
 msgid "The prerequisites of `%s' are being made.\n"
 msgstr "Kohteen \"%s\" ennakkoehtoja täytetään.\n"
 
-#: remake.c:614
+#: remake.c:620
 #, c-format
 msgid "Giving up on target file `%s'.\n"
 msgstr "Luovutaan kohdetiedostosta \"%s\".\n"
 
-#: remake.c:619
+#: remake.c:625
 #, c-format
 msgid "Target `%s' not remade because of errors."
 msgstr "Kohdetta \"%s\" ei tuotettu uudelleen virheiden vuoksi."
 
-#: remake.c:671
+#: remake.c:677
 #, c-format
 msgid "Prerequisite `%s' is order-only for target `%s'.\n"
 msgstr ""
 
-#: remake.c:676
+#: remake.c:682
 #, c-format
 msgid "Prerequisite `%s' of target `%s' does not exist.\n"
 msgstr "Kohteen \"%2$s\" ennakkoehto \"%1$s\" ei ole olemassa.\n"
 
-#: remake.c:681
+#: remake.c:687
 #, c-format
 msgid "Prerequisite `%s' is newer than target `%s'.\n"
 msgstr "Ennakkoehto \"%s\" on uudempi kuin kohde \"%s\".\n"
 
-#: remake.c:684
+#: remake.c:690
 #, c-format
 msgid "Prerequisite `%s' is older than target `%s'.\n"
 msgstr "Ennakkoehto \"%s\" on vanhempi kuin kohde \"%s\".\n"
 
-#: remake.c:702
+#: remake.c:708
 #, c-format
 msgid "Target `%s' is double-colon and has no prerequisites.\n"
 msgstr ""
 
-#: remake.c:709
+#: remake.c:715
 #, c-format
 msgid "No commands for `%s' and no prerequisites actually changed.\n"
 msgstr ""
 
-#: remake.c:714
+#: remake.c:720
 #, c-format
 msgid "Making `%s' due to always-make flag.\n"
 msgstr "Tuotetaan \"%s\", koska --always-make -valitsin on käytössä.\n"
 
-#: remake.c:722
+#: remake.c:728
 #, c-format
 msgid "No need to remake target `%s'"
 msgstr "Ei tarvetta uudelleentuottaa kohdetta \"%s\""
 
-#: remake.c:724
+#: remake.c:730
 #, c-format
 msgid "; using VPATH name `%s'"
 msgstr "; käytetään VPATH-nimeä \"%s\""
 
-#: remake.c:744
+#: remake.c:750
 #, c-format
 msgid "Must remake target `%s'.\n"
 msgstr "Kohde \"%s\" on tuotettava uudelleen.\n"
 
-#: remake.c:750
+#: remake.c:756
 #, c-format
 msgid "  Ignoring VPATH name `%s'.\n"
 msgstr "  Ei huomioida VPATH-nimeä \"%s\".\n"
 
-#: remake.c:759
+#: remake.c:765
 #, c-format
 msgid "Commands of `%s' are being run.\n"
 msgstr ""
 
-#: remake.c:766
+#: remake.c:772
 #, c-format
 msgid "Failed to remake target file `%s'.\n"
 msgstr "Kohdetiedoston \"%s\" uudelleentuottaminen epäonnistui.\n"
 
-#: remake.c:769
+#: remake.c:775
 #, c-format
 msgid "Successfully remade target file `%s'.\n"
 msgstr "Kohdetiedosto \"%s\" uudelleentuotettiin onnistuneesti.\n"
 
-#: remake.c:772
+#: remake.c:778
 #, c-format
 msgid "Target file `%s' needs remade under -q.\n"
 msgstr ""
 
-#: remake.c:1300
+#: remake.c:1306
 #, c-format
 msgid "Warning: File `%s' has modification time in the future"
 msgstr "Varoitus: Tiedoston \"%s\" muutosaika on tulevaisuudessa"
 
-#: remake.c:1307
+#: remake.c:1313
 #, c-format
 msgid "Warning: File `%s' has modification time %.2g s in the future"
 msgstr "Varoitus: Tiedoston \"%s\" muutosaika on %.2g sekuntia tulevaisuudessa"
 
-#: remake.c:1505
+#: remake.c:1511
 #, c-format
 msgid ".LIBPATTERNS element `%s' is not a pattern"
 msgstr ".LIBPATTERNS-elementti \"%s\" ei ole hahmo"
@@ -1593,7 +1593,7 @@ msgstr ".LIBPATTERNS-elementti \"%s\" ei ole hahmo"
 msgid "Customs won't export: %s\n"
 msgstr ""
 
-#: rule.c:551
+#: rule.c:548
 msgid ""
 "\n"
 "# Implicit Rules"
@@ -1601,7 +1601,7 @@ msgstr ""
 "\n"
 "# Oletussäännöt"
 
-#: rule.c:566
+#: rule.c:563
 msgid ""
 "\n"
 "# No implicit rules."
@@ -1609,7 +1609,7 @@ msgstr ""
 "\n"
 "# Ei oletussääntöjä."
 
-#: rule.c:569
+#: rule.c:566
 #, c-format
 msgid ""
 "\n"
@@ -1618,11 +1618,11 @@ msgstr ""
 "\n"
 "# %u oletussääntöä, %u"
 
-#: rule.c:578
+#: rule.c:575
 msgid " terminal."
 msgstr ""
 
-#: rule.c:586
+#: rule.c:583
 #, c-format
 msgid "BUG: num_pattern_rules wrong!  %u != %u"
 msgstr "VIKA: num_pattern_rules väärä! %u != %u"
@@ -1805,44 +1805,44 @@ msgstr ""
 msgid "%s strcache free: total = %d / max = %d / min = %d / avg = %d\n"
 msgstr ""
 
-#: variable.c:1367
+#: variable.c:1369
 msgid "default"
 msgstr "oletus"
 
-#: variable.c:1370
+#: variable.c:1372
 msgid "environment"
 msgstr "ympäristö"
 
-#: variable.c:1373
+#: variable.c:1375
 msgid "makefile"
 msgstr "makefile"
 
-#: variable.c:1376
+#: variable.c:1378
 msgid "environment under -e"
 msgstr "-e:n alainen ympäristö"
 
-#: variable.c:1379
+#: variable.c:1381
 msgid "command line"
 msgstr "komentorivi"
 
-#: variable.c:1382
+#: variable.c:1384
 msgid "`override' directive"
 msgstr "\"override\"-toimintaohje"
 
-#: variable.c:1385
+#: variable.c:1387
 msgid "automatic"
 msgstr "automaattinen"
 
-#: variable.c:1394
+#: variable.c:1396
 #, c-format
 msgid " (from `%s', line %lu)"
 msgstr " (tiedostosta \"%s\", rivi %lu)"
 
-#: variable.c:1436
+#: variable.c:1438
 msgid "# variable set hash-table stats:\n"
 msgstr "# muuttujajoukon hajautustaulutilastot:\n"
 
-#: variable.c:1447
+#: variable.c:1449
 msgid ""
 "\n"
 "# Variables\n"
@@ -1850,7 +1850,7 @@ msgstr ""
 "\n"
 "# Muuttujat\n"
 
-#: variable.c:1451
+#: variable.c:1453
 msgid ""
 "\n"
 "# Pattern-specific Variable Values"
@@ -1858,7 +1858,7 @@ msgstr ""
 "\n"
 "# Hahmokohtaisia muuttujien arvoja"
 
-#: variable.c:1465
+#: variable.c:1467
 msgid ""
 "\n"
 "# No pattern-specific variable values."
@@ -1866,7 +1866,7 @@ msgstr ""
 "\n"
 "# Ei hahmokohtaisia muuttuja-arvoja."
 
-#: variable.c:1467
+#: variable.c:1469
 #, c-format
 msgid ""
 "\n"

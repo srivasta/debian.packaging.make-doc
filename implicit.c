@@ -80,19 +80,21 @@ static void
 free_idep_chain (struct idep *p)
 {
   struct idep *n;
-  struct file *f;
 
   for (; p != 0; p = n)
     {
       n = p->next;
 
       if (p->name)
-        free (p->name);
+        {
+          struct file *f = p->intermediate_file;
 
-      f = p->intermediate_file;
-      if (f != 0
-          && (f->stem < f->name || f->stem > f->name + strlen (f->name)))
-        free (f->stem);
+          if (f != 0
+              && (f->stem < f->name || f->stem > f->name + strlen (f->name)))
+            free (f->stem);
+
+          free (p->name);
+        }
 
       free (p);
     }
@@ -352,7 +354,7 @@ pattern_search (struct file *file, int archive,
               check_lastslash = strchr (target, '/') == 0;
 #ifdef HAVE_DOS_PATHS
               /* Didn't find it yet: check for DOS-type directories.  */
-              if (!check_lastslash)
+              if (check_lastslash)
                 {
                   char *b = strrchr (target, '\\');
                   check_lastslash = !(b ? b > lastslash
@@ -800,8 +802,7 @@ pattern_search (struct file *file, int archive,
       while (dep != 0)
         {
           struct dep *next = dep->next;
-          free (dep->name);
-          free ((char *)dep);
+          free_dep (dep);
           dep = next;
         }
       file->deps = 0;
@@ -836,7 +837,7 @@ pattern_search (struct file *file, int archive,
 
 	  f->deps = imf->deps;
 	  f->cmds = imf->cmds;
-	  f->stem = xstrdup (imf->stem);
+	  f->stem = imf->stem;
           f->also_make = imf->also_make;
           f->is_target = 1;
 
@@ -860,15 +861,12 @@ pattern_search (struct file *file, int archive,
 	    }
 	}
 
-      dep = (struct dep *) xmalloc (sizeof (struct dep));
+      dep = alloc_dep ();
       dep->ignore_mtime = d->ignore_mtime;
-      dep->staticpattern = 0;
-      dep->need_2nd_expansion = 0;
       s = d->name; /* Hijacking the name. */
       d->name = 0;
       if (recursions == 0)
 	{
-	  dep->name = 0;
 	  dep->file = lookup_file (s);
 	  if (dep->file == 0)
 	    /* enter_file consumes S's storage.  */
@@ -881,9 +879,8 @@ pattern_search (struct file *file, int archive,
       else
 	{
 	  dep->name = s;
-	  dep->file = 0;
-	  dep->changed = 0;
 	}
+
       if (d->intermediate_file == 0 && tryrules[foundrule]->terminal)
 	{
 	  /* If the file actually existed (was not an intermediate file),
@@ -941,11 +938,9 @@ pattern_search (struct file *file, int archive,
       if (i != matches[foundrule])
 	{
 	  struct file *f;
-	  struct dep *new = (struct dep *) xmalloc (sizeof (struct dep));
+	  struct dep *new = alloc_dep ();
+
 	  /* GKM FIMXE: handle '|' here too */
-	  new->ignore_mtime = 0;
-          new->staticpattern = 0;
-	  new->need_2nd_expansion = 0;
 	  new->name = p = (char *) xmalloc (rule->lens[i] + fullstemlen + 1);
 	  bcopy (rule->targets[i], p,
 		 rule->suffixes[i] - rule->targets[i] - 1);

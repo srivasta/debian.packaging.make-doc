@@ -3,11 +3,11 @@
 % Load plain if necessary, i.e., if running under initex.
 \expandafter\ifx\csname fmtname\endcsname\relax\input plain\fi
 %
-\def\texinfoversion{2006-02-13.16}
+\def\texinfoversion{2005-07-05.19}
 %
 % Copyright (C) 1985, 1986, 1988, 1990, 1991, 1992, 1993, 1994, 1995,
-% 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006 Free
-% Software Foundation, Inc.
+% 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005 Free Software
+% Foundation, Inc.
 %
 % This texinfo.tex file is free software; you can redistribute it and/or
 % modify it under the terms of the GNU General Public License as
@@ -153,9 +153,27 @@
 \ifx\putwordDefopt\undefined    \gdef\putwordDefopt{User Option}\fi
 \ifx\putwordDeffunc\undefined   \gdef\putwordDeffunc{Function}\fi
 
-% Since the category of space is not known, we have to be careful.
+% In some macros, we cannot use the `\? notation---the left quote is
+% in some cases the escape char.
+\chardef\backChar  = `\\
+\chardef\colonChar = `\:
+\chardef\commaChar = `\,
+\chardef\dotChar   = `\.
+\chardef\exclamChar= `\!
+\chardef\plusChar  = `\+
+\chardef\questChar = `\?
+\chardef\semiChar  = `\;
+\chardef\underChar = `\_
+
+\chardef\spaceChar = `\ %
 \chardef\spacecat = 10
-\def\spaceisspace{\catcode`\ =\spacecat}
+\def\spaceisspace{\catcode\spaceChar=\spacecat}
+
+{% for help with debugging.
+ % example usage: \expandafter\show\activebackslash
+ \catcode`\! = 0 \catcode`\\ = \active
+ !global!def!activebackslash{\}
+}
 
 % Ignore a token.
 %
@@ -293,13 +311,6 @@
     % before the \shipout runs.
     %
     \indexdummies         % don't expand commands in the output.
-    \normalturnoffactive  % \ in index entries must not stay \, e.g., if
-               % the page break happens to be in the middle of an example.
-               % We don't want .vr (or whatever) entries like this:
-               % \entry{{\tt \indexbackslash }acronym}{32}{\code {\acronym}}
-               % "\acronym" won't work when it's read back in;
-               % it needs to be 
-               % {\code {{\tt \backslashcurfont }acronym}
     \shipout\vbox{%
       % Do this early so pdf references go to the beginning of the page.
       \ifpdfmakepagedest \pdfdest name{\the\pageno} xyz\fi
@@ -1040,9 +1051,9 @@ where each line of input produces a line of output.}
 % _ active, and distinguish by seeing if the current family is \slfam,
 % which is what @var uses.
 {
-  \catcode`\_ = \active
+  \catcode\underChar = \active
   \gdef\mathunderscore{%
-    \catcode`\_=\active
+    \catcode\underChar=\active
     \def_{\ifnum\fam=\slfam \_\else\sb\fi}%
   }
 }
@@ -1186,20 +1197,21 @@ where each line of input produces a line of output.}
   \fi
 \fi
 
-% PDF uses PostScript string constants for the names of xref targets,
+% PDF uses PostScript string constants for the names of xref targets, to
 % for display in the outlines, and in other places.  Thus, we have to
 % double any backslashes.  Otherwise, a name like "\node" will be
 % interpreted as a newline (\n), followed by o, d, e.  Not good.
 % http://www.ntg.nl/pipermail/ntg-pdftex/2004-July/000654.html
 % (and related messages, the final outcome is that it is up to the TeX
 % user to double the backslashes and otherwise make the string valid, so
-% that's what we do).
+% that's we do).
 
 % double active backslashes.
 % 
 {\catcode`\@=0 \catcode`\\=\active
+ @gdef@activebackslash{@catcode`@\=@active @otherbackslash}
  @gdef@activebackslashdouble{%
-   @catcode`@\=@active
+   @catcode@backChar=@active
    @let\=@doublebackslash}
 }
 
@@ -1231,8 +1243,13 @@ where each line of input produces a line of output.}
 \def\backslashparens#1{%
   \xdef#1{#1}% redefine it as its expansion; the definition is simply
              % \lastnode when called from \setref -> \pdfmkdest.
-  \HyPsdSubst{(}{\realbackslash(}{#1}%
-  \HyPsdSubst{)}{\realbackslash)}{#1}%
+  \HyPsdSubst{(}{\backslashlparen}{#1}%
+  \HyPsdSubst{)}{\backslashrparen}{#1}%
+}
+
+{\catcode\exclamChar = 0 \catcode\backChar = \other
+ !gdef!backslashlparen{\(}%
+ !gdef!backslashrparen{\)}%
 }
 
 \ifpdf
@@ -1373,7 +1390,7 @@ where each line of input produces a line of output.}
       % now, I guess we'll just let the pdf reader have its way.
       \indexnofonts
       \setupdatafile
-      \catcode`\\=\active \otherbackslash
+      \activebackslash
       \input \jobname.toc
     \endgroup
   }
@@ -1392,17 +1409,9 @@ where each line of input produces a line of output.}
   \else
     \let \startlink \pdfstartlink
   \fi
-  % make a live url in pdf output.
   \def\pdfurl#1{%
     \begingroup
-      % it seems we really need yet another set of dummies; have not
-      % tried to figure out what each command should do in the context
-      % of @url.  for now, just make @/ a no-op, that's the only one
-      % people have actually reported a problem with.
-      % 
-      \normalturnoffactive
-      \def\@{@}%
-      \let\/=\empty
+      \normalturnoffactive\def\@{@}%
       \makevalueexpandable
       \leavevmode\Red
       \startlink attr{/Border [0 0 0]}%
@@ -1800,13 +1809,6 @@ where each line of input produces a line of output.}
 % Set sfcode to normal for the chars that usually have another value.
 % Can't use plain's \frenchspacing because it uses the `\x notation, and
 % sometimes \x has an active definition that messes things up.
-%
-\chardef\colonChar = `\:
-\chardef\commaChar = `\,
-\chardef\dotChar   = `\.
-\chardef\exclamChar= `\!
-\chardef\questChar = `\?
-\chardef\semiChar  = `\;
 %
 \catcode`@=11
   \def\plainfrenchspacing{%
@@ -2957,7 +2959,6 @@ where each line of input produces a line of output.}
 
 \def\doignore#1{\begingroup
   % Scan in ``verbatim'' mode:
-  \obeylines
   \catcode`\@ = \other
   \catcode`\{ = \other
   \catcode`\} = \other
@@ -2978,16 +2979,16 @@ where each line of input produces a line of output.}
   \gdef\dodoignore#1{%
     % #1 contains the command name as a string, e.g., `ifinfo'.
     %
-    % Define a command to find the next `@end #1'.
-    \long\def\doignoretext##1^^M@end #1{%
-      \doignoretextyyy##1^^M@#1\_STOP_}%
-    %
+    % Define a command to find the next `@end #1', which must be on a line
+    % by itself.
+    \long\def\doignoretext##1^^M@end #1{\doignoretextyyy##1^^M@#1\_STOP_}%
     % And this command to find another #1 command, at the beginning of a
     % line.  (Otherwise, we would consider a line `@c @ifset', for
     % example, to count as an @ifset for nesting.)
     \long\def\doignoretextyyy##1^^M@#1##2\_STOP_{\doignoreyyy{##2}\_STOP_}%
     %
     % And now expand that command.
+    \obeylines %
     \doignoretext ^^M%
   }%
 }
@@ -3017,12 +3018,7 @@ where each line of input produces a line of output.}
 }
 
 % Finish off ignored text.
-{ \obeylines%
-  % Ignore anything after the last `@end #1'; this matters in verbatim
-  % environments, where otherwise the newline after an ignored conditional
-  % would result in a blank line in the output.
-  \gdef\enddoignore#1^^M{\endgroup\ignorespaces}%
-}
+\def\enddoignore{\endgroup\ignorespaces}
 
 
 % @set VAR sets the variable VAR to an empty value.
@@ -3248,7 +3244,6 @@ where each line of input produces a line of output.}
   %
   % Do the redefinitions.
   \commondummies
-  \otherbackslash
 }
 
 % Called from \indexdummies and \atdummies.
@@ -3335,62 +3330,63 @@ where each line of input produces a line of output.}
 
 % \commondummiesnofonts: common to \commondummies and \indexnofonts.
 %
-\def\commondummiesnofonts{%
-  % Control letters and accents.
-  \definedummyletter\!%
-  \definedummyaccent\"%
-  \definedummyaccent\'%
-  \definedummyletter\*%
-  \definedummyaccent\,%
-  \definedummyletter\.%
-  \definedummyletter\/%
-  \definedummyletter\:%
-  \definedummyaccent\=%
-  \definedummyletter\?%
-  \definedummyaccent\^%
-  \definedummyaccent\`%
-  \definedummyaccent\~%
-  \definedummyword\u
-  \definedummyword\v
-  \definedummyword\H
-  \definedummyword\dotaccent
-  \definedummyword\ringaccent
-  \definedummyword\tieaccent
-  \definedummyword\ubaraccent
-  \definedummyword\udotaccent
-  \definedummyword\dotless
-  %
-  % Texinfo font commands.
-  \definedummyword\b
-  \definedummyword\i
-  \definedummyword\r
-  \definedummyword\sc
-  \definedummyword\t
-  %
-  % Commands that take arguments.
-  \definedummyword\acronym
-  \definedummyword\cite
-  \definedummyword\code
-  \definedummyword\command
-  \definedummyword\dfn
-  \definedummyword\emph
-  \definedummyword\env
-  \definedummyword\file
-  \definedummyword\kbd
-  \definedummyword\key
-  \definedummyword\math
-  \definedummyword\option
-  \definedummyword\pxref
-  \definedummyword\ref
-  \definedummyword\samp
-  \definedummyword\strong
-  \definedummyword\tie
-  \definedummyword\uref
-  \definedummyword\url
-  \definedummyword\var
-  \definedummyword\verb
-  \definedummyword\w
-  \definedummyword\xref
+% Better have this without active chars.
+{
+  \catcode`\~=\other
+  \gdef\commondummiesnofonts{%
+    % Control letters and accents.
+    \definedummyletter\!%
+    \definedummyaccent\"%
+    \definedummyaccent\'%
+    \definedummyletter\*%
+    \definedummyaccent\,%
+    \definedummyletter\.%
+    \definedummyletter\/%
+    \definedummyletter\:%
+    \definedummyaccent\=%
+    \definedummyletter\?%
+    \definedummyaccent\^%
+    \definedummyaccent\`%
+    \definedummyaccent\~%
+    \definedummyword\u
+    \definedummyword\v
+    \definedummyword\H
+    \definedummyword\dotaccent
+    \definedummyword\ringaccent
+    \definedummyword\tieaccent
+    \definedummyword\ubaraccent
+    \definedummyword\udotaccent
+    \definedummyword\dotless
+    %
+    % Texinfo font commands.
+    \definedummyword\b
+    \definedummyword\i
+    \definedummyword\r
+    \definedummyword\sc
+    \definedummyword\t
+    %
+    % Commands that take arguments.
+    \definedummyword\acronym
+    \definedummyword\cite
+    \definedummyword\code
+    \definedummyword\command
+    \definedummyword\dfn
+    \definedummyword\emph
+    \definedummyword\env
+    \definedummyword\file
+    \definedummyword\kbd
+    \definedummyword\key
+    \definedummyword\math
+    \definedummyword\option
+    \definedummyword\samp
+    \definedummyword\strong
+    \definedummyword\tie
+    \definedummyword\uref
+    \definedummyword\url
+    \definedummyword\var
+    \definedummyword\verb
+    \definedummyword\w
+  }
 }
 
 % \indexnofonts is used when outputting the strings to sort the index
@@ -4507,20 +4503,12 @@ where each line of input produces a line of output.}
       \gdef\thissection{#1}%
     \fi\fi\fi
     %
-    % Write the toc entry (before \donoderef).  See comments in \chapmacro.
+    % Write the toc entry (before \donoderef).  See comments in \chfplain.
     \writetocentry{\toctype\sectionlevel}{#1}{#4}%
     %
     % Write the node reference (= pdf destination for pdftex).
-    % Again, see comments in \chapmacro.
+    % Again, see comments in \chfplain.
     \donoderef{#3}%
-    %
-    % Interline glue will be inserted when the vbox is completed.
-    % That glue will be a valid breakpoint for the page, since it'll be
-    % preceded by a whatsit (usually from the \donoderef, or from the
-    % \writetocentry if there was no node).  We don't want to allow that
-    % break, since then the whatsits could end up on page n while the
-    % section is on page n+1, thus toc/etc. are wrong.  Debian bug 276000.
-    \nobreak
     %
     % Output the actual section heading.
     \vbox{\hyphenpenalty=10000 \tolerance=5000 \parindent=0pt \raggedright
@@ -4584,7 +4572,7 @@ where each line of input produces a line of output.}
        \edef\temp{%
          \write\tocfile{@#1entry{#2}{#3}{\lastnode}{\noexpand\folio}}}%
        \temp
-      }%
+      }
     \fi
   \fi
   %
@@ -6097,7 +6085,7 @@ where each line of input produces a line of output.}
     % If the user specified the print name (third arg) to the ref,
     % print it instead of our usual "Figure 1.2".
     \ifdim\wd0 = 0pt
-      \refx{#1-snt}{}%
+      \refx{#1-snt}%
     \else
       \printedrefname
     \fi
@@ -6527,7 +6515,7 @@ where each line of input produces a line of output.}
     % above and below.
     \nobreak\vskip\parskip
     \nobreak
-    \line\bgroup
+    \line\bgroup\hss
   \fi
   %
   % Output the image.
@@ -6540,7 +6528,7 @@ where each line of input produces a line of output.}
     \epsfbox{#1.eps}%
   \fi
   %
-  \ifimagevmode \egroup \bigbreak \fi  % space after the image
+  \ifimagevmode \hss \egroup \bigbreak \fi  % space after the image
 \endgroup}
 
 
@@ -6681,7 +6669,6 @@ where each line of input produces a line of output.}
       % caption if specified, else the full caption if specified, else nothing.
       {%
         \atdummies
-        %
         % since we read the caption text in the macro world, where ^^M
         % is turned into a normal character, we have to scan it back, so
         % we don't write the literal three characters "^^M" into the aux file.
@@ -6702,9 +6689,8 @@ where each line of input produces a line of output.}
   %
   % place the captured inserts
   %
-  % BEWARE: when the floats start floating, we have to issue warning
-  % whenever an insert appears inside a float which could possibly
-  % float. --kasal, 26may04
+  % BEWARE: when the floats start float, we have to issue warning whenever an
+  % insert appears inside a float which could possibly float. --kasal, 26may04
   %
   \checkinserts
 }
@@ -7131,13 +7117,6 @@ should work if nowhere else does.}
 % \otherifyactive is called near the end of this file.
 \def\otherifyactive{\catcode`+=\other \catcode`\_=\other}
 
-% Used sometimes to turn off (effectively) the active characters even after
-% parsing them.
-\def\turnoffactive{%
-  \normalturnoffactive
-  \otherbackslash
-}
-
 \catcode`\@=0
 
 % \backslashcurfont outputs one backslash character in current font,
@@ -7145,29 +7124,28 @@ should work if nowhere else does.}
 \global\chardef\backslashcurfont=`\\
 \global\let\rawbackslashxx=\backslashcurfont  % let existing .??s files work
 
+% \rawbackslash defines an active \ to do \backslashcurfont.
+% \otherbackslash defines an active \ to be a literal `\' character with
+% catcode other.
+{\catcode`\\=\active
+ @gdef@rawbackslash{@let\=@backslashcurfont}
+ @gdef@otherbackslash{@let\=@realbackslash}
+}
+
 % \realbackslash is an actual character `\' with catcode other, and
 % \doublebackslash is two of them (for the pdf outlines).
 {\catcode`\\=\other @gdef@realbackslash{\} @gdef@doublebackslash{\\}}
 
-% In texinfo, backslash is an active character; it prints the backslash
-% in fixed width font.
+% \normalbackslash outputs one backslash in fixed width font.
+\def\normalbackslash{{\tt\backslashcurfont}}
+
 \catcode`\\=\active
-@def@normalbackslash{{@tt@backslashcurfont}}
-% On startup, @fixbackslash assigns:
-%  @let \ = @normalbackslash
 
-% \rawbackslash defines an active \ to do \backslashcurfont.
-% \otherbackslash defines an active \ to be a literal `\' character with
-% catcode other.
-@gdef@rawbackslash{@let\=@backslashcurfont}
-@gdef@otherbackslash{@let\=@realbackslash}
-
-% Same as @turnoffactive except outputs \ as {\tt\char`\\} instead of
-% the literal character `\'.
-% 
-@def@normalturnoffactive{%
-  @let\=@normalbackslash
+% Used sometimes to turn off (effectively) the active characters
+% even after parsing them.
+@def@turnoffactive{%
   @let"=@normaldoublequote
+  @let\=@realbackslash
   @let~=@normaltilde
   @let^=@normalcaret
   @let_=@normalunderscore
@@ -7178,6 +7156,12 @@ should work if nowhere else does.}
   @let$=@normaldollar %$ font-lock fix
   @unsepspaces
 }
+
+% Same as @turnoffactive except outputs \ as {\tt\char`\\} instead of
+% the literal character `\'.  (Thus, \ is not expandable when this is in
+% effect.)
+%
+@def@normalturnoffactive{@turnoffactive @let\=@normalbackslash}
 
 % Make _ and + \other characters, temporarily.
 % This is canceled by @fixbackslash.
@@ -7191,7 +7175,7 @@ should work if nowhere else does.}
 @global@let\ = @eatinput
 
 % On the other hand, perhaps the file did not have a `\input texinfo'. Then
-% the first `\' in the file would cause an error. This macro tries to fix
+% the first `\{ in the file would cause an error. This macro tries to fix
 % that, assuming it is called before the first `\' could plausibly occur.
 % Also turn back on active characters that might appear in the input
 % file name, in case not using a pre-dumped format.

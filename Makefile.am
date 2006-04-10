@@ -19,9 +19,6 @@
 SUBDIRS =	doc
 
 # Extra stuff to include in the distribution.
-# Note we need all the glob stuff here, rather than in glob/Makefile.am,
-# because often that directory isn't built on the systems used by the
-# maintainers.
 
 EXTRA_DIST =	README 
 

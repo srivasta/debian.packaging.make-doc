@@ -151,6 +151,9 @@ SUBDIRS = doc
 # maintainers.
 EXTRA_DIST = README 
 
+# This is built during configure, but behind configure's back
+DISTCLEANFILES = build.sh
+
 # --------------- Internationalization Section
 localedir = $(datadir)/locale
 all: all-recursive
@@ -489,6 +492,7 @@ clean-generic:
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+	-test -z "$(DISTCLEANFILES)" || rm -f $(DISTCLEANFILES)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"

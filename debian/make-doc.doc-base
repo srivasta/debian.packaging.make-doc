@@ -1,0 +1,21 @@
+Document: make-doc
+Title: GNU Make
+Author: various
+Abstract: GNU Make is a program that determines which pieces of a
+ large program need to be recompiled and issues the commands to
+ recompile them, when necessary.
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/make-doc/make.html/index.html
+Files: /usr/share/doc/make-doc/make.html/*.html
+
+Format: info
+Index: /usr/share/info/make.info.gz
+Files: /usr/share/info/make.info-1.gz /usr/share/info/make.info-2.gz
+
+Format: PDF
+Files: /usr/share/doc/make-doc/make.pdf.gz
+
+Format: PostScript
+Files: /usr/share/doc/make-doc/make.ps.gz

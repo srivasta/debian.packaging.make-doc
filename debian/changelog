@@ -1,3 +1,10 @@
+make-doc-non-dfsg (4.0-2) unstable; urgency=low
+
+  * Move to usntable, since the make binary package has been uploaded
+    there. No changes.
+
+ -- Manoj Srivastava <srivasta@debian.org>  Sun, 04 May 2014 18:48:47 -0700
+
 make-doc-non-dfsg (4.0-1) experimental; urgency=low
 
   * New upstream release

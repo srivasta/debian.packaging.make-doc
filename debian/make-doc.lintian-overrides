@@ -1,0 +1,2 @@
+make-doc: syntax-error-in-debian-changelog line 601 "badly formatted trailer line"
+make-doc: syntax-error-in-debian-changelog line 879 "found eof where expected more change data or trailer"

@@ -1,3 +1,14 @@
+make-doc-non-dfsg (4.1-1) unstable; urgency=low
+
+  * New upstream version
+  * Updated the standards version to 3.9.6. No changes needed.
+  * Updated the VCS-Git filed in the control file to use HTTPS transport.
+  * Moved to source format 1.0 and dgit.
+  * Updated the copyright file to DEP-5 format; performed a full
+    licensecheck.
+
+ -- Manoj Srivastava <srivasta@debian.org>  Fri, 15 Jan 2016 15:35:20 -0800
+
 make-doc-non-dfsg (4.0-2) unstable; urgency=low
 
   * Move to usntable, since the make binary package has been uploaded

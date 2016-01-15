@@ -1,10 +1,10 @@
 Source: make-doc-non-dfsg
-VCS-Git: git://anonscm.debian.org/users/srivasta/debian/make-doc-non-dfsg.git
+VCS-Git: https://anonscm.debian.org/git/users/srivasta/debian/make-doc-non-dfsg.git
 VCS-Browser: http://git.debian.org/git/users/srivasta/debian/make-doc-non-dfsg.git
 Section: non-free/doc
 Priority: optional
 Maintainer: Manoj Srivastava <srivasta@debian.org>
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://www.gnu.org/software/make/
 Build-Depends-Indep: texinfo, gettext, po-debconf,
       debhelper (>= 9.0.0), dh-autoreconf, autoconf,

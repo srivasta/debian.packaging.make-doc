@@ -1,48 +1,70 @@
-This is the Debian GNU/Linux prepackaged version of GNU Make.  GNU
-Make was written by Richard Stallman and Roland McGrath.
-
-This package was put together by Ian Murdock <imurdock@debian.org>,
-from sources obtained from: ftp://ftp.gnu.org/gnu/make/
-
-Changes:
- * added Debian GNU/Linux package maintenance system files
- * Pared down the package to just the documentation bits, and some
-   build infrastructure.
-
-The package has since changed maintainers, the current maintainer being
-Manoj Srivastava <srivasta@debian.org>.
-
-Parts of the GNU Make build structure remain in this package.
-
-GNU Make is Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994,
-1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006
-Free Software Foundation, Inc.
-
-   This program is free software; you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; version 2 dated June, 1991.
-
-   This program is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU General Public License for more details.
-
-On Debian GNU/Linux systems, the complete text of the GNU General
-Public License can be found in `/usr/share/common-licenses/GPL-2'.
-
-    A copy of the GNU General Public License is also available at
-    <URL:http://www.gnu.org/copyleft/gpl.html>.  You may also obtain
-    it by writing to the Free Software Foundation, Inc., 51 Franklin
-    St, Fifth Floor, Boston, MA 02110-1301 USA
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: mailagent 3.0
+Upstream-Contact: Raphael Manfredi <Raphael_Manfredi@grenoble.hp.com>
+Sources: git://git.savannah.gnu.org/make.git
+Comment: This is the Debian GNU/Linux prepackaged version of GNU Make.  GNU Make
+         was written by Richard Stallman and Roland McGrath. This package was put
+         together by Ian Murdock <imurdock@debian.org>
+         Changes:
+           * added Debian GNU/Linux package maintenance system files
+           * Pared down the package to just the documentation bits, and some
+             build infrastructure.
+         Parts of the GNU Make build structure remain in this package.
 
 
-The documentation for this package is available under the GNU Free
-Documentation License, a copy of which is shipped with the
-documentation.
+Files: *
+Copyright: 1988-2014 Free Software Foundation, Inc.
+ GNU Make is free software; you can redistribute it and/or modify it under the
+ terms of the GNU General Public License as published by the Free Software
+ Foundation; either version 3 of the License, or (at your option) any later
+ version.
+ .
+ GNU Make is distributed in the hope that it will be useful, but WITHOUT ANY
+ WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+License: GPL-3+
 
-The Debian specific changes are © 1997, 1998, 1999, 2000, 2001, 2002,
-2003, 2004, 2005, 2006, Manoj Srivastava <srivasta@debian.org>, and
-distributed under the terms of the GNU General Public License, version 2.
+Files: doc/*.texi doc/make.info*
+Copyright: 1988-2014 Free Software Foundation, Inc.
+License: GFDL-1.2+
+Comment:
+ The documentation is released under the GNU Free Documentation License
+ (GFDL) and it has a front-cover text: as such, it has been determined
+ not to meet the Debian Free Software Guidelines (DFSG), so it is not
+ shipped in the Debian packages. Since the source tarball has to be
+ repacked, the opportunity is taken to drop off some substantial weight
+ by wipping out unnecessary material and by cleaning up regenerated
+ material.
 
-Manoj Srivastava <srivasta@debian.org>
-arch-tag: d4250e44-a0e0-4ee0-adb9-2bd74f6eeb27
+Files: debian/*
+Copyright: 1997-2009, 2014-2016  Manoj Srivastava <srivasta@debian.org>
+License: GPL-3+
+
+
+License: GPL-3+
+ This package is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ .
+ This package is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License
+ along with this program. If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General
+ Public License can be found in "/usr/share/common-licenses/GPL-3".
+
+License: GFDL-1.2+
+ Permission is granted to copy, distribute and/or modify this document
+ under the terms of the GNU Free Documentation License, Version 1.2 or
+ any later version published by the Free Software Foundation; with no
+ Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A
+ copy of the license is included in the section entitled GNU Free
+ Documentation License.
+Comment:
+ On Debian systems, the complete text of the GFDL-1.2 can be found
+ in /usr/share/common-licenses/GFDL-1.2.

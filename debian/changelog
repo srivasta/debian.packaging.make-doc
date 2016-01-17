@@ -1,3 +1,9 @@
+make-doc-non-dfsg (4.1-2) unstable; urgency=low
+
+  * Fix typos in the copyright file.
+
+ -- Manoj Srivastava <srivasta@debian.org>  Sun, 17 Jan 2016 00:52:12 -0800
+
 make-doc-non-dfsg (4.1-1) unstable; urgency=low
 
   * New upstream version

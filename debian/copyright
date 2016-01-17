@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: mailagent 3.0
-Upstream-Contact: Raphael Manfredi <Raphael_Manfredi@grenoble.hp.com>
+Upstream-Name: make
+Upstream-Contact: help-make@gnu.org
 Sources: git://git.savannah.gnu.org/make.git
 Comment: This is the Debian GNU/Linux prepackaged version of GNU Make.  GNU Make
          was written by Richard Stallman and Roland McGrath. This package was put

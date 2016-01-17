@@ -1,2 +1,2 @@
-make-doc: syntax-error-in-debian-changelog line 619 "badly formatted trailer line"
-make-doc: syntax-error-in-debian-changelog line 897 "found eof where expected more change data or trailer"
+make-doc: syntax-error-in-debian-changelog line 625 "badly formatted trailer line"
+make-doc: syntax-error-in-debian-changelog line 903 "found eof where expected more change data or trailer"

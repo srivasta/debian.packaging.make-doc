@@ -1,15 +1,15 @@
-This is make.info, produced by makeinfo version 5.2 from make.texi.
+This is make.info, produced by makeinfo version 6.1 from make.texi.
 
 This file documents the GNU 'make' utility, which determines
 automatically which pieces of a large program need to be recompiled, and
 issues the commands to recompile them.
 
-   This is Edition 0.73, last updated 5 October 2014, of 'The GNU Make
-Manual', for GNU 'make' version 4.1.
+   This is Edition 0.74, last updated 21 May 2016, of 'The GNU Make
+Manual', for GNU 'make' version 4.2.1.
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013, 2014, 2015, 2016 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -37,12 +37,12 @@ This file documents the GNU 'make' utility, which determines
 automatically which pieces of a large program need to be recompiled, and
 issues the commands to recompile them.
 
-   This is Edition 0.73, last updated 5 October 2014, of 'The GNU Make
-Manual', for GNU 'make' version 4.1.
+   This is Edition 0.74, last updated 21 May 2016, of 'The GNU Make
+Manual', for GNU 'make' version 4.2.1.
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013, 2014, 2015, 2016 Free Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -72,6 +72,7 @@ Manual', for GNU 'make' version 4.1.
                                   based on their file names.
 * Archives::                    How 'make' can update library archives.
 * Extending make::              Using extensions to 'make'.
+* Integrating make::            Integrating 'make' with other tools.
 * Features::                    Features GNU 'make' has over other 'make's.
 * Missing::                     What GNU 'make' lacks from other 'make's.
 * Makefile Conventions::        Conventions for writing makefiles for
@@ -326,6 +327,16 @@ Loading Dynamic Objects
 * Remaking Loaded Objects::     How loaded objects get remade.
 * Loaded Object API::           Programmatic interface for loaded objects.
 * Loaded Object Example::       Example of a loaded object
+
+Integrating GNU 'make'
+
+* Job Slots::                   Share job slots with GNU 'make'.
+* Terminal Output::             Control output to terminals.
+
+Sharing Job Slots with GNU 'make'
+
+* POSIX Jobserver::             Using the jobserver on POSIX systems.
+* Windows Jobserver::           Using the jobserver on Windows systems.
 
 
 
@@ -2514,8 +2525,8 @@ Certain names have special meanings if they appear as targets.
      '.SILENT' is supported only for historical compatibility.  We
      recommend you use the more selective ways to silence specific
      recipes.  *Note Recipe Echoing: Echoing.  If you want to silence
-     all recipes for a particular run of 'make', use the '-s' or '--silent'
-     option (*note Options Summary::).
+     all recipes for a particular run of 'make', use the '-s' or
+     '--silent' option (*note Options Summary::).
 
 '.EXPORT_ALL_VARIABLES'
 
@@ -3746,9 +3757,9 @@ the '+' token to get these special effects.
 option marks targets as up to date without actually running any recipes;
 see *note Instead of Execution::.)  Following the usual definition of
 '-t', a 'make -t' command in the example would create a file named
-'subsystem' and do nothing else.  What you really want it to do is run 'cd subdir &&
-make -t'; but that would require executing the recipe, and '-t' says not
-to execute recipes.
+'subsystem' and do nothing else.  What you really want it to do is run
+'cd subdir && make -t'; but that would require executing the recipe, and
+'-t' says not to execute recipes.
 
    The special feature makes this do what you want: whenever a recipe
 line of a rule contains the variable 'MAKE', the flags '-t', '-n' and
@@ -3928,12 +3939,12 @@ Recipes: Instead of Execution.) doesn't count against the total jobs
 over for any real work!)
 
    If your operating system doesn't support the above communication,
-then '-j 1' is always put into 'MAKEFLAGS' instead of the value you
-specified.  This is because if the '-j' option were passed down to
-sub-'make's, you would get many more jobs running in parallel than you
-asked for.  If you give '-j' with no numeric argument, meaning to run as
-many jobs as possible in parallel, this is passed down, since multiple
-infinities are no more than one.
+then no '-j' is added to 'MAKEFLAGS', so that sub-'make's run in
+non-parallel mode.  If the '-j' option were passed down to sub-'make's
+you would get many more jobs running in parallel than you asked for.  If
+you give '-j' with no numeric argument, meaning to run as many jobs as
+possible in parallel, this is passed down, since multiple infinities are
+no more than one.
 
    If you do not want to pass the other flags down, you must change the
 value of 'MAKEFLAGS', like this:
@@ -4018,11 +4029,11 @@ File: make.info,  Node: -w Option,  Prev: Options/Recursion,  Up: Recursion
 5.7.4 The '--print-directory' Option
 ------------------------------------
 
-If you use several levels of recursive 'make' invocations, the '-w' or '--print-directory'
-option can make the output a lot easier to understand by showing each
-directory as 'make' starts processing it and as 'make' finishes
-processing it.  For example, if 'make -w' is run in the directory
-'/u/gnu/make', 'make' will print a line of the form:
+If you use several levels of recursive 'make' invocations, the '-w' or
+'--print-directory' option can make the output a lot easier to
+understand by showing each directory as 'make' starts processing it and
+as 'make' finishes processing it.  For example, if 'make -w' is run in
+the directory '/u/gnu/make', 'make' will print a line of the form:
 
      make: Entering directory `/u/gnu/make'.
 
@@ -4129,10 +4140,16 @@ beginning with a recipe prefix character to define an empty recipe, but
 this would be confusing because such a line looks empty.
 
    You may be wondering why you would want to define a recipe that does
-nothing.  The only reason this is useful is to prevent a target from
-getting implicit recipes (from implicit rules or the '.DEFAULT' special
-target; *note Implicit Rules:: and *note Defining Last-Resort Default
-Rules: Last Resort.).
+nothing.  One reason this is useful is to prevent a target from getting
+implicit recipes (from implicit rules or the '.DEFAULT' special target;
+*note Implicit Rules:: and *note Defining Last-Resort Default Rules:
+Last Resort.).
+
+   Empty recipes can also be used to avoid errors for targets that will
+be created as a side-effect of another recipe: if the target does not
+exist the empty recipe ensures that 'make' won't complain that it
+doesn't know how to build the target, and 'make' will assume the target
+is out of date.
 
    You may be inclined to define empty recipes for targets that are not
 actual files, but only exist so that their prerequisites can be remade.
@@ -4627,8 +4644,8 @@ File: make.info,  Node: Setting,  Next: Appending,  Prev: Values,  Up: Using Var
 =====================
 
 To set a variable from the makefile, write a line starting with the
-variable name followed by '=' ':=', or '::='.  Whatever follows the '=',
-':=', or '::=' on the line becomes the value.  For example,
+variable name followed by '=', ':=', or '::='.  Whatever follows the
+'=', ':=', or '::=' on the line becomes the value.  For example,
 
      objects = main.o foo.o bar.o utils.o
 
@@ -4671,10 +4688,10 @@ and
      FOO = bar
      endif
 
-   The shell assignment operator '!=' can be used to execute a program
-and set a variable to its output.  This operator first evaluates the
-right-hand side, then passes that result to the shell for execution.  If
-the result of the execution ends in a newline, that one newline is
+   The shell assignment operator '!=' can be used to execute a shell
+script and set a variable to its output.  This operator first evaluates
+the right-hand side, then passes that result to the shell for execution.
+If the result of the execution ends in a newline, that one newline is
 removed; all other newlines are replaced by spaces.  The resulting
 string is then placed into the named recursively-expanded variable.  For
 example:
@@ -4691,6 +4708,9 @@ The 'shell' Function: Shell Function.  For example:
 
      hash := $(shell printf '\043')
      var := $(shell find . -name "*.c")
+
+   As with the 'shell' function, the exit status of the just-invoked
+shell script is stored in the '.SHELLSTATUS' variable.
 
 
 File: make.info,  Node: Appending,  Next: Override Directive,  Prev: Setting,  Up: Using Variables
@@ -4771,12 +4791,12 @@ references.  Take this common example:
 The first line defines the 'CFLAGS' variable with a reference to another
 variable, 'includes'.  ('CFLAGS' is used by the rules for C compilation;
 *note Catalogue of Built-In Rules: Catalogue of Rules.)  Using '=' for
-the definition makes 'CFLAGS' a recursively-expanded variable, meaning '$(includes) -O'
-is _not_ expanded when 'make' processes the definition of 'CFLAGS'.
-Thus, 'includes' need not be defined yet for its value to take effect.
-It only has to be defined before any reference to 'CFLAGS'.  If we tried
-to append to the value of 'CFLAGS' without using '+=', we might do it
-like this:
+the definition makes 'CFLAGS' a recursively-expanded variable, meaning
+'$(includes) -O' is _not_ expanded when 'make' processes the definition
+of 'CFLAGS'.  Thus, 'includes' need not be defined yet for its value to
+take effect.  It only has to be defined before any reference to
+'CFLAGS'.  If we tried to append to the value of 'CFLAGS' without using
+'+=', we might do it like this:
 
      CFLAGS := $(CFLAGS) -pg # enable profiling
 
@@ -5476,7 +5496,7 @@ table of them:
 
 'ifdef VARIABLE-NAME'
      The 'ifdef' form takes the _name_ of a variable as its argument,
-     not a reference to a variable.  The value of that variable has a
+     not a reference to a variable.  If the value of that variable has a
      non-empty value, the TEXT-IF-TRUE is effective; otherwise, the
      TEXT-IF-FALSE, if any, is effective.  Variables that have never
      been defined have an empty value.  The text VARIABLE-NAME is
@@ -6163,31 +6183,41 @@ File: make.info,  Node: File Function,  Next: Call Function,  Prev: Foreach Func
 8.6 The 'file' Function
 =======================
 
-The 'file' function allows the makefile to write to a file.  Two modes
-of writing are supported: overwrite, where the text is written to the
-beginning of the file and any existing content is lost, and append,
-where the text is written to the end of the file, preserving the
-existing content.  In all cases the file is created if it does not
-exist.
+The 'file' function allows the makefile to write to or read from a file.
+Two modes of writing are supported: overwrite, where the text is written
+to the beginning of the file and any existing content is lost, and
+append, where the text is written to the end of the file, preserving the
+existing content.  In both cases the file is created if it does not
+exist.  It is a fatal error if the file cannot be opened for writing, or
+if the write operation fails.  The 'file' function expands to the empty
+string when writing to a file.
+
+   When reading from a file, the 'file' function expands to the verbatim
+contents of the file, except that the final newline (if there is one)
+will be stripped.  Attempting to read from a non-existent file expands
+to the empty string.
 
    The syntax of the 'file' function is:
 
      $(file OP FILENAME[,TEXT])
 
-   The operator OP can be either '>' which indicates overwrite mode, or
-'>>' which indicates append mode.  The FILENAME indicates the file to be
-written to.  There may optionally be whitespace between the operator and
-the file name.
-
-   When the 'file' function is expanded all its arguments are expanded
+   When the 'file' function is evaluated all its arguments are expanded
 first, then the file indicated by FILENAME will be opened in the mode
-described by OP.  Finally TEXT will be written to the file.  If TEXT
-does not already end in a newline, even if empty, a final newline will
-be written.  If the TEXT argument is not given, nothing will be written.
-The result of evaluating the 'file' function is always the empty string.
+described by OP.
 
-   It is a fatal error if the file cannot be opened for writing, or if
-the write operation fails.
+   The operator OP can be '>' to indicate the file will be overwritten
+with new content, '>>' to indicate the current contents of the file will
+be appended to, or '<' to indicate the contents of the file will be read
+in.  The FILENAME specifies the file to be written to or read from.
+There may optionally be whitespace between the operator and the file
+name.
+
+   When reading files, it is an error to provide a TEXT value.
+
+   When writing files, TEXT will be written to the file.  If TEXT does
+not already end in a newline a final newline will be written (even if
+TEXT is the empty string).  If the TEXT argument is not given at all,
+nothing will be written.
 
    For example, the 'file' function can be useful if your build system
 has a limited command line size and your recipe runs a command that can
@@ -6586,6 +6616,9 @@ should carefully consider the performance implications of using the
 'shell' function within recursively expanded variables vs. simply
 expanded variables (*note The Two Flavors of Variables: Flavors.).
 
+   After the 'shell' function or '!=' assignment operator is used, its
+exit status is placed in the '.SHELLSTATUS' variable.
+
    Here are some examples of the use of the 'shell' function:
 
      contents := $(shell cat foo)
@@ -6732,8 +6765,8 @@ containing several programs, with a makefile that starts like this:
      .PHONY: all
      all: size nm ld ar as
 
-   If you are working on the program 'size', you might want to say 'make size'
-so that only the files of that program are recompiled.
+   If you are working on the program 'size', you might want to say
+'make size' so that only the files of that program are recompiled.
 
    Another use of specifying a goal is to make files that are not
 normally made.  For example, there may be a file of debugging output, or

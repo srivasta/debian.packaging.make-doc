@@ -41,11 +41,11 @@
 /* Use case insensitive file names */
 #undef HAVE_CASE_INSENSITIVE_FS
 
-/* Define to 1 if you have the MacOS X function CFLocaleCopyCurrent in the
+/* Define to 1 if you have the Mac OS X function CFLocaleCopyCurrent in the
    CoreFoundation framework. */
 #undef HAVE_CFLOCALECOPYCURRENT
 
-/* Define to 1 if you have the MacOS X function CFPreferencesCopyAppValue in
+/* Define to 1 if you have the Mac OS X function CFPreferencesCopyAppValue in
    the CoreFoundation framework. */
 #undef HAVE_CFPREFERENCESCOPYAPPVALUE
 
@@ -105,6 +105,9 @@
 
 /* Define to 1 if you have the `fileno' function. */
 #undef HAVE_FILENO
+
+/* Define to 1 if you have the `fork' function. */
+#undef HAVE_FORK
 
 /* Define to 1 if you have the `getcwd' function. */
 #undef HAVE_GETCWD
@@ -177,6 +180,9 @@
 
 /* Define to 1 if you have the `pipe' function. */
 #undef HAVE_PIPE
+
+/* Define to 1 if you have the `pselect' function. */
+#undef HAVE_PSELECT
 
 /* Define to 1 if you have the `pstat_getdynamic' function. */
 #undef HAVE_PSTAT_GETDYNAMIC
@@ -286,6 +292,9 @@
 /* Define to 1 if you have the <sys/resource.h> header file. */
 #undef HAVE_SYS_RESOURCE_H
 
+/* Define to 1 if you have the <sys/select.h> header file. */
+#undef HAVE_SYS_SELECT_H
+
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #undef HAVE_SYS_STAT_H
 
@@ -304,17 +313,35 @@
 /* Define to 1 if you have the `ttyname' function. */
 #undef HAVE_TTYNAME
 
+/* Define to 1 if the system has the type `uintmax_t'. */
+#undef HAVE_UINTMAX_T
+
 /* Define to 1 if you have the 'union wait' type in <sys/wait.h>. */
 #undef HAVE_UNION_WAIT
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H
 
+/* Define to 1 if the system has the type 'unsigned long long int'. */
+#undef HAVE_UNSIGNED_LONG_LONG_INT
+
+/* Define to 1 if you have the `vfork' function. */
+#undef HAVE_VFORK
+
+/* Define to 1 if you have the <vfork.h> header file. */
+#undef HAVE_VFORK_H
+
 /* Define to 1 if you have the `wait3' function. */
 #undef HAVE_WAIT3
 
 /* Define to 1 if you have the `waitpid' function. */
 #undef HAVE_WAITPID
+
+/* Define to 1 if `fork' works. */
+#undef HAVE_WORKING_FORK
+
+/* Define to 1 if `vfork' works. */
+#undef HAVE_WORKING_VFORK
 
 /* Build host information. */
 #undef MAKE_HOST
@@ -456,14 +483,24 @@
 /* Define to `int' if <sys/types.h> doesn't define. */
 #undef gid_t
 
+/* Define to `long int' if <sys/types.h> does not define. */
+#undef off_t
+
 /* Define to `int' if <sys/types.h> does not define. */
 #undef pid_t
 
 /* Define to `unsigned int' if <sys/types.h> does not define. */
 #undef size_t
 
+/* Define to `int' if <sys/types.h> does not define. */
+#undef ssize_t
+
 /* Define to `int' if <sys/types.h> doesn't define. */
 #undef uid_t
 
-/* Define uintmax_t if not defined in <stdint.h> or <inttypes.h>. */
+/* Define to the widest unsigned integer type if <stdint.h> and <inttypes.h>
+   do not define. */
 #undef uintmax_t
+
+/* Define as `fork' if `vfork' does not work. */
+#undef vfork

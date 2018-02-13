@@ -1,3 +1,9 @@
+make-doc-non-dfsg (4.2.1-1) unstable; urgency=medium
+
+  * New upstream version
+
+ -- Manoj Srivastava <srivasta@debian.org>  Mon, 12 Feb 2018 17:18:41 -0800
+
 make-doc-non-dfsg (4.1-3) unstable; urgency=low
 
   * Updated standards version to 3.9.7. No changes needed.

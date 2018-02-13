@@ -4,7 +4,7 @@ VCS-Browser: http://git.debian.org/git/users/srivasta/debian/make-doc-non-dfsg.g
 Section: non-free/doc
 Priority: optional
 Maintainer: Manoj Srivastava <srivasta@debian.org>
-Standards-Version: 3.9.7
+Standards-Version: 4.1.3
 Homepage: http://www.gnu.org/software/make/
 Build-Depends-Indep: texinfo, gettext, po-debconf,
       debhelper (>= 9.0.0), dh-autoreconf, autoconf,

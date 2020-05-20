@@ -1,3 +1,9 @@
+make-doc-non-dfsg (4.3-2) unstable; urgency=medium
+
+  * Mark as autobuildable.
+
+ -- Manoj Srivastava <srivasta@debian.org>  Wed, 20 May 2020 01:26:28 -0700
+
 make-doc-non-dfsg (4.3-1) unstable; urgency=medium
 
   * New upst6ream release

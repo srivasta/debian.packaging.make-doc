@@ -1,15 +1,16 @@
-This is make.info, produced by makeinfo version 6.1 from make.texi.
+This is make.info, produced by makeinfo version 6.6 from make.texi.
 
 This file documents the GNU 'make' utility, which determines
 automatically which pieces of a large program need to be recompiled, and
 issues the commands to recompile them.
 
-   This is Edition 0.74, last updated 21 May 2016, of 'The GNU Make
-Manual', for GNU 'make' version 4.2.1.
+   This is Edition 0.75, last updated 19 January 2020, of 'The GNU Make
+Manual', for GNU 'make' version 4.3.
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014, 2015, 2016 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 Free
+Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -37,12 +38,13 @@ This file documents the GNU 'make' utility, which determines
 automatically which pieces of a large program need to be recompiled, and
 issues the commands to recompile them.
 
-   This is Edition 0.74, last updated 21 May 2016, of 'The GNU Make
-Manual', for GNU 'make' version 4.2.1.
+   This is Edition 0.75, last updated 19 January 2020, of 'The GNU Make
+Manual', for GNU 'make' version 4.3.
 
    Copyright (C) 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996,
 1997, 1998, 1999, 2000, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009,
-2010, 2011, 2012, 2013, 2014, 2015, 2016 Free Software Foundation, Inc.
+2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020 Free
+Software Foundation, Inc.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -113,7 +115,8 @@ Writing Makefiles
 * Remaking Makefiles::          How makefiles get remade.
 * Overriding Makefiles::        How to override part of one makefile
                                   with another makefile.
-* Reading Makefiles::           How makefiles are parsed.
+* Reading Makefiles::           How makefiles are read in.
+* Parsing Makefiles::           How makefiles are parsed.
 * Secondary Expansion::         How and when secondary expansion is performed.
 
 What Makefiles Contain
@@ -868,7 +871,8 @@ reading a data base called the "makefile".
 * Remaking Makefiles::          How makefiles get remade.
 * Overriding Makefiles::        How to override part of one makefile
                                   with another makefile.
-* Reading Makefiles::           How makefiles are parsed.
+* Reading Makefiles::           How makefiles are read in.
+* Parsing Makefiles::           How makefiles are parsed.
 * Secondary Expansion::         How and when secondary expansion is performed.
 
 
@@ -976,6 +980,28 @@ backslash/newline combinations.
 handling is modified slightly to conform to POSIX.2: first, whitespace
 preceding a backslash is not removed and second, consecutive
 backslash/newlines are not condensed.
+
+Splitting Without Adding Whitespace
+...................................
+
+If you need to split a line but do _not_ want any whitespace added, you
+can utilize a subtle trick: replace your backslash/newline pairs with
+the three characters dollar sign/backslash/newline:
+
+     var := one$\
+            word
+
+   After 'make' removes the backslash/newline and condenses the
+following line into a single space, this is equivalent to:
+
+     var := one$ word
+
+   Then 'make' will perform variable expansion.  The variable reference
+'$ ' refers to a variable with the one-character name " " (space) which
+does not exist, and so expands to the empty string, giving a final
+assignment which is the equivalent of:
+
+     var := oneword
 
 
 File: make.info,  Node: Makefile Names,  Next: Include,  Prev: Makefile Contents,  Up: Makefiles
@@ -1137,16 +1163,17 @@ Sometimes makefiles can be remade from other files, such as RCS or SCCS
 files.  If a makefile can be remade from other files, you probably want
 'make' to get an up-to-date version of the makefile to read in.
 
-   To this end, after reading in all makefiles, 'make' will consider
-each as a goal target and attempt to update it.  If a makefile has a
-rule which says how to update it (found either in that very makefile or
-in another one) or if an implicit rule applies to it (*note Using
-Implicit Rules: Implicit Rules.), it will be updated if necessary.
-After all makefiles have been checked, if any have actually been
-changed, 'make' starts with a clean slate and reads all the makefiles
-over again.  (It will also attempt to update each of them over again,
-but normally this will not change them again, since they are already up
-to date.)
+   To this end, after reading in all makefiles 'make' will consider each
+as a goal target and attempt to update it.  If a makefile has a rule
+which says how to update it (found either in that very makefile or in
+another one) or if an implicit rule applies to it (*note Using Implicit
+Rules: Implicit Rules.), it will be updated if necessary.  After all
+makefiles have been checked, if any have actually been changed, 'make'
+starts with a clean slate and reads all the makefiles over again.  (It
+will also attempt to update each of them over again, but normally this
+will not change them again, since they are already up to date.)  Each
+restart will cause the special variable 'MAKE_RESTARTS' to be updated
+(*note Special Variables::).
 
    If you know that one or more of your makefiles cannot be remade and
 you want to keep 'make' from performing an implicit rule search on them,
@@ -1251,30 +1278,31 @@ it--otherwise it would apply the same match-anything rule to 'force'
 itself and create a prerequisite loop!
 
 
-File: make.info,  Node: Reading Makefiles,  Next: Secondary Expansion,  Prev: Overriding Makefiles,  Up: Makefiles
+File: make.info,  Node: Reading Makefiles,  Next: Parsing Makefiles,  Prev: Overriding Makefiles,  Up: Makefiles
 
 3.7 How 'make' Reads a Makefile
 ===============================
 
 GNU 'make' does its work in two distinct phases.  During the first phase
 it reads all the makefiles, included makefiles, etc.  and internalizes
-all the variables and their values, implicit and explicit rules, and
-constructs a dependency graph of all the targets and their
-prerequisites.  During the second phase, 'make' uses these internal
-structures to determine what targets will need to be rebuilt and to
-invoke the rules necessary to do so.
+all the variables and their values and implicit and explicit rules, and
+builds a dependency graph of all the targets and their prerequisites.
+During the second phase, 'make' uses this internalized data to determine
+which targets need to be updated and run the recipes necessary to update
+them.
 
    It's important to understand this two-phase approach because it has a
 direct impact on how variable and function expansion happens; this is
-often a source of some confusion when writing makefiles.  Here we will
-present a summary of the phases in which expansion happens for different
-constructs within the makefile.  We say that expansion is "immediate" if
-it happens during the first phase: in this case 'make' will expand any
-variables or functions in that section of a construct as the makefile is
-parsed.  We say that expansion is "deferred" if expansion is not
-performed immediately.  Expansion of a deferred construct is not
-performed until either the construct appears later in an immediate
-context, or until the second phase.
+often a source of some confusion when writing makefiles.  Below is a
+summary of the different constructs that can be found in a makefile, and
+the phase in which expansion happens for each part of the construct.
+
+   We say that expansion is "immediate" if it happens during the first
+phase: 'make' will expand that part of the construct as the makefile is
+parsed.  We say that expansion is "deferred" if it is not immediate.
+Expansion of a deferred construct part is delayed until the expansion is
+used: either when it is referenced in an immediate context, or when it
+is needed during the second phase.
 
    You may not be familiar with some of these constructs yet.  You can
 reference this section as you become familiar with them, in later
@@ -1320,11 +1348,11 @@ Variable definitions are parsed as follows:
        IMMEDIATE
      endef
 
-   For the append operator, '+=', the right-hand side is considered
+   For the append operator '+=', the right-hand side is considered
 immediate if the variable was previously set as a simple variable (':='
 or '::='), and deferred otherwise.
 
-   For the shell assignment operator, '!=', the right-hand side is
+   For the shell assignment operator '!=', the right-hand side is
 evaluated immediately and handed to the shell.  The result is stored in
 the variable named on the left, and that variable becomes a simple
 variable (and will thus be re-evaluated on each reference).
@@ -1348,23 +1376,78 @@ A rule is always expanded the same way, regardless of the form:
              DEFERRED
 
    That is, the target and prerequisite sections are expanded
-immediately, and the recipe used to construct the target is always
-deferred.  This general rule is true for explicit rules, pattern rules,
-suffix rules, static pattern rules, and simple prerequisite definitions.
+immediately, and the recipe used to build the target is always deferred.
+This is true for explicit rules, pattern rules, suffix rules, static
+pattern rules, and simple prerequisite definitions.
 
 
-File: make.info,  Node: Secondary Expansion,  Prev: Reading Makefiles,  Up: Makefiles
+File: make.info,  Node: Parsing Makefiles,  Next: Secondary Expansion,  Prev: Reading Makefiles,  Up: Makefiles
 
-3.8 Secondary Expansion
+3.8 How Makefiles Are Parsed
+============================
+
+GNU 'make' parses makefiles line-by-line.  Parsing proceeds using the
+following steps:
+
+  1. Read in a full logical line, including backslash-escaped lines
+     (*note Splitting Long Lines: Splitting Lines.).
+
+  2. Remove comments (*note What Makefiles Contain: Makefile Contents.).
+
+  3. If the line begins with the recipe prefix character and we are in a
+     rule context, add the line to the current recipe and read the next
+     line (*note Recipe Syntax::).
+
+  4. Expand elements of the line which appear in an _immediate_
+     expansion context (*note How 'make' Reads a Makefile: Reading
+     Makefiles.).
+
+  5. Scan the line for a separator character, such as ':' or '=', to
+     determine whether the line is a macro assignment or a rule (*note
+     Recipe Syntax::).
+
+  6. Internalize the resulting operation and read the next line.
+
+   An important consequence of this is that a macro can expand to an
+entire rule, _if it is one line long_.  This will work:
+
+     myrule = target : ; echo built
+
+     $(myrule)
+
+   However, this will not work because 'make' does not re-split lines
+after it has expanded them:
+
+     define myrule
+     target:
+             echo built
+     endef
+
+     $(myrule)
+
+   The above makefile results in the definition of a target 'target'
+with prerequisites 'echo' and 'built', as if the makefile contained
+'target: echo built', rather than a rule with a recipe.  Newlines still
+present in a line after expansion is complete are ignored as normal
+whitespace.
+
+   In order to properly expand a multi-line macro you must use the
+'eval' function: this causes the 'make' parser to be run on the results
+of the expanded macro (*note Eval Function::).
+
+
+File: make.info,  Node: Secondary Expansion,  Prev: Parsing Makefiles,  Up: Makefiles
+
+3.9 Secondary Expansion
 =======================
 
-In the previous section we learned that GNU 'make' works in two distinct
-phases: a read-in phase and a target-update phase (*note How 'make'
-Reads a Makefile: Reading Makefiles.).  GNU make also has the ability to
-enable a _second expansion_ of the prerequisites (only) for some or all
-targets defined in the makefile.  In order for this second expansion to
-occur, the special target '.SECONDEXPANSION' must be defined before the
-first prerequisite list that makes use of this feature.
+Previously we learned that GNU 'make' works in two distinct phases: a
+read-in phase and a target-update phase (*note How 'make' Reads a
+Makefile: Reading Makefiles.).  GNU make also has the ability to enable
+a _second expansion_ of the prerequisites (only) for some or all targets
+defined in the makefile.  In order for this second expansion to occur,
+the special target '.SECONDEXPANSION' must be defined before the first
+prerequisite list that makes use of this feature.
 
    If that special target is defined then in between the two phases
 mentioned above, right at the end of the read-in phase, all the
@@ -1603,7 +1686,7 @@ with a tab to identify it as a recipe.
 
    * How to update the file 'foo.o': by running 'cc' as stated.  The
      recipe does not explicitly mention 'defs.h', but we presume that
-     'foo.c' includes it, and that that is why 'defs.h' was added to the
+     'foo.c' includes it, and that is why 'defs.h' was added to the
      prerequisites.
 
 
@@ -2521,12 +2604,11 @@ Certain names have special meanings if they appear as targets.
      executing them.  The recipe for '.SILENT' is ignored.
 
      If mentioned as a target with no prerequisites, '.SILENT' says not
-     to print any recipes before executing them.  This usage of
-     '.SILENT' is supported only for historical compatibility.  We
-     recommend you use the more selective ways to silence specific
-     recipes.  *Note Recipe Echoing: Echoing.  If you want to silence
-     all recipes for a particular run of 'make', use the '-s' or
-     '--silent' option (*note Options Summary::).
+     to print any recipes before executing them.  You may also use more
+     selective ways to silence specific recipe command lines.  *Note
+     Recipe Echoing: Echoing.  If you want to silence all recipes for a
+     particular run of 'make', use the '-s' or '--silent' option (*note
+     Options Summary::).
 
 '.EXPORT_ALL_VARIABLES'
 
@@ -2578,25 +2660,36 @@ File: make.info,  Node: Multiple Targets,  Next: Multiple Rules,  Prev: Special 
 4.10 Multiple Targets in a Rule
 ===============================
 
-A rule with multiple targets is equivalent to writing many rules, each
-with one target, and all identical aside from that.  The same recipe
-applies to all the targets, but its effect may vary because you can
-substitute the actual target name into the recipe using '$@'.  The rule
-contributes the same prerequisites to all the targets also.
+When an explicit rule has multiple targets they can be treated in one of
+two possible ways: as independent targets or as grouped targets.  The
+manner in which they are treated is determined by the separator that
+appears after the list of targets.
 
-   This is useful in two cases.
+Rules with Independent Targets
+..............................
+
+Rules that use the standard target separator, ':', define independent
+targets.  This is equivalent to writing the same rule once for each
+target, with duplicated prerequisites and recipes.  Typically, the
+recipe would use automatic variables such as '$@' to specify which
+target is being built.
+
+   Rules with independent targets are useful in two cases:
 
    * You want just prerequisites, no recipe.  For example:
 
           kbd.o command.o files.o: command.h
 
      gives an additional prerequisite to each of the three object files
-     mentioned.
+     mentioned.  It is equivalent to writing:
 
-   * Similar recipes work for all the targets.  The recipes do not need
-     to be absolutely identical, since the automatic variable '$@' can
-     be used to substitute the particular target to be remade into the
-     commands (*note Automatic Variables::).  For example:
+          kbd.o: command.h
+          command.o: command.h
+          files.o: command.h
+
+   * Similar recipes work for all the targets.  The automatic variable
+     '$@' can be used to substitute the particular target to be remade
+     into the commands (*note Automatic Variables::).  For example:
 
           bigoutput littleoutput : text.g
                   generate text.g -$(subst output,,$@) > $@
@@ -2618,6 +2711,51 @@ target, much as the variable '$@' allows you to vary the recipe.  You
 cannot do this with multiple targets in an ordinary rule, but you can do
 it with a "static pattern rule".  *Note Static Pattern Rules: Static
 Pattern.
+
+Rules with Grouped Targets
+..........................
+
+If instead of independent targets you have a recipe that generates
+multiple files from a single invocation, you can express that
+relationship by declaring your rule to use _grouped targets_.  A grouped
+target rule uses the separator '&:' (the '&' here is used to imply
+"all").
+
+   When 'make' builds any one of the grouped targets, it understands
+that all the other targets in the group are also created as a result of
+the invocation of the recipe.  Furthermore, if only some of the grouped
+targets are out of date or missing 'make' will realize that running the
+recipe will update all of the targets.
+
+   As an example, this rule defines a grouped target:
+
+     foo bar biz &: baz boz
+             echo $^ > foo
+             echo $^ > bar
+             echo $^ > biz
+
+   During the execution of a grouped target's recipe, the automatic
+variable '$@' is set to the name of the particular target in the group
+which triggered the rule.  Caution must be used if relying on this
+variable in the recipe of a grouped target rule.
+
+   Unlike independent targets, a grouped target rule _must_ include a
+recipe.  However, targets that are members of a grouped target may also
+appear in independent target rule definitions that do not have recipes.
+
+   Each target may have only one recipe associated with it.  If a
+grouped target appears in either an independent target rule or in
+another grouped target rule with a recipe, you will get a warning and
+the latter recipe will replace the former recipe.  Additionally the
+target will be removed from the previous group and appear only in the
+new group.
+
+   If you would like a target to appear in multiple groups, then you
+must use the double-colon grouped target separator, '&::' when declaring
+all of the groups containing that target.  Grouped double-colon targets
+are each considered independently, and each grouped double-colon rule's
+recipe is executed at most once, if at least one of its multiple targets
+requires updating.
 
 
 File: make.info,  Node: Multiple Rules,  Next: Static Pattern,  Prev: Multiple Targets,  Up: Rules
@@ -3186,8 +3324,7 @@ thinks are necessary without actually doing them.
    The '-s' or '--silent' flag to 'make' prevents all echoing, as if all
 recipes started with '@'.  A rule in the makefile for the special target
 '.SILENT' without prerequisites has the same effect (*note Special
-Built-in Target Names: Special Targets.).  '.SILENT' is essentially
-obsolete since '@' is more flexible.
+Built-in Target Names: Special Targets.).
 
 
 File: make.info,  Node: Execution,  Next: Parallel,  Prev: Echoing,  Up: Recipes
@@ -3209,7 +3346,7 @@ recipe line.  Then 'make' will invoke one shell to run the entire line,
 and the shell will execute the statements in sequence.  For example:
 
      foo : bar/lose
-             cd $(@D) && gobble $(@F) > ../$@
+             cd $(<D) && gobble $(<F) > ../$@
 
 Here we use the shell AND operator ('&&') so that if the 'cd' command
 fails, the script will fail without trying to invoke the 'gobble'
@@ -3288,7 +3425,7 @@ or
              print "@f\n";
 
    As a special feature, if 'SHELL' is determined to be a POSIX-style
-shell, the special prefix characters in "internal" recipe lines will
+shell, the special prefix characters in "internal" recipe lines will be
 _removed_ before the recipe is processed.  This feature is intended to
 allow existing makefiles to add the '.ONESHELL' special target and still
 run properly without extensive modifications.  Since the special prefix
@@ -3606,8 +3743,7 @@ This causes 'make' to continue even if 'rm' is unable to remove a file.
    When you run 'make' with the '-i' or '--ignore-errors' flag, errors
 are ignored in all recipes of all rules.  A rule in the makefile for the
 special target '.IGNORE' has the same effect, if there are no
-prerequisites.  These ways of ignoring errors are obsolete because '-'
-is more flexible.
+prerequisites.  This is less flexible but sometimes useful.
 
    When errors are to be ignored, because of either a '-' or the '-i'
 flag, 'make' treats an error return just like success, except that it
@@ -3678,6 +3814,20 @@ a signal happens.  Some reasons why you might do this are that the
 target is updated in some atomic fashion, or exists only to record a
 modification-time (its contents do not matter), or must exist at all
 times to prevent other sorts of trouble.
+
+   Although 'make' does its best to clean up there are certain
+situations in which cleanup is impossible.  For example, 'make' may be
+killed by an uncatchable signal.  Or, one of the programs make invokes
+may be killed or crash, leaving behind an up-to-date but corrupt target
+file: 'make' will not realize that this failure requires the target to
+be cleaned.  Or 'make' itself may encounter a bug and crash.
+
+   For these reasons it's best to write _defensive recipes_, which won't
+leave behind corrupted targets even if they fail.  Most commonly these
+recipes create temporary files rather than updating the target directly,
+then rename the temporary file to the final target name.  Some compilers
+already behave this way, so that you don't need to write a defensive
+recipe.
 
 
 File: make.info,  Node: Recursion,  Next: Canned Recipes,  Prev: Interrupts,  Up: Recipes
@@ -4261,8 +4411,12 @@ is precisely 'c'.  (Don't actually write your makefiles this way!)
    A dollar sign followed by a character other than a dollar sign,
 open-parenthesis or open-brace treats that single character as the
 variable name.  Thus, you could reference the variable 'x' with '$x'.
-However, this practice is strongly discouraged, except in the case of
-the automatic variables (*note Automatic Variables::).
+However, this practice can lead to confusion (e.g., '$foo' refers to the
+variable 'f' followed by the string 'oo') so we recommend using
+parentheses or braces around all variables, even single-letter
+variables, unless omitting them gives significant readability
+improvements.  One place where readability is often improved is
+automatic variables (*note Automatic Variables::).
 
 
 File: make.info,  Node: Flavors,  Next: Advanced,  Prev: Reference,  Up: Using Variables
@@ -4445,16 +4599,16 @@ followed by whitespace or at the end of the value in order to be
 replaced; other occurrences of A in the value are unaltered.  For
 example:
 
-     foo := a.o b.o c.o
+     foo := a.o b.o l.a c.o
      bar := $(foo:.o=.c)
 
-sets 'bar' to 'a.c b.c c.c'.  *Note Setting Variables: Setting.
+sets 'bar' to 'a.c b.c l.a c.c'.  *Note Setting Variables: Setting.
 
-   A substitution reference is actually an abbreviation for use of the
-'patsubst' expansion function (*note Functions for String Substitution
-and Analysis: Text Functions.).  We provide substitution references as
-well as 'patsubst' for compatibility with other implementations of
-'make'.
+   A substitution reference is shorthand for the 'patsubst' expansion
+function (*note Functions for String Substitution and Analysis: Text
+Functions.): '$(VAR:A=B)' is equivalent to '$(patsubst %A,%B,VAR)'.  We
+provide substitution references as well as 'patsubst' for compatibility
+with other implementations of 'make'.
 
    Another type of substitution reference lets you use the full power of
 the 'patsubst' function.  It has the same form '$(VAR:A=B)' described
@@ -4465,10 +4619,10 @@ Substitution and Analysis: Text Functions, for a description of the
 
 For example:
 
-     foo := a.o b.o c.o
+     foo := a.o b.o l.a c.o
      bar := $(foo:%.o=%.c)
 
-sets 'bar' to 'a.c b.c c.c'.
+sets 'bar' to 'a.c b.c l.a c.c'.
 
 
 File: make.info,  Node: Computed Names,  Prev: Substitution Refs,  Up: Advanced
@@ -4724,7 +4878,8 @@ defined.  You do this with a line containing '+=', like this:
      objects += another.o
 
 This takes the value of the variable 'objects', and adds the text
-'another.o' to it (preceded by a single space).  Thus:
+'another.o' to it (preceded by a single space, if it has a value
+already).  Thus:
 
      objects = main.o foo.o bar.o utils.o
      objects += another.o
@@ -4875,10 +5030,22 @@ Recipes.), and also sections of makefile syntax to use with 'eval'
 the variable being defined and an (optional) assignment operator, and
 nothing more.  The value to give the variable appears on the following
 lines.  The end of the value is marked by a line containing just the
-word 'endef'.  Aside from this difference in syntax, 'define' works just
-like any other variable definition.  The variable name may contain
-function and variable references, which are expanded when the directive
-is read to find the actual variable name to use.
+word 'endef'.
+
+   Aside from this difference in syntax, 'define' works just like any
+other variable definition.  The variable name may contain function and
+variable references, which are expanded when the directive is read to
+find the actual variable name to use.
+
+   The final newline before the 'endef' is not included in the value; if
+you want your value to contain a trailing newline you must include a
+blank line.  For example in order to define a variable that contains a
+newline character you must use _two_ empty lines, not one:
+
+     define newline
+
+
+     endef
 
    You may omit the variable assignment operator if you prefer.  If
 omitted, 'make' assumes it to be '=' and creates a recursively-expanded
@@ -4893,15 +5060,10 @@ directives and report an error if they are not all properly closed with
 considered part of a recipe, so any 'define' or 'endef' strings
 appearing on such a line will not be considered 'make' directives.
 
-     define two-lines =
+     define two-lines
      echo foo
      echo $(bar)
      endef
-
-   The value in an ordinary assignment cannot contain a newline; but the
-newlines that separate the lines of the value in a 'define' become part
-of the variable's value (except for the final newline which precedes the
-'endef' and is not considered part of the value).
 
    When used in a recipe, the previous example is functionally
 equivalent to this:
@@ -5324,6 +5486,49 @@ GNU 'make' supports some variables that have special properties.
      Expands to a list of directories that 'make' searches for included
      makefiles (*note Including Other Makefiles: Include.).
 
+'.EXTRA_PREREQS'
+     Each word in this variable is a new prerequisite which is added to
+     targets for which it is set.  These prerequisites differ from
+     normal prerequisites in that they do not appear in any of the
+     automatic variables (*note Automatic Variables::).  This allows
+     prerequisites to be defined which do not impact the recipe.
+
+     Consider a rule to link a program:
+
+          myprog: myprog.o file1.o file2.o
+                 $(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+
+     Now suppose you want to enhance this makefile to ensure that
+     updates to the compiler cause the program to be re-linked.  You can
+     add the compiler as a prerequisite, but you must ensure that it's
+     not passed as an argument to link command.  You'll need something
+     like this:
+
+          myprog: myprog.o file1.o file2.o $(CC)
+                 $(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(filter-out $(CC),$^) $(LDLIBS)
+
+     Then consider having multiple extra prerequisites: they would all
+     have to be filtered out.  Using '.EXTRA_PREREQS' and
+     target-specific variables provides a simpler solution:
+
+          myprog: myprog.o file1.o file2.o
+                 $(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+          myprog: .EXTRA_PREREQS = $(CC)
+
+     This feature can also be useful if you want to add prerequisites to
+     a makefile you cannot easily modify: you can create a new file such
+     as 'extra.mk':
+
+          myprog: .EXTRA_PREREQS = $(CC)
+
+     then invoke 'make -f extra.mk -f Makefile'.
+
+     Setting '.EXTRA_PREREQS' globally will cause those prerequisites to
+     be added to all targets (which did not themselves override it with
+     a target-specific value).  Note 'make' is smart enough not to add a
+     prerequisite listed in '.EXTRA_PREREQS' as a prerequisite to
+     itself.
+
 
 File: make.info,  Node: Conditionals,  Next: Functions,  Prev: Using Variables,  Up: Top
 
@@ -5706,7 +5911,7 @@ Here are some functions that operate on strings:
 
           $(subst ee,EE,feet on the street)
 
-     substitutes the string 'fEEt on the strEEt'.
+     produces the value 'fEEt on the strEEt'.
 
 '$(patsubst PATTERN,REPLACEMENT,TEXT)'
      Finds whitespace-separated words in TEXT that match PATTERN and
@@ -6066,7 +6271,7 @@ expanded.
      The 'if' function provides support for conditional expansion in a
      functional context (as opposed to the GNU 'make' makefile
      conditionals such as 'ifeq' (*note Syntax of Conditionals:
-     Conditional Syntax.).
+     Conditional Syntax.)).
 
      The first argument, CONDITION, first has all preceding and trailing
      whitespace stripped, then is expanded.  If it expands to any
@@ -7016,334 +7221,4 @@ which kind of variable you create.
 have overridden.  This is to use the 'override' directive, which is a
 line that looks like this: 'override VARIABLE = VALUE' (*note The
 'override' Directive: Override Directive.).
-
-
-File: make.info,  Node: Testing,  Next: Options Summary,  Prev: Overriding,  Up: Running
-
-9.6 Testing the Compilation of a Program
-========================================
-
-Normally, when an error happens in executing a shell command, 'make'
-gives up immediately, returning a nonzero status.  No further recipes
-are executed for any target.  The error implies that the goal cannot be
-correctly remade, and 'make' reports this as soon as it knows.
-
-   When you are compiling a program that you have just changed, this is
-not what you want.  Instead, you would rather that 'make' try compiling
-every file that can be tried, to show you as many compilation errors as
-possible.
-
-   On these occasions, you should use the '-k' or '--keep-going' flag.
-This tells 'make' to continue to consider the other prerequisites of the
-pending targets, remaking them if necessary, before it gives up and
-returns nonzero status.  For example, after an error in compiling one
-object file, 'make -k' will continue compiling other object files even
-though it already knows that linking them will be impossible.  In
-addition to continuing after failed shell commands, 'make -k' will
-continue as much as possible after discovering that it does not know how
-to make a target or prerequisite file.  This will always cause an error
-message, but without '-k', it is a fatal error (*note Summary of
-Options: Options Summary.).
-
-   The usual behavior of 'make' assumes that your purpose is to get the
-goals up to date; once 'make' learns that this is impossible, it might
-as well report the failure immediately.  The '-k' flag says that the
-real purpose is to test as much as possible of the changes made in the
-program, perhaps to find several independent problems so that you can
-correct them all before the next attempt to compile.  This is why Emacs'
-'M-x compile' command passes the '-k' flag by default.
-
-
-File: make.info,  Node: Options Summary,  Prev: Testing,  Up: Running
-
-9.7 Summary of Options
-======================
-
-Here is a table of all the options 'make' understands:
-
-'-b'
-'-m'
-     These options are ignored for compatibility with other versions of
-     'make'.
-
-'-B'
-'--always-make'
-     Consider all targets out-of-date.  GNU 'make' proceeds to consider
-     targets and their prerequisites using the normal algorithms;
-     however, all targets so considered are always remade regardless of
-     the status of their prerequisites.  To avoid infinite recursion, if
-     'MAKE_RESTARTS' (*note Other Special Variables: Special Variables.)
-     is set to a number greater than 0 this option is disabled when
-     considering whether to remake makefiles (*note How Makefiles Are
-     Remade: Remaking Makefiles.).
-
-'-C DIR'
-'--directory=DIR'
-     Change to directory DIR before reading the makefiles.  If multiple
-     '-C' options are specified, each is interpreted relative to the
-     previous one: '-C / -C etc' is equivalent to '-C /etc'.  This is
-     typically used with recursive invocations of 'make' (*note
-     Recursive Use of 'make': Recursion.).
-
-'-d'
-
-     Print debugging information in addition to normal processing.  The
-     debugging information says which files are being considered for
-     remaking, which file-times are being compared and with what
-     results, which files actually need to be remade, which implicit
-     rules are considered and which are applied--everything interesting
-     about how 'make' decides what to do.  The '-d' option is equivalent
-     to '--debug=a' (see below).
-
-'--debug[=OPTIONS]'
-
-     Print debugging information in addition to normal processing.
-     Various levels and types of output can be chosen.  With no
-     arguments, print the "basic" level of debugging.  Possible
-     arguments are below; only the first character is considered, and
-     values must be comma- or space-separated.
-
-     'a (all)'
-          All types of debugging output are enabled.  This is equivalent
-          to using '-d'.
-
-     'b (basic)'
-          Basic debugging prints each target that was found to be
-          out-of-date, and whether the build was successful or not.
-
-     'v (verbose)'
-          A level above 'basic'; includes messages about which makefiles
-          were parsed, prerequisites that did not need to be rebuilt,
-          etc.  This option also enables 'basic' messages.
-
-     'i (implicit)'
-          Prints messages describing the implicit rule searches for each
-          target.  This option also enables 'basic' messages.
-
-     'j (jobs)'
-          Prints messages giving details on the invocation of specific
-          sub-commands.
-
-     'm (makefile)'
-          By default, the above messages are not enabled while trying to
-          remake the makefiles.  This option enables messages while
-          rebuilding makefiles, too.  Note that the 'all' option does
-          enable this option.  This option also enables 'basic'
-          messages.
-
-     'n (none)'
-          Disable all debugging currently enabled.  If additional
-          debugging flags are encountered after this they will still
-          take effect.
-
-'-e'
-'--environment-overrides'
-     Give variables taken from the environment precedence over variables
-     from makefiles.  *Note Variables from the Environment: Environment.
-
-'--eval=STRING'
-
-     Evaluate STRING as makefile syntax.  This is a command-line version
-     of the 'eval' function (*note Eval Function::).  The evaluation is
-     performed after the default rules and variables have been defined,
-     but before any makefiles are read.
-
-'-f FILE'
-'--file=FILE'
-'--makefile=FILE'
-     Read the file named FILE as a makefile.  *Note Writing Makefiles:
-     Makefiles.
-
-'-h'
-'--help'
-
-     Remind you of the options that 'make' understands and then exit.
-
-'-i'
-'--ignore-errors'
-     Ignore all errors in recipes executed to remake files.  *Note
-     Errors in Recipes: Errors.
-
-'-I DIR'
-'--include-dir=DIR'
-     Specifies a directory DIR to search for included makefiles.  *Note
-     Including Other Makefiles: Include.  If several '-I' options are
-     used to specify several directories, the directories are searched
-     in the order specified.
-
-'-j [JOBS]'
-'--jobs[=JOBS]'
-     Specifies the number of recipes (jobs) to run simultaneously.  With
-     no argument, 'make' runs as many recipes simultaneously as
-     possible.  If there is more than one '-j' option, the last one is
-     effective.  *Note Parallel Execution: Parallel, for more
-     information on how recipes are run.  Note that this option is
-     ignored on MS-DOS.
-
-'-k'
-'--keep-going'
-     Continue as much as possible after an error.  While the target that
-     failed, and those that depend on it, cannot be remade, the other
-     prerequisites of these targets can be processed all the same.
-     *Note Testing the Compilation of a Program: Testing.
-
-'-l [LOAD]'
-'--load-average[=LOAD]'
-'--max-load[=LOAD]'
-     Specifies that no new recipes should be started if there are other
-     recipes running and the load average is at least LOAD (a
-     floating-point number).  With no argument, removes a previous load
-     limit.  *Note Parallel Execution: Parallel.
-
-'-L'
-'--check-symlink-times'
-     On systems that support symbolic links, this option causes 'make'
-     to consider the timestamps on any symbolic links in addition to the
-     timestamp on the file referenced by those links.  When this option
-     is provided, the most recent timestamp among the file and the
-     symbolic links is taken as the modification time for this target
-     file.
-
-'-n'
-'--just-print'
-'--dry-run'
-'--recon'
-
-     Print the recipe that would be executed, but do not execute it
-     (except in certain circumstances).  *Note Instead of Executing
-     Recipes: Instead of Execution.
-
-'-o FILE'
-'--old-file=FILE'
-'--assume-old=FILE'
-     Do not remake the file FILE even if it is older than its
-     prerequisites, and do not remake anything on account of changes in
-     FILE.  Essentially the file is treated as very old and its rules
-     are ignored.  *Note Avoiding Recompilation of Some Files: Avoiding
-     Compilation.
-
-'-O[TYPE]'
-'--output-sync[=TYPE]'
-     Ensure that the complete output from each recipe is printed in one
-     uninterrupted sequence.  This option is only useful when using the
-     '--jobs' option to run multiple recipes simultaneously (*note
-     Parallel Execution: Parallel.) Without this option output will be
-     displayed as it is generated by the recipes.
-
-     With no type or the type 'target', output from the entire recipe of
-     each target is grouped together.  With the type 'line', output from
-     each line in the recipe is grouped together.  With the type
-     'recurse', the output from an entire recursive make is grouped
-     together.  With the type 'none', no output synchronization is
-     performed.  *Note Output During Parallel Execution: Parallel
-     Output.
-
-'-p'
-'--print-data-base'
-     Print the data base (rules and variable values) that results from
-     reading the makefiles; then execute as usual or as otherwise
-     specified.  This also prints the version information given by the
-     '-v' switch (see below).  To print the data base without trying to
-     remake any files, use 'make -qp'.  To print the data base of
-     predefined rules and variables, use 'make -p -f /dev/null'.  The
-     data base output contains file name and line number information for
-     recipe and variable definitions, so it can be a useful debugging
-     tool in complex environments.
-
-'-q'
-'--question'
-     "Question mode".  Do not run any recipes, or print anything; just
-     return an exit status that is zero if the specified targets are
-     already up to date, one if any remaking is required, or two if an
-     error is encountered.  *Note Instead of Executing Recipes: Instead
-     of Execution.
-
-'-r'
-'--no-builtin-rules'
-     Eliminate use of the built-in implicit rules (*note Using Implicit
-     Rules: Implicit Rules.).  You can still define your own by writing
-     pattern rules (*note Defining and Redefining Pattern Rules: Pattern
-     Rules.).  The '-r' option also clears out the default list of
-     suffixes for suffix rules (*note Old-Fashioned Suffix Rules: Suffix
-     Rules.).  But you can still define your own suffixes with a rule
-     for '.SUFFIXES', and then define your own suffix rules.  Note that
-     only _rules_ are affected by the '-r' option; default variables
-     remain in effect (*note Variables Used by Implicit Rules: Implicit
-     Variables.); see the '-R' option below.
-
-'-R'
-'--no-builtin-variables'
-     Eliminate use of the built-in rule-specific variables (*note
-     Variables Used by Implicit Rules: Implicit Variables.).  You can
-     still define your own, of course.  The '-R' option also
-     automatically enables the '-r' option (see above), since it doesn't
-     make sense to have implicit rules without any definitions for the
-     variables that they use.
-
-'-s'
-'--silent'
-'--quiet'
-
-     Silent operation; do not print the recipes as they are executed.
-     *Note Recipe Echoing: Echoing.
-
-'-S'
-'--no-keep-going'
-'--stop'
-
-     Cancel the effect of the '-k' option.  This is never necessary
-     except in a recursive 'make' where '-k' might be inherited from the
-     top-level 'make' via 'MAKEFLAGS' (*note Recursive Use of 'make':
-     Recursion.) or if you set '-k' in 'MAKEFLAGS' in your environment.
-
-'-t'
-'--touch'
-
-     Touch files (mark them up to date without really changing them)
-     instead of running their recipes.  This is used to pretend that the
-     recipes were done, in order to fool future invocations of 'make'.
-     *Note Instead of Executing Recipes: Instead of Execution.
-
-'--trace'
-     Show tracing information for 'make' execution.  Prints the entire
-     recipe to be executed, even for recipes that are normally silent
-     (due to '.SILENT' or '@').  Also prints the makefile name and line
-     number where the recipe was defined, and information on why the
-     target is being rebuilt.
-
-'-v'
-'--version'
-     Print the version of the 'make' program plus a copyright, a list of
-     authors, and a notice that there is no warranty; then exit.
-
-'-w'
-'--print-directory'
-     Print a message containing the working directory both before and
-     after executing the makefile.  This may be useful for tracking down
-     errors from complicated nests of recursive 'make' commands.  *Note
-     Recursive Use of 'make': Recursion.  (In practice, you rarely need
-     to specify this option since 'make' does it for you; see *note The
-     '--print-directory' Option: -w Option.)
-
-'--no-print-directory'
-     Disable printing of the working directory under '-w'.  This option
-     is useful when '-w' is turned on automatically, but you do not want
-     to see the extra messages.  *Note The '--print-directory' Option:
-     -w Option.
-
-'-W FILE'
-'--what-if=FILE'
-'--new-file=FILE'
-'--assume-new=FILE'
-     Pretend that the target FILE has just been modified.  When used
-     with the '-n' flag, this shows you what would happen if you were to
-     modify that file.  Without '-n', it is almost the same as running a
-     'touch' command on the given file before running 'make', except
-     that the modification time is changed only in the imagination of
-     'make'.  *Note Instead of Executing Recipes: Instead of Execution.
-
-'--warn-undefined-variables'
-     Issue a warning message whenever 'make' sees a reference to an
-     undefined variable.  This can be helpful when you are trying to
-     debug makefiles which use variables in complex ways.
 

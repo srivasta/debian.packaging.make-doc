@@ -1,3 +1,10 @@
+make-doc-non-dfsg (4.3-1) unstable; urgency=medium
+
+  * New upst6ream release
+  * Updated standasrds version to 4.3.0. No changes needed
+
+ -- Manoj Srivastava <srivasta@debian.org>  Wed, 20 May 2020 01:02:25 -0700
+
 make-doc-non-dfsg (4.2.1-1) unstable; urgency=medium
 
   * New upstream version
